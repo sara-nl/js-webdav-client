@@ -41,34 +41,47 @@ nl.sara.webdav.Response = function(xmlNode) {
           this.set(child.localName, child.childNodes.item(0).childNodes.item(0).nodeValue);
           break;
         case 'propstat': // propstat node should be parsed further
-          var property = new nl.sara.webdav.Property(child);
-          var propertyChilds = child.childNodes;
+          var propstatChilds = child.childNodes;
+          // First find status, error, responsedescription and props (as Node objects, not yet as Property objects)
+          var status = null;
+          var errors = [];
+          var responsedescription = null;
           var props = [];
-          for (var j = 0; j < propertyChilds.length; j++) {
-            var propertyChild = propertyChilds.item(j);
-            if ((propertyChild.localName == 'prop') && (propertyChild.namespaceURI != null) && (propertyChild.namespaceURI.toLowerCase() == 'dav:')) {
-              for (var k = 0; k < propertyChild.childNodes.length; k++) {
-                props.push(propertyChild.childNodes.item(k));
-              }
+          for (var j = 0; j < propstatChilds.length; j++) { // Parse the child nodes of the propstat element
+            var propstatChild = propstatChilds.item(j);
+            if ((propstatChild.nodeValue != 1) || (propstatChild.namespaceURI != 'DAV:')) {
+              continue;
+            }
+            switch (propstatChild.localName) {
+              case 'prop':
+                for (var k = 0; k < propstatChild.childNodes.length; k++) {
+                  props.push(propstatChild.childNodes.item(k));
+                }
+                break;
+              case 'error':
+                for (var k = 0; k < propstatChild.childNodes.length; k++) {
+                  errors.push(propstatChild.childNodes.item(k));
+                }
+                break;
+                break;
+              case 'status': // always CDATA, so just take the text
+                status = child.childNodes.item(0).nodeValue;
+                break;
+              case 'responsedescription': // always CDATA, so just take the text
+                responsedescription = child.childNodes.item(0).nodeValue;
               break;
             }
           }
-          if (props.length > 1) {
-            for (var l = 0; l < props.length; l++) {
-              var prop = props[l];
-              var copyProperty = new nl.sara.webdav.Property();
-              copyProperty.set('status', property.get('status'));
-              copyProperty.set('responsedescription', property.get('responsedescription'));
-              var errors = property.getErrors();
-              for (var m = 0; m < errors.length; m++) {
-                copyProperty.addError(errors[m]);
-              }
-              copyProperty.set('xmlvalue', prop);
-              if (copyProperty.get('namespace')) {
-                this.addProperty(copyProperty);
-              }
+          
+          // Then create and add a new property for each element found in DAV:prop
+          for (var j = 0; j < props.length; j++) {
+            var property = new nl.sara.webdav.Property();
+            property.set('xmlvalue', props[j]);
+            property.set('status', status);
+            property.set('responsedescription', responsedescription);
+            for (var k = 0; k < errors.length; k++) {
+              property.addError(errors[k]);
             }
-          }else{
             this.addProperty(property);
           }
         break;

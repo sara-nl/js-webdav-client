@@ -21,33 +21,7 @@ nl.sara.webdav.Property = function(xmlNode) {
   
   // Constructor logic
   if (xmlNode instanceof Node) { 
-    if ((xmlNode.namespaceURI.toLowerCase() != 'dav:') || (xmlNode.localName.toLowerCase() != 'propstat')) {
-      throw new nl.sara.webdav.Exception('Node is not of type DAV:propstat', nl.sara.webdav.Exception.WRONG_XML);
-    }
-    var data = xmlNode.childNodes;
-    for (var i = 0; i < data.length; i++) {
-      var child = data.item(i);
-      if ((child.namespaceURI == null) || (child.namespaceURI.toLowerCase() != 'dav:')) { // Skip if not from the right namespace
-        continue;
-      }
-      switch (child.localName) {
-        case 'status':
-        case 'responsedescription':
-          // always CDATA, so just take the text
-          this.set(child.localName, child.childNodes.item(0).nodeValue);
-          break;
-        case 'error':
-          for (var j = 0; j < child.childNodes.length; j++) {
-            this.addError(child.childNodes.item(j));
-          }
-          break;
-        case 'prop':
-          if (child.childNodes.length > 0) {
-            this.set('xmlvalue', child.childNodes.item(0));  // this also sets value, namespace and tagname
-          }
-        break;
-      }
-    }
+    this.set('xmlvalue', xmlNode);  // this also sets value, namespace and tagname
   }
 }
   
@@ -72,8 +46,6 @@ nl.sara.webdav.Property.prototype.set = function(prop, value) {
       if (value.childNodes.length > 0) {
         if ((value.childNodes.item(0).nodeType == 3) || (value.childNodes.item(0).nodeType == 4)) { // Make sure text and CDATA content is stored, even in older browsers
           this.set('value', value.childNodes.item(0).nodeValue);
-        }else if (value.textContent) { // For other type of nodes we just hope this will do something useful, although you probably want to examine the xmlvalue yourself anyway.
-          this.set('value', value.textContent); // This could fail in older browsers, but that's no problem. See comments in the line above.
         }else{
           this.set('value', null);
         }
@@ -84,12 +56,14 @@ nl.sara.webdav.Property.prototype.set = function(prop, value) {
       this.set('tagname', value.localName);
       break;
     case 'value':
+    case 'namespace':
+    case 'tagname':
       this._defaultprops['xmlvalue'] = null;
       break;
     case 'status':
       value = parseInt(value);
       if ((value < 200) || (value >= 600)) {
-        throw new nl.sara.webdav.Exception('Status must be between 200 and 599 (inclusive)', nl.sara.webdav.Exception.WRONG_TYPE);
+        throw new nl.sara.webdav.Exception('Status must be between 200 and 599 (inclusive)', nl.sara.webdav.Exception.WRONG_VALUE);
       }
       break;
   }

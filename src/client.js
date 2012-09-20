@@ -74,7 +74,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
   switch (depth) {
     case 0:
     case 1:
-      depthHeader = depth
+      depthHeader = depth;
       break;
     case nl.sara.webdav.Client.INFINITY:
       depthHeader = 'infinity';
@@ -164,6 +164,7 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
   
   // Create the request XML
   var propsBody = document.implementation.createDocument("DAV:", "propertyupdate", null);
+  propsBody.documentElement.setAttribute("xmlns:D", "DAV:");
   if (setProps !== undefined) {
     var props = propsBody.createElementNS('DAV:', 'prop');
     for (var i = 0; i < setProps.length; i++) { // Cycle through the array
