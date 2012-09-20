@@ -1,6 +1,6 @@
 // If nl.sara.webdav.Property is already defined, we have a namespace clash!
 if (nl.sara.webdav.Property !== undefined) {
-  throw new nl.sara.webdav.Exception('Namespace nl.sara.webdav.Property already taken, could not load JavaScript library for WebDAV connectivity.', nl.sara.webdav.Exception.NAMESPACE_TAKEN);
+  throw new nl.sara.webdav.Exception('Class name nl.sara.webdav.Property already taken, could not load JavaScript library for WebDAV connectivity.', nl.sara.webdav.Exception.NAMESPACE_TAKEN);
 }
 
 /**
@@ -21,7 +21,7 @@ nl.sara.webdav.Property = function(xmlNode) {
   
   // Constructor logic
   if (xmlNode instanceof Node) { 
-    if ((xmlNode.namespaceURI.toLowerCase() != 'dav:') || (xmlNode.localName.toLowerCase() != 'propstat')) {
+    if ((xmlNode.namespaceURI != 'DAV:') || (xmlNode.localName != 'propstat')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:propstat', nl.sara.webdav.Exception.WRONG_XML);
     }
     var data = xmlNode.childNodes;
@@ -48,6 +48,8 @@ nl.sara.webdav.Property = function(xmlNode) {
         break;
       }
     }
+  } else {
+    // Create an empty property. No initialization required.
   }
 }
   

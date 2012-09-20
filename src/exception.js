@@ -1,6 +1,6 @@
 // If nl.sara.webdav.Exception is already defined, we have a namespace clash!
 if (nl.sara.webdav.Exception !== undefined) {
-  throw 'Namespace nl.sara.webdav.Exception already taken, could not load JavaScript library for WebDAV connectivity.';
+  throw 'Class name nl.sara.webdav.Exception already taken, could not load JavaScript library for WebDAV connectivity.';
 }
 
 /**
@@ -37,12 +37,12 @@ nl.sara.webdav.Exception.NOT_IMPLEMENTED = 8;
 /**
  * Sets the message
  * 
- * @param   string  message   The message
- * @return  int               0 on error, 1 on success
+ * @param   string  message  The message
+ * @return  Exception        self
  */
 nl.sara.webdav.Exception.prototype.setMessage = function(message) {
   this._message = message;
-  return 1;
+  return this;
 }
 
 /**
@@ -57,15 +57,15 @@ nl.sara.webdav.Exception.prototype.getMessage = function() {
 /**
  * Sets the code
  * 
- * @param   int  code  The code
- * @return  int        0 on error, 1 on success
+ * @param   int        code  The code
+ * @return  Exception        self
  */
 nl.sara.webdav.Exception.prototype.setCode = function(code) {
   if (isNaN(code)) {
     throw new nl.sara.webdav.Exception('nl.sara.webdav.Exception.setCode(code) expects an integer', nl.sara.webdav.Exception.WRONG_TYPE);
   }
   this._code = parseInt(code);
-  return 1;
+  return this;
 }
 
 /**

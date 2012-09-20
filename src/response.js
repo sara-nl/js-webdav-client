@@ -46,7 +46,9 @@ nl.sara.webdav.Response = function(xmlNode) {
           var props = [];
           for (var j = 0; j < propertyChilds.length; j++) {
             var propertyChild = propertyChilds.item(j);
-            if ((propertyChild.localName == 'prop') && (propertyChild.namespaceURI != null) && (propertyChild.namespaceURI.toLowerCase() == 'dav:')) {
+            if ((propertyChild.localName == 'prop') &&
+                (propertyChild.namespaceURI != null) &&
+                (propertyChild.namespaceURI.toLowerCase() == 'dav:')) {
               for (var k = 0; k < propertyChild.childNodes.length; k++) {
                 props.push(propertyChild.childNodes.item(k));
               }
