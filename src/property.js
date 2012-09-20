@@ -1,6 +1,6 @@
 // If nl.sara.webdav.Property is already defined, we have a namespace clash!
 if (nl.sara.webdav.Property !== undefined) {
-  throw new nl.sara.webdav.Exception('Namespace nl.sara.webdav.Property already taken, could not load JavaScript library for WebDAV connectivity.', nl.sara.webdav.Exception.NAMESPACE_TAKEN);
+  throw new nl.sara.webdav.Exception('Class name nl.sara.webdav.Property already taken, could not load JavaScript library for WebDAV connectivity.', nl.sara.webdav.Exception.NAMESPACE_TAKEN);
 }
 
 /**
@@ -20,7 +20,7 @@ nl.sara.webdav.Property = function(xmlNode) {
   this._errors = [];
   
   // Constructor logic
-  if (xmlNode instanceof Node) { 
+  if (xmlNode instanceof Node) {
     this.set('xmlvalue', xmlNode);  // this also sets value, namespace and tagname
   }
 }
