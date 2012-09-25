@@ -1,3 +1,4 @@
+"use strict"
 /*
  * Copyright ©2012 SARA bv, The Netherlands
  *
@@ -94,13 +95,7 @@ nl.sara.webdav.Response = function(xmlNode) {
           
           // Then create and add a new property for each element found in DAV:prop
           for (var j = 0; j < props.length; j++) {
-            var property = new nl.sara.webdav.Property();
-            property.set('xmlvalue', props[j]);
-            property.set('status', status);
-            property.set('responsedescription', responsedescription);
-            for (var k = 0; k < errors.length; k++) {
-              property.addError(errors[k]);
-            }
+            var property = new nl.sara.webdav.Property(props[j], status, responsedescription, errors);
             this.addProperty(property);
           }
         break;
@@ -119,7 +114,7 @@ nl.sara.webdav.Response.prototype.addProperty = function(property) {
   if (!(property instanceof nl.sara.webdav.Property)) {
     throw new nl.sara.webdav.Exception('Response property should be instance of Property', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  var namespace = property.get('namespace');
+  var namespace = property.namespace;
   if (namespace) {
     if (this._namespaces[namespace] === undefined) {
       this._namespaces[namespace] = {};
@@ -128,7 +123,7 @@ nl.sara.webdav.Response.prototype.addProperty = function(property) {
     throw new nl.sara.webdav.Exception('Response property should have a namespace', nl.sara.webdav.Exception.WRONG_TYPE);
   }
   
-  this._namespaces[namespace][property.get('tagname')] = property;
+  this._namespaces[namespace][property.tagname] = property;
   return this;
 }
 

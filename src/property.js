@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+"use strict";
 
 // If nl.sara.webdav.Property is already defined, we have a namespace clash!
 if (nl.sara.webdav.Property !== undefined) {
@@ -23,115 +24,70 @@ if (nl.sara.webdav.Property !== undefined) {
 }
 
 /**
- * This class describes a WebDAV property
- * 
- * @param   Node  xmlNode  Optionally; the xmlNode describing the propstat object (should be compliant with RFC 4918)
+ * WebDAV property.
  */
-nl.sara.webdav.Property = function(xmlNode) {
-  this._defaultprops = {
-    'namespace'           : null,
-    'tagname'             : null,
-    'value'               : null,
-    'xmlvalue'            : null,
-    'status'              : null,
-    'responsedescription' : null
+nl.sara.webdav.Property = function() {
+  if (0 == arguments.length) {
+    throw new nl.sara.webdav.Exception(
+      'This constructor requires at least one argument.',
+      nl.sara.webdav.Exception.WRONG_TYPE
+    );
   }
-  this._errors = [];
-  
-  // Constructor logic
-  if (xmlNode instanceof Node) {
-    this.set('xmlvalue', xmlNode);  // this also sets value, namespace and tagname
-  }
-}
-  
-/**
- * Sets a property
- * 
- * @param   string    prop   The property to update
- * @param   mixed     value  The value
- * @return  Property         The property itself for chaining methods
- */
-nl.sara.webdav.Property.prototype.set = function(prop, value) {
-  if (this._defaultprops[prop] === undefined) {
-    throw new nl.sara.webdav.Exception('Property ' + prop + ' does not exist', nl.sara.webdav.Exception.UNEXISTING_PROPERTY);
-  }
-  switch (prop) {
-    case 'xmlvalue':
-      if (!(value instanceof Node)) {
-        throw new nl.sara.webdav.Exception('xmlvalue must be an instance of Node', nl.sara.webdav.Exception.WRONG_TYPE);
-      }
-
-      // If we get a new xmlvalue, update the corresponding properties too: value, namespace and tagname
-      if (value.childNodes.length > 0) {
-        if ((value.childNodes.item(0).nodeType == 3) || (value.childNodes.item(0).nodeType == 4)) { // Make sure text and CDATA content is stored, even in older browsers
-          this.set('value', value.childNodes.item(0).nodeValue);
-        }else{
-          this.set('value', null);
-        }
-      }else{
-        this.set('value', null);
-      }
-      this.set('namespace', value.namespaceURI);
-      this.set('tagname', value.localName);
-      break;
-    case 'value':
-    case 'namespace':
-    case 'tagname':
-      this._defaultprops['xmlvalue'] = null;
-      break;
-    case 'status':
-      value = parseInt(value);
-      if ((value < 200) || (value >= 600)) {
-        throw new nl.sara.webdav.Exception('Status must be between 200 and 599 (inclusive)', nl.sara.webdav.Exception.WRONG_VALUE);
-      }
-      break;
-  }
-  this._defaultprops[prop] = value;
-  return this;
+  this.xmlElement = arguments[0];
+  this.status = (1 < arguments.length) ? arguments[1] : 200;
+  this.responsedescription = (2 < arguments.length) ? arguments[2] : '';
+  this.errors = (3 < arguments.length) ? arguments[3] : [];
 }
 
-/**
- * Gets a property
- * 
- * @param   string  prop  The property to get
- * @return  mixed         The value of the property
- */
-nl.sara.webdav.Property.prototype.get = function(prop) {
-  if (this._defaultprops[prop] === undefined) {
-    throw new nl.sara.webdav.Exception('Property ' + prop + ' does not exist', nl.sara.webdav.Exception.UNEXISTING_PROPERTY);
-  }
-  return this._defaultprops[prop];
-}
+nl.sara.webdav.Property.prototype = {
 
-/**
- * Adds an error to this property
- * 
- * @return  Node  The Node which represents the error
- */
-nl.sara.webdav.Property.prototype.addError = function(error) {
-  if (!(error instanceof Node)) {
-    throw new nl.sara.webdav.Exception('Error must be an instance of Node', nl.sara.webdav.Exception.WRONG_TYPE);
-  }
-  this._errors.push(error);
-  return this;
-}
+//  set 'xmlElement': function(xmlElement) {
+//    if (!(xmlElement instanceof Node)) {
+//      throw new nl.sara.webdav.Exception(
+//        'xmlvalue must be an instance of Node',
+//        nl.sara.webdav.Exception.WRONG_TYPE
+//      );
+//    }
+//    this._xmlElement = xmlElement;
+//  },
 
-/**
- * Returns all errors
- * 
- * @return  array  An array of Node representing the error
- */
-nl.sara.webdav.Property.prototype.getErrors = function() {
-  return this._errors;
-}
+//  get 'xmlElement': nl.sara.webdav.defaultGetter('_xmlElement');
 
-/**
- * Overloads the default toString() method so it returns the value of this property
- * 
- * @return  string  A string representation of this property
- */
-nl.sara.webdav.Property.prototype.toString = function() {
-  return this.get('value');
-}
+  /**
+   * @return mixed the text of this property, if it's text-only, otherwise a
+   *         NodeList of all child nodes.
+   */
+  get 'value': function() {
+    var result;
+    switch (this.namespace + this.tagname) {
+    case 'DAV:getcontentlength':
+      return parseInt(this.xmlElement.textContent, 10);
+    case 'DAV:getlastmodified':
+      result = this.xmlElement.textContent;
+      // TODO: parse `result` into a UNIX timestamp (ie. an integer).
+      return result;
+    case 'DAV:owner':
+    case 'DAV:group':
+      result = [];
+      // TODO: parse all HREF elements and return as an array of URLs.
+      return result;
+    // TODO: implement all other known property types.
+    }
+    // By default, do nothing, ie. return `undefined`.
+  },
+
+  set 'status': function(status) {
+    status = parseInt(status, 10);
+    if ((status < 200) || (status >= 600)) {
+      throw new nl.sara.webdav.Exception('Status must be between 200 and 599 (inclusive)', nl.sara.webdav.Exception.WRONG_VALUE);
+    }
+    this._status = status;
+  },
+
+  get 'status': nl.sara.webdav.defaultGetter('_status'),
+  get 'namespace': function() { return this.xmlElement.namespaceURI; },
+  get 'tagname': function() { return this.xmlElement.tagname; }
+
+};
 
 // End of library

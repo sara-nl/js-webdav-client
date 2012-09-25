@@ -1,3 +1,4 @@
+"use strict"
 /*
  * Copyright ©2012 SARA bv, The Netherlands
  *
@@ -31,4 +32,9 @@ if (nl.sara === undefined) {
 }
 if (nl.sara.webdav === undefined) {
   nl.sara.webdav = {};
+}
+nl.sara.webdav.defaultGetter = function(name) {
+  return function() {
+    return this[name];
+  }
 }

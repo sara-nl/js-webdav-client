@@ -1,3 +1,4 @@
+"use strict"
 /*
  * Copyright ©2012 SARA bv, The Netherlands
  *
