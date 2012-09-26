@@ -11,7 +11,7 @@ dist.js: $(SOURCES)
 	done
 
 docs: $(SOURCES)
-	-rm -rf $@
+	-rm -rf $@/*
 	-rm jsdoc.log
 	BASEDIR="$$(pwd)" && cd "$(JSRUN)" && ./jsrun.sh \
 		--allfunctions \
