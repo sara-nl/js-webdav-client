@@ -1,3 +1,5 @@
 dist*
 test/
 .project
+docs/
+jsdoc.log

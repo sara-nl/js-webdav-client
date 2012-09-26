@@ -23,9 +23,9 @@ if (nl.sara.webdav.Property !== undefined) {
 }
 
 /**
- * This class describes a WebDAV property
+ * @class a WebDAV property
  * 
- * @param   Node  xmlNode  Optionally; the xmlNode describing the propstat object (should be compliant with RFC 4918)
+ * @param   {Node}  xmlNode  Optionally; the xmlNode describing the propstat object (should be compliant with RFC 4918)
  */
 nl.sara.webdav.Property = function(xmlNode) {
   this._defaultprops = {
@@ -47,9 +47,9 @@ nl.sara.webdav.Property = function(xmlNode) {
 /**
  * Sets a property
  * 
- * @param   string    prop   The property to update
- * @param   mixed     value  The value
- * @return  Property         The property itself for chaining methods
+ * @param   {String}    prop   The property to update
+ * @param               value  The value
+ * @returns  {nl.sara.webdav.Property}         The property itself for chaining methods
  */
 nl.sara.webdav.Property.prototype.set = function(prop, value) {
   if (this._defaultprops[prop] === undefined) {
@@ -93,8 +93,8 @@ nl.sara.webdav.Property.prototype.set = function(prop, value) {
 /**
  * Gets a property
  * 
- * @param   string  prop  The property to get
- * @return  mixed         The value of the property
+ * @param   {String}  prop  The property to get
+ * @returns                  The value of the property
  */
 nl.sara.webdav.Property.prototype.get = function(prop) {
   if (this._defaultprops[prop] === undefined) {
@@ -106,7 +106,7 @@ nl.sara.webdav.Property.prototype.get = function(prop) {
 /**
  * Adds an error to this property
  * 
- * @return  Node  The Node which represents the error
+ * @returns  {Node}  The Node which represents the error
  */
 nl.sara.webdav.Property.prototype.addError = function(error) {
   if (!(error instanceof Node)) {
@@ -119,7 +119,7 @@ nl.sara.webdav.Property.prototype.addError = function(error) {
 /**
  * Returns all errors
  * 
- * @return  array  An array of Node representing the error
+ * @returns  {array}  An array of Node representing the error
  */
 nl.sara.webdav.Property.prototype.getErrors = function() {
   return this._errors;
@@ -128,7 +128,7 @@ nl.sara.webdav.Property.prototype.getErrors = function() {
 /**
  * Overloads the default toString() method so it returns the value of this property
  * 
- * @return  string  A string representation of this property
+ * @returns  {String}  A string representation of this property
  */
 nl.sara.webdav.Property.prototype.toString = function() {
   return this.get('value');

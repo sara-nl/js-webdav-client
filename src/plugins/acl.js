@@ -23,9 +23,9 @@ if (nl.sara.webdav.Acl !== undefined) {
 }
 
 /**
- * This class describes an ACL
+ * @class Access Control List
  * 
- * @param   Node  xmlNode  Optionally; the xmlNode describing the acl object (should be compliant with RFC 3744)
+ * @param   {Node}  xmlNode  Optionally; the xmlNode describing the acl object (should be compliant with RFC 3744)
  */
 nl.sara.webdav.Acl = function(xmlNode) {
   this._aces = [];
@@ -49,9 +49,9 @@ nl.sara.webdav.Acl = function(xmlNode) {
 /**
  * Adds an ACE
  * 
- * @param   Ace  ace       The ACE to add
- * @param   int  position  Optional; The position to add this ACE. If the position is lower than 1, 0 is assumed, of the position is higher than the current length of the ACL or not specified, the ACE is appended to the end.
- * @return  Acl            The ACL itself for chaining methods
+ * @param   {nl.sara.webdav.Ace}  ace       The ACE to add
+ * @param   {Number}  position  Optional; The position to add this ACE. If the position is lower than 1, 0 is assumed, of the position is higher than the current length of the ACL or not specified, the ACE is appended to the end.
+ * @returns  {nl.sara.webdav.Acl}            The ACL itself for chaining methods
  */
 nl.sara.webdav.Acl.prototype.addAce = function(ace, position) {
   if (!(ace instanceof nl.sara.webdav.Ace)) {
@@ -73,7 +73,7 @@ nl.sara.webdav.Acl.prototype.addAce = function(ace, position) {
 /**
  * Gets the ACL as an array
  * 
- * @return  Ace[]  An array of the ACE's in this ACL
+ * @returns  {nl.sara.webdav.Ace[]}  An array of the ACE's in this ACL
  */
 nl.sara.webdav.Acl.prototype.getAces = function() {
   return this._aces;
@@ -82,8 +82,8 @@ nl.sara.webdav.Acl.prototype.getAces = function() {
 /**
  * Gets one ACE from a certain position
  * 
- * @param   int  position  The position of the ACE
- * @return  Ace            The ACE
+ * @param   {Number}  position  The position of the ACE
+ * @returns  {nl.sara.webdav.Ace}            The ACE
  */
 nl.sara.webdav.Acl.prototype.getAce = function(position) {
   position = Number(position);
@@ -96,7 +96,7 @@ nl.sara.webdav.Acl.prototype.getAce = function(position) {
 /**
  * Gets the length of the ACL
  * 
- * @return  int  The length of the ACL
+ * @returns  {Number}  The length of the ACL
  */
 nl.sara.webdav.Acl.prototype.getLength = function() {
   return this._aces.length;

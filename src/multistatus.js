@@ -23,9 +23,9 @@ if (nl.sara.webdav.Multistatus !== undefined) {
 }
 
 /**
- * This class describes a WebDAV property
+ * @class WebDAV Multistatus response body
  * 
- * @param   Node  xmlNode  Optionally; the xmlNode describing the multistatus object (should be compliant with RFC 4918)
+ * @param   {Node}  xmlNode  Optionally; the xmlNode describing the multistatus object (should be compliant with RFC 4918)
  */
 nl.sara.webdav.Multistatus = function(xmlNode) {
   this._defaultprops = {
@@ -80,8 +80,8 @@ nl.sara.webdav.Multistatus = function(xmlNode) {
 /**
  * Adds a Response
  * 
- * @param   Response     response  The response
- * @return  Multistatus            The multistatus itself for chaining methods
+ * @param   {nl.sara.webdav.Response}     response  The response
+ * @returns  {nl.sara.webdav.Multistatus}            The multistatus itself for chaining methods
  */
 nl.sara.webdav.Multistatus.prototype.addResponse = function(response) {
   if (!(response instanceof nl.sara.webdav.Response)) {
@@ -99,8 +99,8 @@ nl.sara.webdav.Multistatus.prototype.addResponse = function(response) {
 /**
  * Gets a Response
  * 
- * @param   string    name  The name of the response to get
- * @return  Response        The value of the WebDAV property or undefined if the WebDAV property doesn't exist
+ * @param   {String}    name  The name of the response to get
+ * @returns  {nl.sara.webdav.Response}        The value of the WebDAV property or undefined if the WebDAV property doesn't exist
  */
 nl.sara.webdav.Multistatus.prototype.getResponse = function(name) {
   return this._responses[name];
@@ -109,7 +109,7 @@ nl.sara.webdav.Multistatus.prototype.getResponse = function(name) {
 /**
  * Gets the response names
  * 
- * @return  String[]  The names of the different responses
+ * @returns  {String[]}  The names of the different responses
  */
 nl.sara.webdav.Multistatus.prototype.getResponseNames = function() {
   return Object.keys(this._responses);
@@ -118,9 +118,9 @@ nl.sara.webdav.Multistatus.prototype.getResponseNames = function() {
 /**
  * Sets a property
  * 
- * @param   string       prop   The property to update
- * @param   mixed        value  The value
- * @return  Multistatus         The multistatus object itself for chaining methods
+ * @param   {String}       prop   The property to update
+ * @param                  value  The value
+ * @returns  {nl.sara.webdav.Multistatus}         The multistatus object itself for chaining methods
  */
 nl.sara.webdav.Multistatus.prototype.set = function(prop, value) {
   if (this._defaultprops[prop] === undefined) {
@@ -133,8 +133,8 @@ nl.sara.webdav.Multistatus.prototype.set = function(prop, value) {
 /**
  * Gets a property
  * 
- * @param   string  prop  The property to get
- * @return  mixed         The value of the property or undefined if the property doesn't exist
+ * @param   {String}  prop  The property to get
+ * @returns                  The value of the property or undefined if the property doesn't exist
  */
 nl.sara.webdav.Multistatus.prototype.get = function(prop) {
   if (this._defaultprops[prop] === undefined) {

@@ -23,11 +23,11 @@ if (nl.sara.webdav.Client !== undefined) {
 }
 
 /**
- * This class represents a connection to a webDAV server
+ * @class Connection to a WebDAV server
  * 
- * @param  string   host         The hostname or IP address of the server
- * @param  boolean  useHTTPS     If set to true, HTTPS is used. If set to false or omitted, HTTP is used
- * @param  int      port         Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS)
+ * @param  {String}   host         The hostname or IP address of the server
+ * @param  {Boolean}  useHTTPS     If set to true, HTTPS is used. If set to false or omitted, HTTP is used
+ * @param  {Number}      port         Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS)
  */
 nl.sara.webdav.Client = function(host, useHTTPS, port) {
   this._baseUrl = null;
@@ -41,8 +41,8 @@ nl.sara.webdav.Client = function(host, useHTTPS, port) {
   this._baseUrl = protocol + '://' + host + ((((protocol == 'http') && (port == 80)) || ((protocol == 'https') && (port == 443))) ? '' : ':' + port);
 }
 
-/**
- * Class constants
+/**#@+
+ * Class constant
  */
 nl.sara.webdav.Client.PROPNAME = 1;
 nl.sara.webdav.Client.ALLPROP = 2;
@@ -50,12 +50,13 @@ nl.sara.webdav.Client.INFINITY = 'infinity';
 nl.sara.webdav.Client.FAIL_ON_OVERWRITE = 3;
 nl.sara.webdav.Client.TRUNCATE_ON_OVERWRITE = 4;
 nl.sara.webdav.Client.SILENT_OVERWRITE = 5;
+/**#@-*/
 
 /**
  * Converts a path to the full url (i.e. appends the protocol and host part)
  * 
- * @param   string  path  The path on the server
- * @return  string        The full url to the path
+ * @param   {String}  path  The path on the server
+ * @returns {String}        The full url to the path
  */
 nl.sara.webdav.Client.prototype.getUrl = function(path) {
   if (path.substring(0,1) != '/') {
@@ -67,12 +68,12 @@ nl.sara.webdav.Client.prototype.getUrl = function(path) {
 /**
  * Perform a WebDAV PROPFIND request
  * 
- * @param   string                        path      The path get a PROPFIND for
- * @param   function(status,Multistatus)  callback  Querying the server is done asynchronously, this callback function is called when the results are in
- * @param   string                        depth     Value for the 'depth' header, should be either '0', '1' or the class constant INFINITY. When omitted, '0' is used. See RFC 4916.
- * @param   mixed                         props     The properties to fetch. Should be either one of the class constants PROPNAME or ALLPROP or an array with Property objects. When omitted, ALLPROP is assumed. See RFC 4916.
- * @param   array<Property>               include   An array with Property objects used for the <include> element. This is only used for ALLPROP requests. When omitted, no <include> element is send. See RFC 4916.
- * @return  Client                                  The client itself for chaining methods
+ * @param   {String}                        path      The path get a PROPFIND for
+ * @param   {Function(status,Multistatus)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param   {String}                        depth     Value for the 'depth' header, should be either '0', '1' or the class constant INFINITY. When omitted, '0' is used. See RFC 4916.
+ * @param                                   props     The properties to fetch. Should be either one of the class constants PROPNAME or ALLPROP or an array with Property objects. When omitted, ALLPROP is assumed. See RFC 4916.
+ * @param   {nl.sara.webdav.Property[]}               include   An array with Property objects used for the <include> element. This is only used for ALLPROP requests. When omitted, no <include> element is send. See RFC 4916.
+ * @returns  {nl.sara.webdav.Client}                                  The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props, include) {
   if ((path === undefined) || (callback === undefined)) {
@@ -164,11 +165,11 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
 /**
  * Perform a WebDAV PROPPATCH request
  * 
- * @param   string                        path      The path do a PROPPATCH on
- * @param   function(status,Multistatus)  callback  Querying the server is done asynchronously, this callback function is called when the results are in
- * @param   array<Property>               setProps  The properties to set. If not set, delProps should be set.
- * @param   array<Property>               delProps  The properties to delete. If not set, setProps should be set.
- * @return  Client                                  The client itself for chaining methods
+ * @param   {String}                        path      The path do a PROPPATCH on
+ * @param   {Function(status,Multistatus)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param   {nl.sara.webdav.Property[]}               setProps  The properties to set. If not set, delProps should be set.
+ * @param   {nl.sara.webdav.Property[]}               delProps  The properties to delete. If not set, setProps should be set.
+ * @returns  {nl.sara.webdav.Client}                                  The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, delProps) {
   if ((path === undefined) || (callback === undefined) || ((setProps === undefined) && (delProps === undefined))) {
@@ -237,11 +238,11 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
 /**
  * Perform a WebDAV MKCOL request
  * 
- * @param   string                        path         The path to perform MKCOL on
- * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
- * @param   string                        body         Optional; a body to include in the MKCOL request.
- * @param   string                        contenttype  Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/xml; charset="utf-8"' is assumed
- * @return  Client                                     The client itself for chaining methods
+ * @param   {String}                        path         The path to perform MKCOL on
+ * @param   {Function(status,Multistatus)}  callback     Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param   {String}                        body         Optional; a body to include in the MKCOL request.
+ * @param   {String}                        contenttype  Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/xml; charset="utf-8"' is assumed
+ * @returns  {nl.sara.webdav.Client}                                     The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contenttype) {
   if ((path === undefined) || (callback === undefined)) {
@@ -277,9 +278,9 @@ nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contentty
  * 'remove'. However, performs a regular DELETE request as described in
  * RFC 4918
  * 
- * @param   string                        path         The path to perform DELETE on
- * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
- * @return  Client                                     The client itself for chaining methods
+ * @param   {String}                        path         The path to perform DELETE on
+ * @param   {Function(status,Multistatus)}  callback     Querying the server is done asynchronously, this callback function is called when the results are in
+ * @returns  {nl.sara.webdav.Client}                                     The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.remove = function(path, callback) {
   if ((path === undefined) || (callback === undefined)) {
@@ -302,9 +303,9 @@ nl.sara.webdav.Client.prototype.remove = function(path, callback) {
 /**
  * Perform a WebDAV GET request
  * 
- * @param   string                    path         The path to GET
- * @param   function(status,content)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
- * @return  Client                                 The client itself for chaining methods
+ * @param   {String}                    path         The path to GET
+ * @param   {Function(status,content)}  callback     Querying the server is done asynchronously, this callback function is called when the results are in
+ * @returns  {nl.sara.webdav.Client}                                 The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.get = function(path, callback) {
   if ((path === undefined) || (callback === undefined)) {
@@ -330,9 +331,9 @@ nl.sara.webdav.Client.prototype.get = function(path, callback) {
 /**
  * Perform a WebDAV HEAD request
  *
- * @param   string                    path         The path to perform HEAD on
- * @param   function(status,headers)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
- * @return  Client                                 The client itself for chaining methods
+ * @param   {String}                    path         The path to perform HEAD on
+ * @param   {Function(status,headers)}  callback     Querying the server is done asynchronously, this callback function is called when the results are in
+ * @returns  {nl.sara.webdav.Client}                                 The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.head = function(path, callback) {
   if ((path === undefined) || (callback === undefined)) {
@@ -358,11 +359,11 @@ nl.sara.webdav.Client.prototype.head = function(path, callback) {
 /**
  * Perform a WebDAV PUT request
  * 
- * @param   string                        path         The path to perform PUT on
- * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
- * @param   string                        body         The content to include in the PUT request.
- * @param   string                        contenttype  Optional; the content type of the body (i.e. value for the Content-Type header).
- * @return  Client                                     The client itself for chaining methods
+ * @param   {String}                        path         The path to perform PUT on
+ * @param   {Function(status,Multistatus)}  callback     Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param   {String}                        body         The content to include in the PUT request.
+ * @param   {String}                        contenttype  Optional; the content type of the body (i.e. value for the Content-Type header).
+ * @returns  {nl.sara.webdav.Client}                                     The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype) {
   if ((path === undefined) || (callback === undefined) || (body === undefined)) {
@@ -389,11 +390,11 @@ nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype
 /**
  * Perform a WebDAV POST request
  * 
- * @param   string                        path         The path to perform POST on
- * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
- * @param   string                        body         Optional; a body to include in the POST request.
- * @param   string                        contenttype  Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/x-www-form-urlencoded' is assumed
- * @return  Client                                     The client itself for chaining methods
+ * @param   {String}                        path         The path to perform POST on
+ * @param   {Function(status,Multistatus)}  callback     Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param   {String}                        body         Optional; a body to include in the POST request.
+ * @param   {String}                        contenttype  Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/x-www-form-urlencoded' is assumed
+ * @returns  {nl.sara.webdav.Client}                                     The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttype) {
   if ((path === undefined) || (callback === undefined)) {
@@ -426,12 +427,12 @@ nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttyp
 /**
  * Perform a WebDAV COPY request
  * 
- * @param   string                        path           The path to perform COPY on
- * @param   function(status,Multistatus)  callback       Querying the server is done asynchronously, this callback function is called when the results are in
- * @param   string                        destination    The destination to copy to. Should be either a full URL or a path from the root on this server (i.e. it should start with a /)
- * @param   boolean                       overwriteMode  Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.
- * @param   string                        depth          Should be '0' or 'infinity'. This is used in case of a collection; 0 means only copy the collection itself, infinity means copy also everything contained in the collection
- * @return  Client                                       The client itself for chaining methods
+ * @param   {String}                        path           The path to perform COPY on
+ * @param   {Function(status,Multistatus)}  callback       Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param   {String}                        destination    The destination to copy to. Should be either a full URL or a path from the root on this server (i.e. it should start with a /)
+ * @param   {Boolean}                       overwriteMode  Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.
+ * @param   {String}                        depth          Should be '0' or 'infinity'. This is used in case of a collection; 0 means only copy the collection itself, infinity means copy also everything contained in the collection
+ * @returns  {nl.sara.webdav.Client}                                       The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.copy = function(path, callback, destination, overwriteMode, depth) {
   if ((path === undefined) || (callback === undefined) || (destination === undefined)) {
@@ -469,11 +470,11 @@ nl.sara.webdav.Client.prototype.copy = function(path, callback, destination, ove
 /**
  * Perform a WebDAV MOVE request
  * 
- * @param   string                        path           The path to perform MOVE on
- * @param   function(status,Multistatus)  callback       Querying the server is done asynchronously, this callback function is called when the results are in
- * @param   string                        destination    The destination to move to. Should be either a full URL or a path from the root on this server (i.e. it should start with a /)
- * @param   int                           overwriteMode  Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE, TRUNCATE_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.
- * @return  Client                                       The client itself for chaining methods
+ * @param   {String}                        path           The path to perform MOVE on
+ * @param   {Function(status,Multistatus)}  callback       Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param   {String}                        destination    The destination to move to. Should be either a full URL or a path from the root on this server (i.e. it should start with a /)
+ * @param   {Number}                           overwriteMode  Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE, TRUNCATE_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.
+ * @returns  {nl.sara.webdav.Client}                                       The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.move = function(path, callback, destination, overwriteMode) {
   if ((path === undefined) || (callback === undefined) || (destination === undefined)) {
@@ -507,9 +508,9 @@ nl.sara.webdav.Client.prototype.move = function(path, callback, destination, ove
 /**
  * Perform a WebDAV LOCK request
  * 
- * @param   string                        path         The path to perform LOCK on
- * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
- * @return  Client                                     The client itself for chaining methods
+ * @param   {String}                        path         The path to perform LOCK on
+ * @param   {Function(status,Multistatus)}  callback     Querying the server is done asynchronously, this callback function is called when the results are in
+ * @returns  {nl.sara.webdav.Client}                                     The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.lock = function(path, callback) {
   throw new nl.sara.webdav.Exception('LOCK is not implemented yet', nl.sara.webdav.Exception.NOT_IMPLEMENTED);
@@ -519,9 +520,9 @@ nl.sara.webdav.Client.prototype.lock = function(path, callback) {
 /**
  * Perform a WebDAV UNLOCK request
  * 
- * @param   string                        path         The path to perform UNLOCK on
- * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
- * @return  Client                                     The client itself for chaining methods
+ * @param   {String}                        path         The path to perform UNLOCK on
+ * @param   {Function(status,Multistatus)}  callback     Querying the server is done asynchronously, this callback function is called when the results are in
+ * @returns  {nl.sara.webdav.Client}                                     The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.unlock = function(path, callback) {
   throw new nl.sara.webdav.Exception('UNLOCK is not implemented yet', nl.sara.webdav.Exception.NOT_IMPLEMENTED);
@@ -532,13 +533,13 @@ nl.sara.webdav.Client.prototype.unlock = function(path, callback) {
  * Prepares a XMLHttpRequest object to be used for an AJAX request
  * 
  * @static
- * @param    string                        method    The HTTP/webDAV method to use (e.g. GET, POST, PROPFIND)
- * @param    string                        url       The url to connect to
- * @param    function(status,Multistatus)  callback  Querying the server is done asynchronously, this callback function is called when the results are in
- * @return   XMLHttpRequest                          A prepared XMLHttpRequest
+ * @param    {String}                        method    The HTTP/webDAV method to use (e.g. GET, POST, PROPFIND)
+ * @param    {String}                        url       The url to connect to
+ * @param    {Function(status,Multistatus)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @returns   {XMLHttpRequest}                          A prepared XMLHttpRequest
  */
 nl.sara.webdav.Client.getAjax = function(method, url, callback) {
-  var ajax = new XMLHttpRequest();
+  var /** @type XMLHttpRequest */ ajax = new XMLHttpRequest();
   ajax.open(method, url, true);
   ajax.onreadystatechange=function(){nl.sara.webdav.Client.ajaxHandler(ajax, callback);}
   return ajax;
@@ -548,8 +549,8 @@ nl.sara.webdav.Client.getAjax = function(method, url, callback) {
  * AJAX request handler. Parses Multistatus (if available) and call a user specified callback function
  * 
  * @static
- * @param    XMLHttpRequest                ajax      The XMLHttpRequest object which performed the request
- * @param    function(status,Multistatus)  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {XMLHttpRequest}                ajax      The XMLHttpRequest object which performed the request
+ * @param    {Function(status,Multistatus)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
  */
 nl.sara.webdav.Client.ajaxHandler = function(ajax, callback) {
   if (ajax.readyState==4){ //if request has completed
