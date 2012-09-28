@@ -24,9 +24,9 @@ if (nl.sara.webdav.Privilege !== undefined) {
 }
 
 /**
- * This class describes a WebDAV ACL privilege
+ * @class WebDAV ACL privilege
  * 
- * @param   Node  xmlNode  Optionally; the xmlNode describing the privilege object
+ * @param   {Node}  xmlNode  Optionally; the xmlNode describing the privilege object
  */
 nl.sara.webdav.Privilege = function(xmlNode) {
   this._defaultprops = {
@@ -45,9 +45,9 @@ nl.sara.webdav.Privilege = function(xmlNode) {
 /**
  * Sets a property
  * 
- * @param   string    prop   The property to update
- * @param   mixed     value  The value
- * @return  Privilege        The privilege itself for chaining methods
+ * @param   {String}    prop   The property to update
+ * @param               value  The value
+ * @returns  {nl.sara.webdav.Privilege}        The privilege itself for chaining methods
  */
 nl.sara.webdav.Privilege.prototype.set = function(prop, value) {
   if (this._defaultprops[prop] === undefined) {
@@ -85,8 +85,8 @@ nl.sara.webdav.Privilege.prototype.set = function(prop, value) {
 /**
  * Gets a property
  * 
- * @param   string  prop  The property to get
- * @return  mixed         The value of the property
+ * @param   {String}  prop  The property to get
+ * @returns                  The value of the property
  */
 nl.sara.webdav.Privilege.prototype.get = function(prop) {
   if (this._defaultprops[prop] === undefined) {
@@ -98,7 +98,7 @@ nl.sara.webdav.Privilege.prototype.get = function(prop) {
 /**
  * Overloads the default toString() method so it returns the value of this privilege
  * 
- * @return  string  A string representation of this privilege
+ * @returns  {String}  A string representation of this privilege
  */
 nl.sara.webdav.Privilege.prototype.toString = function() {
   return this.get('value');

@@ -24,7 +24,17 @@ if (nl.sara.webdav.Property !== undefined) {
 }
 
 /**
- * WebDAV property.
+ * @class a WebDAV property
+ * 
+ * @param   {Node}  xmlElement  Optionally; the xmlNode describing the propstat object (should be compliant with RFC 4918)
+ * @param {Number} status
+ * @param {String} responsedescription
+ * @param {String[]} errors
+ * @property {Element} xmlElement
+ * @property value
+ * @property {Number} status
+ * @property {String} responsedescription
+ * @property {String[]} errors
  */
 nl.sara.webdav.Property = function() {
   if (0 == arguments.length) {
@@ -39,55 +49,52 @@ nl.sara.webdav.Property = function() {
   this.errors = (3 < arguments.length) ? arguments[3] : [];
 }
 
-nl.sara.webdav.Property.prototype = {
+Object.defineProperty(
+  nl.sara.webdav.Property.prototype, 'value', {
+    get: function() {
+      var result;
+      switch (this.namespace + this.tagname) {
+      case 'DAV:getcontentlength':
+        return parseInt(this.xmlElement.textContent, 10);
+      case 'DAV:getlastmodified':
+        result = this.xmlElement.textContent;
+        // TODO: parse `result` into a UNIX timestamp (ie. an integer).
+        return result;
+      case 'DAV:owner':
+      case 'DAV:group':
+        result = [];
+        // TODO: parse all HREF elements and return as an array of URLs.
+        return result;
+      // TODO: implement all other known property types.
+      }
+      // By default, do nothing, ie. return `undefined`.
+    } // function
+  } // config object
+);
 
-//  set 'xmlElement': function(xmlElement) {
-//    if (!(xmlElement instanceof Node)) {
-//      throw new nl.sara.webdav.Exception(
-//        'xmlvalue must be an instance of Node',
-//        nl.sara.webdav.Exception.WRONG_TYPE
-//      );
-//    }
-//    this._xmlElement = xmlElement;
-//  },
+Object.defineProperty(
+  nl.sara.webdav.Property.prototype, 'status', {
+    get: nl.sara.webdav.defaultGetter('_status'),
+    set: function(status) {
+      status = parseInt(status, 10);
+      if ((status < 200) || (status >= 600)) {
+        throw new nl.sara.webdav.Exception('Status must be between 200 and 599 (inclusive)', nl.sara.webdav.Exception.WRONG_VALUE);
+      }
+      this._status = status;
+    },
+  } // config object
+);
 
-//  get 'xmlElement': nl.sara.webdav.defaultGetter('_xmlElement');
+Object.defineProperty(
+  nl.sara.webdav.Property.prototype, 'namespace', {
+    get: function() { return this.xmlElement.namespaceURI; }
+  }
+);
 
-  /**
-   * @return mixed the text of this property, if it's text-only, otherwise a
-   *         NodeList of all child nodes.
-   */
-  get 'value': function() {
-    var result;
-    switch (this.namespace + this.tagname) {
-    case 'DAV:getcontentlength':
-      return parseInt(this.xmlElement.textContent, 10);
-    case 'DAV:getlastmodified':
-      result = this.xmlElement.textContent;
-      // TODO: parse `result` into a UNIX timestamp (ie. an integer).
-      return result;
-    case 'DAV:owner':
-    case 'DAV:group':
-      result = [];
-      // TODO: parse all HREF elements and return as an array of URLs.
-      return result;
-    // TODO: implement all other known property types.
-    }
-    // By default, do nothing, ie. return `undefined`.
-  },
-
-  set 'status': function(status) {
-    status = parseInt(status, 10);
-    if ((status < 200) || (status >= 600)) {
-      throw new nl.sara.webdav.Exception('Status must be between 200 and 599 (inclusive)', nl.sara.webdav.Exception.WRONG_VALUE);
-    }
-    this._status = status;
-  },
-
-  get 'status': nl.sara.webdav.defaultGetter('_status'),
-  get 'namespace': function() { return this.xmlElement.namespaceURI; },
-  get 'tagname': function() { return this.xmlElement.tagname; }
-
-};
+Object.defineProperty(
+  nl.sara.webdav.Property.prototype, 'tagname', {
+    get: function() { return this.xmlElement.tagname; }
+  }
+);
 
 // End of library
