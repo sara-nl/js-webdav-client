@@ -24,10 +24,9 @@ if (nl.sara.webdav.Exception !== undefined) {
 }
 
 /**
- * This class describes an exception
- *
- * @param  string  message  A human readable message
- * @param  int     code     The error code. It is best to use the class constants to set this.
+ * @class An exception
+ * @param  {String}  message  Optionally; A human readable message
+ * @param  {Number}  code     Optionally; The error code. It is best to use the class constants to set this.
  */
 nl.sara.webdav.Exception = function(message, code) {
   Object.defineProperty(this, 'message', {
@@ -52,7 +51,7 @@ nl.sara.webdav.Exception = function(message, code) {
   }
 }
 
-/**
+/**#@+
  * Declaration of the error code constants
  */
 nl.sara.webdav.Exception.WRONG_TYPE = 1;
@@ -63,11 +62,12 @@ nl.sara.webdav.Exception.WRONG_VALUE = 5;
 nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER = 6;
 nl.sara.webdav.Exception.AJAX_ERROR = 7;
 nl.sara.webdav.Exception.NOT_IMPLEMENTED = 8;
+/**#@-*/
 
 /**
  * Overloads the default toString() method so it returns the message of this exception
  *
- * @return  string  A string representation of this property
+ * @returns  {String}  A string representation of this property
  */
 nl.sara.webdav.Exception.prototype.toString = function() {
   return this.message;

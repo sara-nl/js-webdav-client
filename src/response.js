@@ -24,9 +24,9 @@ if (nl.sara.webdav.Response !== undefined) {
 }
 
 /**
- * This class describes a WebDAV response
+ * @class a WebDAV response
  *
- * @param   Node  xmlNode  Optionally; the xmlNode describing the response object (should be compliant with RFC 4918)
+ * @param  {Node}  xmlNode  Optionally; the xmlNode describing the response object (should be compliant with RFC 4918)
  */
 nl.sara.webdav.Response = function(xmlNode) {
   Object.defineProperty(this, '_namespaces', {
@@ -135,8 +135,8 @@ nl.sara.webdav.Response = function(xmlNode) {
 /**
  * Adds a WebDAV property
  *
- * @param   Property  property  The property
- * @return  Response            The response itself for chaining methods
+ * @param    {nl.sara.webdav.Property}  property  The property
+ * @returns  {nl.sara.webdav.Response}            The response itself for chaining methods
  */
 nl.sara.webdav.Response.prototype.addProperty = function(property) {
   if (!(property instanceof nl.sara.webdav.Property)) {
@@ -157,9 +157,9 @@ nl.sara.webdav.Response.prototype.addProperty = function(property) {
 /**
  * Gets a WebDAV property
  *
- * @param   string    namespace  The namespace of the WebDAV property
- * @param   string    prop       The WebDAV property to get
- * @return  Property             The value of the WebDAV property or undefined if the WebDAV property doesn't exist
+ * @param    {String}                   namespace  The namespace of the WebDAV property
+ * @param    {String}                   prop       The WebDAV property to get
+ * @returns  {nl.sara.webdav.Property}             The value of the WebDAV property or undefined if the WebDAV property doesn't exist
  */
 nl.sara.webdav.Response.prototype.getProperty = function(namespace, prop) {
   if ((this._namespaces[namespace] === undefined) || (this._namespaces[namespace][prop] === undefined)) {
@@ -171,7 +171,7 @@ nl.sara.webdav.Response.prototype.getProperty = function(namespace, prop) {
 /**
  * Gets the namespace names
  *
- * @return  String[]  The names of the different namespaces
+ * @returns  {String[]}  The names of the different namespaces
  */
 nl.sara.webdav.Response.prototype.getNamespaceNames = function() {
   return Object.keys(this._namespaces);
@@ -180,8 +180,8 @@ nl.sara.webdav.Response.prototype.getNamespaceNames = function() {
 /**
  * Gets the property names of a namespace
  *
- * @param   string    namespace  The namespace of the WebDAV property
- * @return  String[]             The names of the different properties of a namespace
+ * @param    {String}    namespace  The namespace of the WebDAV property
+ * @returns  {String[]}             The names of the different properties of a namespace
  */
 nl.sara.webdav.Response.prototype.getPropertyNames = function(namespace) {
   if (this._namespaces[namespace] === undefined) {

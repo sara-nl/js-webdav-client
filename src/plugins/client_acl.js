@@ -21,13 +21,14 @@
 /**
  * This plugin adds acl capabilities to the WebDAV client class
  */
+
 /**
  * Perform a WebDAV ACL request
  *
- * @param   string                        path         The path to perform ACL on
- * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
- * @param   Acl                           acl          The ACL to submit
- * @return  Client                                     The client itself for chaining methods
+ * @param    {String}                        path      The path to perform ACL on
+ * @param    {Function(status,Multistatus)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {nl.sara.webdav.Acl}            acl       The ACL to submit
+ * @returns  {nl.sara.webdav.Client}                   The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
   if ((path === undefined) || (callback === undefined)) {
@@ -137,10 +138,10 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
 /**
  * Perform a WebDAV REPORT request
  *
- * @param   string                        path         The path to perform REPORT on
- * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
- * @param   Document                      body         The (XML DOM) document to parse and send as the request body
- * @return  Client                                     The client itself for chaining methods
+ * @param    {String}                        path         The path to perform REPORT on
+ * @param    {Function(status,Multistatus)}  callback     Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {Document}                      body         The (XML DOM) document to parse and send as the request body
+ * @returns  {nl.sara.webdav.Client}                      The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.report = function(path, callback, body) {
   if ((path === undefined) || (callback === undefined) || (body === undefined)) {

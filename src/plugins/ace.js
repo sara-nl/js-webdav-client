@@ -24,9 +24,9 @@ if (nl.sara.webdav.Ace !== undefined) {
 }
 
 /**
- * This class describes a WebDAV property
+ * @class WebDAV property
  *
- * @param   Node  xmlNode  Optionally; the xmlNode describing the ace object (should be compliant with RFC 3744)
+ * @param   {Node}  xmlNode  Optionally; the xmlNode describing the ace object (should be compliant with RFC 3744)
  */
 nl.sara.webdav.Ace = function(xmlNode) {
   Object.defineProperty(this, '_namespaces', {
@@ -219,7 +219,6 @@ Object.defineProperty(nl.sara.webdav.Ace.prototype, 'isprotected', {
   }
 });
 
-
 Object.defineProperty(nl.sara.webdav.Ace.prototype, 'grantdeny', {
   'set': function(value) {
     if ((value != nl.sara.webdav.Ace.GRANT) && (value != nl.sara.webdav.Ace.DENY)) {
@@ -231,7 +230,6 @@ Object.defineProperty(nl.sara.webdav.Ace.prototype, 'grantdeny', {
     return this._grantdeny;
   }
 });
-
 
 Object.defineProperty(nl.sara.webdav.Ace.prototype, 'inherited', {
   'set': function(value) {
@@ -249,8 +247,8 @@ Object.defineProperty(nl.sara.webdav.Ace.prototype, 'inherited', {
 /**
  * Adds a WebDAV privilege
  *
- * @param   Privilege  privilege  The privilege to add
- * @return  Ace                   The ace itself for chaining methods
+ * @param    {nl.sara.webdav.Privilege}  privilege  The privilege to add
+ * @returns  {nl.sara.webdav.Ace}                   The ace itself for chaining methods
  */
 nl.sara.webdav.Ace.prototype.addPrivilege = function(privilege) {
   if (!(privilege instanceof nl.sara.webdav.Privilege)) {
@@ -272,9 +270,9 @@ nl.sara.webdav.Ace.prototype.addPrivilege = function(privilege) {
 /**
  * Gets a WebDAV privilege
  *
- * @param   string     namespace  The namespace of the privilege
- * @param   string     privilege  The privilege to get
- * @return  Privilege             The value of the privilege or undefined if the privilege doesn't exist
+ * @param    {String}                    namespace  The namespace of the privilege
+ * @param    {String}                    privilege  The privilege to get
+ * @returns  {nl.sara.webdav.Privilege}             The value of the privilege or undefined if the privilege doesn't exist
  */
 nl.sara.webdav.Ace.prototype.getPrivilege = function(namespace, privilege) {
   if ((this._namespaces[namespace] === undefined) || (this._namespaces[namespace][privilege] === undefined)) {
@@ -286,7 +284,7 @@ nl.sara.webdav.Ace.prototype.getPrivilege = function(namespace, privilege) {
 /**
  * Gets the namespace names
  *
- * @return  String[]  The names of the different namespaces
+ * @returns  {String[]}  The names of the different namespaces
  */
 nl.sara.webdav.Ace.prototype.getNamespaceNames = function() {
   return Object.keys(this._namespaces);
@@ -295,8 +293,8 @@ nl.sara.webdav.Ace.prototype.getNamespaceNames = function() {
 /**
  * Gets the privilege names of a namespace
  *
- * @param   string    namespace  The namespace of the privilege
- * @return  String[]             The names of the different privilege of a namespace
+ * @param    {String}    namespace  The namespace of the privilege
+ * @returns  {String[]}             The names of the different privilege of a namespace
  */
 nl.sara.webdav.Ace.prototype.getPrivilegeNames = function(namespace) {
   if (this._namespaces[namespace] === undefined) {
