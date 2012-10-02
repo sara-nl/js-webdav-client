@@ -25,8 +25,8 @@ if (nl.sara.webdav.Exception !== undefined) {
 
 /**
  * @class An exception
- * @param  {String}  message  Optionally; A human readable message
- * @param  {Number}  code     Optionally; The error code. It is best to use the class constants to set this.
+ * @param  {String}  [message]  Optional; A human readable message
+ * @param  {Number}  [code]     Optional; The error code. It is best to use the class constants to set this.
  * @property  {String}  message  The exception message
  * @property  {Number}  code     The exception code
  */

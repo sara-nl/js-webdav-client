@@ -26,7 +26,7 @@ if (nl.sara.webdav.Ace !== undefined) {
 /**
  * @class WebDAV property
  *
- * @param  {Node}  xmlNode  Optionally; the xmlNode describing the ace object (should be compliant with RFC 3744)
+ * @param  {Node}  [xmlNode]  Optional; the xmlNode describing the ace object (should be compliant with RFC 3744)
  * @property  {mixed}    principal        The principal. Is one of the class constants ALL, AUTHENTICATED, UNAUTHENTICATED or SELF or a String with the path to the principal or a property. See RFC 3744 for more information on this.
  * @property  {Boolean}  invertprincipal  Whether to invert the principal; true means 'all principals except the one specified'. Default is false.
  * @property  {Boolean}  isprotected      Whether this ACE is protected. Default is false.

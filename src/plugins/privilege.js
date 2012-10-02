@@ -26,7 +26,7 @@ if (nl.sara.webdav.Privilege !== undefined) {
 /**
  * @class WebDAV ACL privilege
  *
- * @param  {Node}  xmlNode  Optionally; the xmlNode describing the privilege object
+ * @param  {Node}  [xmlNode]  Optional; the xmlNode describing the privilege object
  * @property  {String}    namespace  The namespace
  * @property  {String}    tagname    The tag name
  * @property  {NodeList}  xmlvalue   A NodeList with the value of this privilege
@@ -34,18 +34,6 @@ if (nl.sara.webdav.Privilege !== undefined) {
  */
 nl.sara.webdav.Privilege = function(xmlNode) {
   // First define private attributes
-  Object.defineProperty(this, '_namespace', {
-    'value': null,
-    'enumerable': false,
-    'configurable': false,
-    'writable': true
-  });
-  Object.defineProperty(this, '_tagname', {
-    'value': null,
-    'enumerable': false,
-    'configurable': false,
-    'writable': true
-  });
   Object.defineProperty(this, '_value', {
     'value': null,
     'enumerable': false,
@@ -55,6 +43,19 @@ nl.sara.webdav.Privilege = function(xmlNode) {
   Object.defineProperty(this, '_xmlvalue', {
     'value': null,
     'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  // Second define public attributes
+  Object.defineProperty(this, 'namespace', {
+    'value': null,
+    'enumerable': true,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, 'tagname', {
+    'value': null,
+    'enumerable': true,
     'configurable': false,
     'writable': true
   });
@@ -68,24 +69,6 @@ nl.sara.webdav.Privilege = function(xmlNode) {
 }
 
 //######################### DEFINE PUBLIC ATTRIBUTES ###########################
-Object.defineProperty(nl.sara.webdav.Privilege.prototype, 'namespace', {
-  'set': function(value) {
-    this._namespace = value;
-  },
-  'get': function() {
-    return this._namespace;
-  }
-});
-
-Object.defineProperty(nl.sara.webdav.Privilege.prototype, 'tagname', {
-  'set': function(value) {
-    this._tagname = value;
-  },
-  'get': function() {
-    return this._tagname;
-  }
-});
-
 Object.defineProperty(nl.sara.webdav.Privilege.prototype, 'value', {
   'set': function(value) {
     this._xmlvalue = null;

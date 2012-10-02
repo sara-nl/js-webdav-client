@@ -26,7 +26,7 @@ if (nl.sara.webdav.Multistatus !== undefined) {
 /**
  * @class WebDAV Multistatus response body
  *
- * @param  {Node}  xmlNode  Optionally; the xmlNode describing the multistatus object (should be compliant with RFC 4918)
+ * @param  {Node}  [xmlNode]  Optional; the xmlNode describing the multistatus object (should be compliant with RFC 4918)
  * @property  {String}  responsedescription  The response description
  */
 nl.sara.webdav.Multistatus = function(xmlNode) {

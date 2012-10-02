@@ -26,7 +26,7 @@ if (nl.sara.webdav.Response !== undefined) {
 /**
  * @class a WebDAV response
  *
- * @param  {Node}  xmlNode  Optionally; the xmlNode describing the response object (should be compliant with RFC 4918)
+ * @param  {Node}  [xmlNode]  Optional; the xmlNode describing the response object (should be compliant with RFC 4918)
  * @property  {String}  href                 The path of the resource
  * @property  {String}  status               The (HTTP) status code
  * @property  {String}  error                The error text

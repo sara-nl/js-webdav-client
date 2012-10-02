@@ -26,7 +26,7 @@ if (nl.sara.webdav.Acl !== undefined) {
 /**
  * @class Access Control List
  *
- * @param  {Node}  xmlNode  Optionally; the xmlNode describing the acl object (should be compliant with RFC 3744)
+ * @param  {Node}  [xmlNode]  Optional; the xmlNode describing the acl object (should be compliant with RFC 3744)
  */
 nl.sara.webdav.Acl = function(xmlNode) {
   // First define private attributes
