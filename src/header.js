@@ -1,4 +1,3 @@
-"use strict"
 /*
  * Copyright ©2012 SARA bv, The Netherlands
  *
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+"use strict"
 
 /**
  * A webDAV client library for JavaScript
@@ -32,9 +32,4 @@ if (nl.sara === undefined) {
 }
 if (nl.sara.webdav === undefined) {
   nl.sara.webdav = {};
-}
-nl.sara.webdav.defaultGetter = function(name) {
-  return function() {
-    return this[name];
-  }
 }

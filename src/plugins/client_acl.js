@@ -1,4 +1,3 @@
-"use strict"
 /*
  * Copyright ©2012 SARA bv, The Netherlands
  *
@@ -17,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+"use strict"
 
 /**
  * This plugin adds acl capabilities to the WebDAV client class
  */
 /**
  * Perform a WebDAV ACL request
- * 
+ *
  * @param   string                        path         The path to perform ACL on
  * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
  * @param   Acl                           acl          The ACL to submit
@@ -36,19 +36,19 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
   if (!(typeof path == "string") || !(acl instanceof nl.sara.webdav.Acl)) {
     throw new nl.sara.webdav.Exception('ACL parameter; path should be a string, acl should be an instance of Acl', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
+
   // Get the full URL, based on the specified path
   var url = this.getUrl(path);
-  
+
   var aclBody = document.implementation.createDocument("DAV:", "acl", null);
   var aclLength = acl.getLength();
   for (var i = 0; i < aclLength; i++) { // Loop over the ACE's in this ACL
     var ace = acl.getAce(i);
     var aceBody = aclBody.createElementNS('DAV:', 'ace');
-    
+
     // First create a principal node
     var principal = aclBody.createElementNS('DAV:', 'principal');
-    var princVal = ace.get('principal');
+    var princVal = ace.principal;
     switch (princVal) {
       case nl.sara.webdav.Ace.ALL:
         principal.appendChild(aclBody.createElementNS('DAV:', 'all'));
@@ -69,31 +69,33 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
           principal.appendChild(href);
         }else{ // And else it is a property
           var property = aclBody.createElementNS('DAV:', 'property');
-          if (princVal.get('xmlvalue') != null) {
-            property.appendChild(princVal.get('xmlvalue'));
-          }else{
-            property.appendChild(aclBody.createElementNS(princVal.get('namespace'), princVal.get('tagname')));
+          var prop = aclBody.createElementNS(princVal.namespace, princVal.tagname);
+          if (princVal.xmlvalue != null) {
+            for (var j = 0; j < princVal.xmlvalue.length; j++) {
+              prop.appendChild(princVal.xmlValue.item(j));
+            }
           }
+          property.appendChild(prop);
           principal.appendChild(property);
         }
       break;
     }
-    
+
     // If the principal should be inverted, put it in an 'invert' element
-    if (ace.get('invertprincipal')) {
+    if (ace.invertprincipal) {
       var invert = aclBody.createElementNS('DAV:', 'invert');
       invert.appendChild(principal);
       aceBody.appendChild(invert);
     }else{
       aceBody.appendChild(principal);
     }
-    
+
     // Then prepare the privileges
     // grant or deny?
     var privilegeParent = null;
-    if (ace.get('grantdeny') == nl.sara.webdav.Ace.DENY) {
+    if (ace.grantdeny == nl.sara.webdav.Ace.DENY) {
       privilegeParent = aceBody.createElementNS('DAV:', 'deny');
-    }else if (ace.get('grantdeny') == nl.sara.webdav.Ace.GRANT) {
+    }else if (ace.grantdeny == nl.sara.webdav.Ace.GRANT) {
       privilegeParent = aceBody.createElementNS('DAV:', 'grant');
     }else{
       throw new nl.sara.webdav.Exception('\'grantdeny\' property not set on one of the ACE\'s in this ACL', nl.sara.webdav.Exception.WRONG_VALUE);
@@ -105,23 +107,25 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
       for (var k = 0; k < privileges.length; k++) { // loop through each privilege in this namespace
         var privilege = privileges[k];
         var privilegeElement = aclBody.createElementNS('DAV:', 'privilege');
-        if (privilege.get('xmlvalue') != null) {
-          privilegeElement.appendChild(privilege.get('xmlvalue'));
-        }else{
-          privilegeElement.appendChild(aclBody.createElementNS(privilege.get('namespace'), privilege.get('tagname')));
+        var priv = aclBody.createElementNS(privilege.namespace, privilege.tagname);
+        if (privilege.xmlvalue != null) {
+          for (var l = 0; l < privilege.xmlvalue.length; l++) {
+            priv.appendChild(privilege.xmlValue.item(j));
+          }
         }
+        privilegeElement.appendChild(priv);
         privilegeParent.appendChild(privilegeElement);
       }
     }
     aceBody.appendChild(privilegeParent);
-    
+
     aclBody.documentElement.appendChild(aceBody);
-  }  
-    
+  }
+
   // Create the request body string
   var serializer = new XMLSerializer();
   var body = '<?xml version="1.0" encoding="utf-8" ?>' + serializer.serializeToString(aclBody);
-  
+
   // And then send the request
   var ajax = nl.sara.webdav.Client.getAjax("ACL", url, callback);
   ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
@@ -132,7 +136,7 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
 
 /**
  * Perform a WebDAV REPORT request
- * 
+ *
  * @param   string                        path         The path to perform REPORT on
  * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
  * @param   Document                      body         The (XML DOM) document to parse and send as the request body
@@ -145,10 +149,10 @@ nl.sara.webdav.Client.prototype.report = function(path, callback, body) {
   if ((typeof path != "string") || (typeof body != 'string') || !(body instanceof Document)) {
     throw new nl.sara.webdav.Exception('POST parameter; path should be a string, body should be an instance of Document', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
+
   // Get the full URL, based on the specified path
   var url = this.getUrl(path);
-  
+
   // Parse the body
   var serializer = new XMLSerializer();
   var body = '<?xml version="1.0" encoding="utf-8" ?>' + serializer.serializeToString(body);

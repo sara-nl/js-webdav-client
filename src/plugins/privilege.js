@@ -1,4 +1,3 @@
-"use strict"
 /*
  * Copyright ©2012 SARA bv, The Netherlands
  *
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+"use strict"
 
 // If nl.sara.webdav.Privilege is already defined, we have a namespace clash!
 if (nl.sara.webdav.Privilege !== undefined) {
@@ -25,83 +25,111 @@ if (nl.sara.webdav.Privilege !== undefined) {
 
 /**
  * This class describes a WebDAV ACL privilege
- * 
+ *
  * @param   Node  xmlNode  Optionally; the xmlNode describing the privilege object
  */
 nl.sara.webdav.Privilege = function(xmlNode) {
-  this._defaultprops = {
-    'namespace'           : null,
-    'tagname'             : null,
-    'value'               : null,
-    'xmlvalue'            : null
-  }
-  
+  Object.defineProperty(this, '_namespace', {
+    'value': null,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, '_tagname', {
+    'value': null,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, '_value', {
+    'value': null,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, '_xmlvalue', {
+    'value': null,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+
   // Constructor logic
   if (xmlNode instanceof Node) {
-    this.set('xmlvalue', xmlNode);
+    this.namespace = xmlNode.namespaceURI;
+    this.tagname = xmlNode.localName;
+    this.xmlvalue = xmlNode.childNodes;
   }
 }
-  
-/**
- * Sets a property
- * 
- * @param   string    prop   The property to update
- * @param   mixed     value  The value
- * @return  Privilege        The privilege itself for chaining methods
- */
-nl.sara.webdav.Privilege.prototype.set = function(prop, value) {
-  if (this._defaultprops[prop] === undefined) {
-    throw new nl.sara.webdav.Exception('Property ' + prop + ' does not exist', nl.sara.webdav.Exception.UNEXISTING_PROPERTY);
-  }
-  switch (prop) {
-    case 'xmlvalue':
-      if (!(value instanceof Node)) {
-        throw new nl.sara.webdav.Exception('xmlvalue must be an instance of Node', nl.sara.webdav.Exception.WRONG_TYPE);
-      }
 
-      // If we get a new xmlvalue, update the corresponding properties too: value, namespace and tagname
-      if (value.childNodes.length > 0) {
-        if ((value.childNodes.item(0).nodeType == 3) || (value.childNodes.item(0).nodeType == 4)) { // Make sure text and CDATA content is stored, even in older browsers
-          this.set('value', value.childNodes.item(0).nodeValue);
-        }else if (value.textContent) { // For other type of nodes we just hope this will do something useful, although you probably want to examine the xmlvalue yourself anyway.
-          this.set('value', value.textContent); // This could fail in older browsers, but that's no problem. See comments in the line above.
-        }else{
-          this.set('value', null);
+Object.defineProperty(nl.sara.webdav.Privilege.prototype, 'namespace', {
+  'set': function(value) {
+    this._namespace = value;
+  },
+  'get': function() {
+    return this._namespace;
+  }
+});
+
+Object.defineProperty(nl.sara.webdav.Privilege.prototype, 'tagname', {
+  'set': function(value) {
+    this._tagname = value;
+  },
+  'get': function() {
+    return this._tagname;
+  }
+});
+
+Object.defineProperty(nl.sara.webdav.Privilege.prototype, 'value', {
+  'set': function(value) {
+    this._xmlvalue = null;
+    this._value = value;
+  },
+  'get': function() {
+    return this._value;
+  }
+});
+
+Object.defineProperty(nl.sara.webdav.Privilege.prototype, 'xmlvalue', {
+  'set': function(value) {
+    if (value === null) {
+      this._value = null;
+      this._xmlvalue = null;
+      return;
+    }
+    if (!(value instanceof NodeList)) {
+      throw new nl.sara.webdav.Exception('xmlvalue must be an instance of NodeList', nl.sara.webdav.Exception.WRONG_TYPE);
+    }
+
+    // TODO: handle convertion of value with codecs
+    if (value.length > 0) {
+      this._value = '';
+      for (var i = 0; i < value.length; i++) {
+        var node = value.item(i);
+        if ((node.nodeType == 3) || (node.nodeType == 4)) { // Make sure text and CDATA content is stored
+          this._value += node.nodeValue;
+        }else{ // If even one of the nodes is not text or CDATA, then we don't parse a text value at all
+          this._value = null;
+          break;
         }
-      }else{
-        this.set('value', null);
       }
-      this.set('namespace', value.namespaceURI);
-      this.set('tagname', value.localName);
-      break;
-    case 'value':
-      this._defaultprops['xmlvalue'] = null;
-    break;
+    }else{
+      this._value = null;
+    }
+    this._xmlvalue = value;
+  },
+  'get': function() {
+    return this._xmlvalue;
   }
-  this._defaultprops[prop] = value;
-  return this;
-}
-
-/**
- * Gets a property
- * 
- * @param   string  prop  The property to get
- * @return  mixed         The value of the property
- */
-nl.sara.webdav.Privilege.prototype.get = function(prop) {
-  if (this._defaultprops[prop] === undefined) {
-    throw new nl.sara.webdav.Exception('Property ' + prop + ' does not exist', nl.sara.webdav.Exception.UNEXISTING_PROPERTY);
-  }
-  return this._defaultprops[prop];
-}
+});
 
 /**
  * Overloads the default toString() method so it returns the value of this privilege
- * 
+ *
  * @return  string  A string representation of this privilege
  */
 nl.sara.webdav.Privilege.prototype.toString = function() {
-  return this.get('value');
+  return this.value;
 }
 
 // End of library

@@ -1,4 +1,3 @@
-"use strict"
 /*
  * Copyright ©2012 SARA bv, The Netherlands
  *
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+"use strict"
 
 // If nl.sara.webdav.Ace is already defined, we have a namespace clash!
 if (nl.sara.webdav.Ace !== undefined) {
@@ -25,19 +25,47 @@ if (nl.sara.webdav.Ace !== undefined) {
 
 /**
  * This class describes a WebDAV property
- * 
+ *
  * @param   Node  xmlNode  Optionally; the xmlNode describing the ace object (should be compliant with RFC 3744)
  */
 nl.sara.webdav.Ace = function(xmlNode) {
-  this._namespaces = {};
-  this._defaultprops = {
-    'principal'           : null,
-    'invertprincipal'     : false,
-    'grantdeny'           : null,
-    'protected'           : false,
-    'inherited'           : false
-  }
-  
+  Object.defineProperty(this, '_namespaces', {
+    'value': {},
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, '_principal', {
+    'value': null,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, '_invertprincipal', {
+    'value': false,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, '_grantdeny', {
+    'value': null,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, '_isprotected', {
+    'value': false,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, '_inherited', {
+    'value': false,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+
   // Constructor logic
   function parsePrincipal(object, child) {
     if (!(child instanceof Node)) {
@@ -50,16 +78,16 @@ nl.sara.webdav.Ace = function(xmlNode) {
       }
       switch (principal.localName) {
         case 'href':
-          object.set('principal', principal.childNodes.item(0).nodeValue);
+          object.principal = principal.childNodes.item(0).nodeValue;
           break;
         case 'all':
-          object.set('principal', nl.sara.webdav.Ace.ALL);
+          object.principal = nl.sara.webdav.Ace.ALL;
           break;
         case 'authenticated':
-          object.set('principal', nl.sara.webdav.Ace.AUTHENTICATED);
+          object.principal = nl.sara.webdav.Ace.AUTHENTICATED;
           break;
         case 'unauthenticated':
-          object.set('principal', nl.sara.webdav.Ace.UNAUTHENTICATED);
+          object.principal = nl.sara.webdav.Ace.UNAUTHENTICATED;
           break;
         case 'property':
           for (var k = 0; k < principal.childNodes.length; k++) {
@@ -67,14 +95,13 @@ nl.sara.webdav.Ace = function(xmlNode) {
             if (element.nodeType != 1) {
               continue;
             }
-            var prop = new nl.sara.webdav.Property();
-            prop.set('xmlvalue', element);
-            object.set('principal', prop);
+            var prop = new nl.sara.webdav.Property(element);
+            object.principal = prop;
             break;
           }
           break;
         case 'self':
-          object.set('principal', nl.sara.webdav.Ace.SELF);
+          object.principal = nl.sara.webdav.Ace.SELF;
           break;
         default:
           throw new nl.sara.webdav.Exception('Principal XML Node contains illegal child node: ' + principal.localName, nl.sara.webdav.Exception.WRONG_XML);
@@ -82,7 +109,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
       }
     }
   }
-  
+
   function parsePrivileges(object, privilegeList) {
     for (var i = 0; i < privilegeList.length; i++) {
       var privilege = privilegeList.item(i);
@@ -91,7 +118,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
       }
     }
   }
-  
+
   // Parse the XML
   if (xmlNode instanceof Node) {
     if ((xmlNode.namespaceURI != 'DAV:') || (xmlNode.localName != 'ace')) {
@@ -105,11 +132,11 @@ nl.sara.webdav.Ace = function(xmlNode) {
       }
       switch (child.localName) {
         case 'principal':
-          this.set('invertprincipal', false);
+          this.invertprincipal = false;
           parsePrincipal(this, child);
           break;
         case 'invert':
-          this.set('invertprincipal', true);
+          this.invertprincipal = true;
           for (var j = 0; j < child.childNodes.length; j++) {
             var element = child.childNodes.item(j);
             if ((element.namespaceURI != 'DAV:') || (element.localName != 'principal')) {
@@ -119,15 +146,15 @@ nl.sara.webdav.Ace = function(xmlNode) {
           }
           break;
         case 'grant':
-          this.set('grantdeny', nl.sara.webdav.Ace.GRANT);
+          this.grantdeny = nl.sara.webdav.Ace.GRANT;
           parsePrivileges(this, child.childNodes);
           break;
         case 'deny':
-          this.set('grantdeny', nl.sara.webdav.Ace.DENY);
+          this.grantdeny = nl.sara.webdav.Ace.DENY;
           parsePrivileges(this, child.childNodes);
           break;
         case 'protected':
-          this.set('protected', true);
+          this.isprotected = true;
           break;
         case 'inherited':
           for (var j = 0; j < child.childNodes.length; j++) {
@@ -135,7 +162,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
             if ((element.namespaceURI != 'DAV:') || (element.localName != 'href')) {
               continue;
             }
-            this.set('inherited', child.childNodes.item(j).childNodes.item(0).nodeValue);
+            this.inherited = child.childNodes.item(j).childNodes.item(0).nodeValue;
           }
         break;
       }
@@ -152,70 +179,76 @@ nl.sara.webdav.Ace.ALL = 3;
 nl.sara.webdav.Ace.AUTHENTICATED = 4;
 nl.sara.webdav.Ace.UNAUTHENTICATED = 5;
 nl.sara.webdav.Ace.SELF = 6;
-  
-/**
- * Sets a property
- * 
- * @param   string    prop   The property to update
- * @param   mixed     value  The value
- * @return  Ace              The ace itself for chaining methods
- */
-nl.sara.webdav.Ace.prototype.set = function(prop, value) {
-  if (this._defaultprops[prop] === undefined) {
-    throw new nl.sara.webdav.Exception('Property ' + prop + ' does not exist', nl.sara.webdav.Exception.UNEXISTING_PROPERTY);
-  }
-  switch (prop) {
-    case 'principal':
-      switch (value) {
-        case nl.sara.webdav.Ace.ALL:
-        case nl.sara.webdav.Ace.AUTHENTICATED:
-        case nl.sara.webdav.Ace.UNAUTHENTICATED:
-        case nl.sara.webdav.Ace.SELF:
-          break;
-        default: // If it isn't one of the constants, it should be either a Property object or a string/URL
-          if (!(value instanceof nl.sara.webdav.Property)) {
-            value = String(value);
-          }
-        break;
-      }
-      break;
-    case 'invertprincipal':
-    case 'protected':
-      value = Boolean(value);
-      break;
-    case 'grantdeny':
-      if ((value != nl.sara.webdav.Ace.GRANT) && (value != nl.sara.webdav.Ace.DENY)) {
-        throw new nl.sara.webdav.Exception('grantdeny must be either nl.sara.webdav.Ace.GRANT or nl.sara.webdav.Ace.DENY', nl.sara.webdav.Exception.WRONG_VALUE);
-      }
-      break;
-    case 'inherited':
-      if (Boolean(value)) {
-        value = String(value);
-      }else{
-        value = false;
-      }
-    break;
-  }
-  this._defaultprops[prop] = value;
-  return this;
-}
 
-/**
- * Gets a property
- * 
- * @param   string  prop  The property to get
- * @return  mixed         The value of the property
- */
-nl.sara.webdav.Ace.prototype.get = function(prop) {
-  if (this._defaultprops[prop] === undefined) {
-    throw new nl.sara.webdav.Exception('Property ' + prop + ' does not exist', nl.sara.webdav.Exception.UNEXISTING_PROPERTY);
+Object.defineProperty(nl.sara.webdav.Ace.prototype, 'principal', {
+  'set': function(value) {
+    switch (value) {
+      case nl.sara.webdav.Ace.ALL:
+      case nl.sara.webdav.Ace.AUTHENTICATED:
+      case nl.sara.webdav.Ace.UNAUTHENTICATED:
+      case nl.sara.webdav.Ace.SELF:
+        break;
+      default: // If it isn't one of the constants, it should be either a Property object or a string/URL
+        if (!(value instanceof nl.sara.webdav.Property)) {
+          value = String(value);
+        }
+      break;
+    }
+    this._principal = value;
+  },
+  'get': function() {
+    return this._principal;
   }
-  return this._defaultprops[prop];
-}
+});
+
+Object.defineProperty(nl.sara.webdav.Ace.prototype, 'invertprincipal', {
+  'set': function(value) {
+    this._invertprincipal = Boolean(value);
+  },
+  'get': function() {
+    return this._invertprincipal;
+  }
+});
+
+Object.defineProperty(nl.sara.webdav.Ace.prototype, 'isprotected', {
+  'set': function(value) {
+    this._isprotected = Boolean(value);
+  },
+  'get': function() {
+    return this._isprotected;
+  }
+});
+
+
+Object.defineProperty(nl.sara.webdav.Ace.prototype, 'grantdeny', {
+  'set': function(value) {
+    if ((value != nl.sara.webdav.Ace.GRANT) && (value != nl.sara.webdav.Ace.DENY)) {
+      throw new nl.sara.webdav.Exception('grantdeny must be either nl.sara.webdav.Ace.GRANT or nl.sara.webdav.Ace.DENY', nl.sara.webdav.Exception.WRONG_VALUE);
+    }
+    this._grantdeny = value;
+  },
+  'get': function() {
+    return this._grantdeny;
+  }
+});
+
+
+Object.defineProperty(nl.sara.webdav.Ace.prototype, 'inherited', {
+  'set': function(value) {
+    if (Boolean(value)) {
+      this._inherited = String(value);
+    }else{
+      this._inherited = false;
+    }
+  },
+  'get': function() {
+    return this._inherited;
+  }
+});
 
 /**
  * Adds a WebDAV privilege
- * 
+ *
  * @param   Privilege  privilege  The privilege to add
  * @return  Ace                   The ace itself for chaining methods
  */
@@ -223,7 +256,7 @@ nl.sara.webdav.Ace.prototype.addPrivilege = function(privilege) {
   if (!(privilege instanceof nl.sara.webdav.Privilege)) {
     throw new nl.sara.webdav.Exception('Privilege should be instance of Privilege', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  var namespace = privilege.get('namespace');
+  var namespace = privilege.namespace;
   if (namespace) {
     if (this._namespaces[namespace] === undefined) {
       this._namespaces[namespace] = {};
@@ -231,14 +264,14 @@ nl.sara.webdav.Ace.prototype.addPrivilege = function(privilege) {
   }else{
     throw new nl.sara.webdav.Exception('Privilege should have a namespace', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
-  this._namespaces[namespace][privilege.get('tagname')] = privilege;
+
+  this._namespaces[namespace][privilege.tagname] = privilege;
   return this;
 }
 
 /**
  * Gets a WebDAV privilege
- * 
+ *
  * @param   string     namespace  The namespace of the privilege
  * @param   string     privilege  The privilege to get
  * @return  Privilege             The value of the privilege or undefined if the privilege doesn't exist
@@ -252,7 +285,7 @@ nl.sara.webdav.Ace.prototype.getPrivilege = function(namespace, privilege) {
 
 /**
  * Gets the namespace names
- * 
+ *
  * @return  String[]  The names of the different namespaces
  */
 nl.sara.webdav.Ace.prototype.getNamespaceNames = function() {
@@ -261,7 +294,7 @@ nl.sara.webdav.Ace.prototype.getNamespaceNames = function() {
 
 /**
  * Gets the privilege names of a namespace
- * 
+ *
  * @param   string    namespace  The namespace of the privilege
  * @return  String[]             The names of the different privilege of a namespace
  */

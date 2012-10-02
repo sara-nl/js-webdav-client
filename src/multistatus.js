@@ -1,4 +1,3 @@
-"use strict"
 /*
  * Copyright ©2012 SARA bv, The Netherlands
  *
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+"use strict"
 
 // If nl.sara.webdav.Multistatus is already defined, we have a namespace clash!
 if (nl.sara.webdav.Multistatus !== undefined) {
@@ -25,29 +25,37 @@ if (nl.sara.webdav.Multistatus !== undefined) {
 
 /**
  * This class describes a WebDAV property
- * 
+ *
  * @param   Node  xmlNode  Optionally; the xmlNode describing the multistatus object (should be compliant with RFC 4918)
  */
 nl.sara.webdav.Multistatus = function(xmlNode) {
-  this._defaultprops = {
-    'responsedescription' : null
-  }
-  this._responses = {};
-  
+  Object.defineProperty(this, '_responses', {
+    'value': {},
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, 'responsedescription', {
+    'value': null,
+    'enumerable': true,
+    'configurable': false,
+    'writable': true
+  });
+
   // Constructor logic
-  if (xmlNode instanceof Node) { 
-    if ((xmlNode.namespaceURI.toLowerCase() != 'dav:') || (xmlNode.localName.toLowerCase() != 'multistatus')) {
+  if (xmlNode instanceof Node) {
+    if ((xmlNode.namespaceURI != 'DAV:') || (xmlNode.localName != 'multistatus')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:multistatus', nl.sara.webdav.Exception.WRONG_XML);
     }
     var data = xmlNode.childNodes;
     for (var i = 0; i < data.length; i++) {
       var child = data.item(i);
-      if ((child.namespaceURI == null) || (child.namespaceURI.toLowerCase() != 'dav:')) { // Skip if not from the right namespace
+      if ((child.namespaceURI == null) || (child.namespaceURI != 'DAV:')) { // Skip if not from the right namespace
         continue;
       }
       switch (child.localName) {
         case 'responsedescription': // responsedescription is always CDATA, so just take the text
-          this.set('responsedescription', child.childNodes.item(0).nodeValue);
+          this.responsedescription = child.childNodes.item(0).nodeValue;
           break;
         case 'response': // response node should be parsed further
           var response = new nl.sara.webdav.Response(child);
@@ -55,18 +63,18 @@ nl.sara.webdav.Multistatus = function(xmlNode) {
           var hrefs = [];
           for (var j = 0; j < responseChilds.length; j++) {
             var responseChild = responseChilds.item(j);
-            if ((responseChild.localName == 'href') && (responseChild.namespaceURI != null) && (responseChild.namespaceURI.toLowerCase() == 'dav:')) { // For each HREF element we create a separate response object
+            if ((responseChild.localName == 'href') && (responseChild.namespaceURI != null) && (responseChild.namespaceURI == 'DAV:')) { // For each HREF element we create a separate response object
               hrefs.push(responseChild.childNodes.item(0).nodeValue);
             }
           }
           if (hrefs.length > 1) { // Multiple HREFs = start copying the response (this makes sure it is not parsed over and over again). No deep copying needed; there can't be a propstat
             for (var k = 0; k < hrefs.length; k++) {
               var copyResponse = new nl.sara.webdav.Response();
-              copyResponse.set('href', hrefs[k]);
-              copyResponse.set('status', response.get('status'));
-              copyResponse.set('error', response.get('error'));
-              copyResponse.set('responsedescription', response.get('responsedescription'));
-              copyResponse.set('location', response.get('location'));
+              copyResponse.href = hrefs[k];
+              copyResponse.status = response.status;
+              copyResponse.error = response.error;
+              copyResponse.responsedescription = response.responsedescription;
+              copyResponse.location = response.location;
               this.addResponse(copyResponse);
             }
           }else{
@@ -80,7 +88,7 @@ nl.sara.webdav.Multistatus = function(xmlNode) {
 
 /**
  * Adds a Response
- * 
+ *
  * @param   Response     response  The response
  * @return  Multistatus            The multistatus itself for chaining methods
  */
@@ -88,7 +96,7 @@ nl.sara.webdav.Multistatus.prototype.addResponse = function(response) {
   if (!(response instanceof nl.sara.webdav.Response)) {
     throw new nl.sara.webdav.Exception('Response should be instance of Response', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  var name = response.get('href');
+  var name = response.href;
   while (name.substring(name.length-1) == '/') {
     name = name.substr(0, name.length-1);
   }
@@ -99,7 +107,7 @@ nl.sara.webdav.Multistatus.prototype.addResponse = function(response) {
 
 /**
  * Gets a Response
- * 
+ *
  * @param   string    name  The name of the response to get
  * @return  Response        The value of the WebDAV property or undefined if the WebDAV property doesn't exist
  */
@@ -109,39 +117,11 @@ nl.sara.webdav.Multistatus.prototype.getResponse = function(name) {
 
 /**
  * Gets the response names
- * 
+ *
  * @return  String[]  The names of the different responses
  */
 nl.sara.webdav.Multistatus.prototype.getResponseNames = function() {
   return Object.keys(this._responses);
-}
-
-/**
- * Sets a property
- * 
- * @param   string       prop   The property to update
- * @param   mixed        value  The value
- * @return  Multistatus         The multistatus object itself for chaining methods
- */
-nl.sara.webdav.Multistatus.prototype.set = function(prop, value) {
-  if (this._defaultprops[prop] === undefined) {
-    throw new nl.sara.webdav.Exception('Property ' + prop + ' does not exist', nl.sara.webdav.Exception.UNEXISTING_PROPERTY);
-  }
-  this._defaultprops[prop] = value;
-  return this;
-}
-
-/**
- * Gets a property
- * 
- * @param   string  prop  The property to get
- * @return  mixed         The value of the property or undefined if the property doesn't exist
- */
-nl.sara.webdav.Multistatus.prototype.get = function(prop) {
-  if (this._defaultprops[prop] === undefined) {
-    throw new nl.sara.webdav.Exception('Property ' + prop + ' does not exist', nl.sara.webdav.Exception.UNEXISTING_PROPERTY);
-  }
-  return this._defaultprops[prop];
 }
 
 // End of library

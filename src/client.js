@@ -1,4 +1,3 @@
-"use strict"
 /*
  * Copyright ©2012 SARA bv, The Netherlands
  *
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+"use strict"
 
 // If nl.sara.webdav.Client is already defined, we have a namespace clash!
 if (nl.sara.webdav.Client !== undefined) {
@@ -25,14 +25,19 @@ if (nl.sara.webdav.Client !== undefined) {
 
 /**
  * This class represents a connection to a webDAV server
- * 
+ *
  * @param  string   host         The hostname or IP address of the server
  * @param  boolean  useHTTPS     If set to true, HTTPS is used. If set to false or omitted, HTTP is used
  * @param  int      port         Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS)
  */
 nl.sara.webdav.Client = function(host, useHTTPS, port) {
-  this._baseUrl = null;
-  
+  Object.defineProperty(this, '_baseUrl', {
+    'value': null,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+
   // Constructor logic
   if (host === undefined) {
     throw new nl.sara.webdav.Exception('WebDAV server not specified!', nl.sara.webdav.Exception.WRONG_TYPE);
@@ -54,7 +59,7 @@ nl.sara.webdav.Client.SILENT_OVERWRITE = 5;
 
 /**
  * Converts a path to the full url (i.e. appends the protocol and host part)
- * 
+ *
  * @param   string  path  The path on the server
  * @return  string        The full url to the path
  */
@@ -67,7 +72,7 @@ nl.sara.webdav.Client.prototype.getUrl = function(path) {
 
 /**
  * Perform a WebDAV PROPFIND request
- * 
+ *
  * @param   string                        path      The path get a PROPFIND for
  * @param   function(status,Multistatus)  callback  Querying the server is done asynchronously, this callback function is called when the results are in
  * @param   string                        depth     Value for the 'depth' header, should be either '0', '1' or the class constant INFINITY. When omitted, '0' is used. See RFC 4916.
@@ -82,10 +87,10 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
   if (!(typeof path == "string")) {
     throw new nl.sara.webdav.Exception('PROPFIND parameter; path should be a string', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
+
   // Get the full URL, based on the specified path
   var url = this.getUrl(path);
-  
+
   // Check the depth header
   if (depth === undefined) { // We default depth to 0, not to infinity as this is not supported by all servers
     depth = 0;
@@ -103,7 +108,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
       throw new nl.sara.webdav.Exception("Depth header should be '0', '1' or nl.sara.webdav.Client.INFINITY", nl.sara.webdav.Exception.WRONG_VALUE);
     break;
   }
-  
+
   // Create the request XML
   if (props === undefined) {
     props = nl.sara.webdav.Client.ALLPROP;
@@ -125,7 +130,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
           if (!(item instanceof nl.sara.webdav.Property)) {
             continue;
           }
-          includeBody.appendChild(propsBody.createElementNS(item.get('namespace'), item.get('tagname')));
+          includeBody.appendChild(propsBody.createElementNS(item.namespace, item.tagname));
         }
         if (includeBody.hasChildNodes()) { // But only really add the <include> tag if there is valid content
           propsBody.documentElement.appendChild(includeBody);
@@ -142,7 +147,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
         if (!(prop instanceof nl.sara.webdav.Property)) {
           continue;
         }
-        propertyBody.appendChild(prop.get('namespace'), prop.get('tagname'));
+        propertyBody.appendChild(prop.namespace, prop.tagname);
       }
       if (!propertyBody.hasChildNodes()) { // But if no properties are found, then the array didn't have Property objects in it
         throw new nl.sara.webdav.Exception("Propfind parameter; if props is an array, it should be an array of Properties", nl.sara.webdav.Exception.WRONG_TYPE);
@@ -152,7 +157,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
   }
   var serializer = new XMLSerializer();
   var body = '<?xml version="1.0" encoding="utf-8" ?>' + serializer.serializeToString(propsBody);
-  
+
   // And then send the request
   var ajax = nl.sara.webdav.Client.getAjax("PROPFIND", url, callback);
   ajax.setRequestHeader('Depth', depthHeader);
@@ -164,7 +169,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
 
 /**
  * Perform a WebDAV PROPPATCH request
- * 
+ *
  * @param   string                        path      The path do a PROPPATCH on
  * @param   function(status,Multistatus)  callback  Querying the server is done asynchronously, this callback function is called when the results are in
  * @param   array<Property>               setProps  The properties to set. If not set, delProps should be set.
@@ -178,10 +183,10 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
   if (!(typeof path == "string") || ((setProps !== undefined) && !(setProps instanceof Array)) || ((delProps !== undefined) && !(delProps instanceof Array))) {
     throw new nl.sara.webdav.Exception('PROPPATCH parameter; path should be a string, setProps and delProps should be arrays', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
+
   // Get the full URL, based on the specified path
   var url = this.getUrl(path);
-  
+
   // Create the request XML
   var propsBody = document.implementation.createDocument("DAV:", "propertyupdate", null);
   propsBody.documentElement.setAttribute("xmlns:D", "DAV:");
@@ -192,13 +197,15 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
       if (!(prop instanceof nl.sara.webdav.Property)) {
         continue;
       }
-      if (prop.get('xmlvalue') !== null) {
-        props.appendChild(prop.get('xmlvalue'));
+      var element = propsBody.createElementNS(prop.namespace, prop.tagname);
+      if (prop.xmlvalue !== null) {
+        for (var j = 0; j < prop.xmlvalue.length; j++) {
+          element.appendChild(prop.xmlvalue.item(j));
+        }
       }else{
-        var element = propsBody.createElementNS(prop.get('namespace'), prop.get('tagname'));
-        element.appendChild(propsBody.createCDATASection(prop.get('value')));
-        props.appendChild(element);
+        element.appendChild(propsBody.createCDATASection(prop.value));
       }
+      props.appendChild(element);
     }
     if (!props.hasChildNodes()) { // But if no properties are found, then the array didn't have Property objects in it
       throw new nl.sara.webdav.Exception("Proppatch parameter; setProps should be an array of Properties", nl.sara.webdav.Exception.WRONG_TYPE);
@@ -214,7 +221,7 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
       if (!(prop instanceof nl.sara.webdav.Property)) {
         continue;
       }
-      var element = propsBody.createElementNS(prop.get('namespace'), prop.get('tagname'));
+      var element = propsBody.createElementNS(prop.namespace, prop.tagname);
       props.appendChild(element);
     }
     if (!props.hasChildNodes()) { // But if no properties are found, then the array didn't have Property objects in it
@@ -237,7 +244,7 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
 
 /**
  * Perform a WebDAV MKCOL request
- * 
+ *
  * @param   string                        path         The path to perform MKCOL on
  * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
  * @param   string                        body         Optional; a body to include in the MKCOL request.
@@ -251,7 +258,7 @@ nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contentty
   if ((typeof path != "string") || ((body !== undefined) && (typeof body != 'string')) || ((contenttype !== undefined) && (typeof contenttype != 'string'))) {
     throw new nl.sara.webdav.Exception('MKCOL parameter; path and body should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
+
   // Get the full URL, based on the specified path
   var url = this.getUrl(path);
 
@@ -277,7 +284,7 @@ nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contentty
  * Because 'delete' is an operator in JavaScript, I had to name this method
  * 'remove'. However, performs a regular DELETE request as described in
  * RFC 4918
- * 
+ *
  * @param   string                        path         The path to perform DELETE on
  * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
  * @return  Client                                     The client itself for chaining methods
@@ -289,7 +296,7 @@ nl.sara.webdav.Client.prototype.remove = function(path, callback) {
   if (typeof path != "string"){
     throw new nl.sara.webdav.Exception('DELETE parameter; path should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
+
   // Get the full URL, based on the specified path
   var url = this.getUrl(path);
 
@@ -302,7 +309,7 @@ nl.sara.webdav.Client.prototype.remove = function(path, callback) {
 
 /**
  * Perform a WebDAV GET request
- * 
+ *
  * @param   string                    path         The path to GET
  * @param   function(status,content)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
  * @return  Client                                 The client itself for chaining methods
@@ -314,7 +321,7 @@ nl.sara.webdav.Client.prototype.get = function(path, callback) {
   if (typeof path != "string"){
     throw new nl.sara.webdav.Exception('GET parameter; path should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
+
   // Get the full URL, based on the specified path
   var url = this.getUrl(path);
 
@@ -342,7 +349,7 @@ nl.sara.webdav.Client.prototype.head = function(path, callback) {
   if (typeof path != "string"){
     throw new nl.sara.webdav.Exception('HEAD parameter; path should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
+
   // Get the full URL, based on the specified path
   var url = this.getUrl(path);
 
@@ -358,7 +365,7 @@ nl.sara.webdav.Client.prototype.head = function(path, callback) {
 
 /**
  * Perform a WebDAV PUT request
- * 
+ *
  * @param   string                        path         The path to perform PUT on
  * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
  * @param   string                        body         The content to include in the PUT request.
@@ -372,7 +379,7 @@ nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype
   if ((typeof path != "string") || (typeof body != 'string') || ((contenttype !== undefined) && (typeof contenttype != 'string'))) {
     throw new nl.sara.webdav.Exception('PUT parameter; path, body and contenttype should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
+
   // Get the full URL, based on the specified path
   var url = this.getUrl(path);
 
@@ -389,7 +396,7 @@ nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype
 
 /**
  * Perform a WebDAV POST request
- * 
+ *
  * @param   string                        path         The path to perform POST on
  * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
  * @param   string                        body         Optional; a body to include in the POST request.
@@ -403,7 +410,7 @@ nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttyp
   if ((typeof path != "string") || ((body !== undefined) && (typeof body != 'string')) || ((contenttype !== undefined) && (typeof contenttype != 'string'))) {
     throw new nl.sara.webdav.Exception('POST parameter; path, body and contenttype should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
+
   // Get the full URL, based on the specified path
   var url = this.getUrl(path);
 
@@ -426,7 +433,7 @@ nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttyp
 
 /**
  * Perform a WebDAV COPY request
- * 
+ *
  * @param   string                        path           The path to perform COPY on
  * @param   function(status,Multistatus)  callback       Querying the server is done asynchronously, this callback function is called when the results are in
  * @param   string                        destination    The destination to copy to. Should be either a full URL or a path from the root on this server (i.e. it should start with a /)
@@ -441,7 +448,7 @@ nl.sara.webdav.Client.prototype.copy = function(path, callback, destination, ove
   if ((typeof path != "string") || (typeof destination != "string")){
     throw new nl.sara.webdav.Exception('COPY parameter; path and destination should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
+
   // Get the full URL, based on the specified path
   var url = this.getUrl(path);
 
@@ -469,7 +476,7 @@ nl.sara.webdav.Client.prototype.copy = function(path, callback, destination, ove
 
 /**
  * Perform a WebDAV MOVE request
- * 
+ *
  * @param   string                        path           The path to perform MOVE on
  * @param   function(status,Multistatus)  callback       Querying the server is done asynchronously, this callback function is called when the results are in
  * @param   string                        destination    The destination to move to. Should be either a full URL or a path from the root on this server (i.e. it should start with a /)
@@ -483,7 +490,7 @@ nl.sara.webdav.Client.prototype.move = function(path, callback, destination, ove
   if ((typeof path != "string") || (typeof destination != "string")){
     throw new nl.sara.webdav.Exception('MOVE parameter; path and destination should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
-  
+
   // Get the full URL, based on the specified path
   var url = this.getUrl(path);
 
@@ -507,7 +514,7 @@ nl.sara.webdav.Client.prototype.move = function(path, callback, destination, ove
 
 /**
  * Perform a WebDAV LOCK request
- * 
+ *
  * @param   string                        path         The path to perform LOCK on
  * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
  * @return  Client                                     The client itself for chaining methods
@@ -519,7 +526,7 @@ nl.sara.webdav.Client.prototype.lock = function(path, callback) {
 
 /**
  * Perform a WebDAV UNLOCK request
- * 
+ *
  * @param   string                        path         The path to perform UNLOCK on
  * @param   function(status,Multistatus)  callback     Querying the server is done asynchronously, this callback function is called when the results are in
  * @return  Client                                     The client itself for chaining methods
@@ -531,7 +538,7 @@ nl.sara.webdav.Client.prototype.unlock = function(path, callback) {
 
 /**
  * Prepares a XMLHttpRequest object to be used for an AJAX request
- * 
+ *
  * @static
  * @param    string                        method    The HTTP/webDAV method to use (e.g. GET, POST, PROPFIND)
  * @param    string                        url       The url to connect to
@@ -547,7 +554,7 @@ nl.sara.webdav.Client.getAjax = function(method, url, callback) {
 
 /**
  * AJAX request handler. Parses Multistatus (if available) and call a user specified callback function
- * 
+ *
  * @static
  * @param    XMLHttpRequest                ajax      The XMLHttpRequest object which performed the request
  * @param    function(status,Multistatus)  callback  Querying the server is done asynchronously, this callback function is called when the results are in

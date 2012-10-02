@@ -1,4 +1,3 @@
-"use strict"
 /*
  * Copyright ©2012 SARA bv, The Netherlands
  *
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
+"use strict"
 
 // If nl.sara.webdav.Exception is already defined, we have a namespace clash!
 if (nl.sara.webdav.Exception !== undefined) {
@@ -25,20 +25,30 @@ if (nl.sara.webdav.Exception !== undefined) {
 
 /**
  * This class describes an exception
- * 
+ *
  * @param  string  message  A human readable message
  * @param  int     code     The error code. It is best to use the class constants to set this.
  */
 nl.sara.webdav.Exception = function(message, code) {
-  this._message = null;
-  this._code = null;
-  
+  Object.defineProperty(this, 'message', {
+    'value': null,
+    'enumerable': true,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, 'code', {
+    'value': null,
+    'enumerable': true,
+    'configurable': false,
+    'writable': true
+  });
+
   // Constructor logic
   if (message !== undefined) {
-    this.setMessage(message);
+    this.message = message;
   }
   if (code !== undefined) {
-    this.setCode(code);
+    this.code = code;
   }
 }
 
@@ -55,55 +65,12 @@ nl.sara.webdav.Exception.AJAX_ERROR = 7;
 nl.sara.webdav.Exception.NOT_IMPLEMENTED = 8;
 
 /**
- * Sets the message
- * 
- * @param   string  message  The message
- * @return  Exception        self
- */
-nl.sara.webdav.Exception.prototype.setMessage = function(message) {
-  this._message = message;
-  return this;
-}
-
-/**
- * Gets the message
- * 
- * @return  mixed  The message
- */
-nl.sara.webdav.Exception.prototype.getMessage = function() {
-  return this._message;
-}
-
-/**
- * Sets the code
- * 
- * @param   int        code  The code
- * @return  Exception        self
- */
-nl.sara.webdav.Exception.prototype.setCode = function(code) {
-  if (isNaN(code)) {
-    throw new nl.sara.webdav.Exception('nl.sara.webdav.Exception.setCode(code) expects an integer', nl.sara.webdav.Exception.WRONG_TYPE);
-  }
-  this._code = parseInt(code);
-  return this;
-}
-
-/**
- * Gets the code
- * 
- * @return  mixed  The code
- */
-nl.sara.webdav.Exception.prototype.getCode = function() {
-  return this._code;
-}
-    
-/**
  * Overloads the default toString() method so it returns the message of this exception
- * 
+ *
  * @return  string  A string representation of this property
  */
 nl.sara.webdav.Exception.prototype.toString = function() {
-  return this.getMessage();
+  return this.message;
 }
 
 // End of library
