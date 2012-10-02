@@ -27,14 +27,21 @@ if (nl.sara.webdav.Response !== undefined) {
  * @class a WebDAV response
  *
  * @param  {Node}  xmlNode  Optionally; the xmlNode describing the response object (should be compliant with RFC 4918)
+ * @property  {String}  href                 The path of the resource
+ * @property  {String}  status               The (HTTP) status code
+ * @property  {String}  error                The error text
+ * @property  {String}  responsedescription  The response description
+ * @property  {String}  location             In case of a 3XX response, the value that would normally be in the 'Location' header
  */
 nl.sara.webdav.Response = function(xmlNode) {
+  // First define private attributes
   Object.defineProperty(this, '_namespaces', {
     'value': {},
     'enumerable': false,
     'configurable': false,
     'writable': true
   });
+  // Second define public attributes
   Object.defineProperty(this, 'href', {
     'value': null,
     'enumerable': true,
@@ -132,6 +139,7 @@ nl.sara.webdav.Response = function(xmlNode) {
   }
 }
 
+//########################## DEFINE PUBLIC METHODS #############################
 /**
  * Adds a WebDAV property
  *

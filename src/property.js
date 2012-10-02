@@ -26,18 +26,19 @@ if (nl.sara.webdav.Property !== undefined) {
 /**
  * @class a WebDAV property
  *
- * @param  {Node}      xmlElement  Optionally; the xmlNode describing the propstat object (should be compliant with RFC 4918)
- * @param  {Number}    status
- * @param  {String}    responsedescription
- * @param  {String[]}  errors
- * @property  {Element}   xmlElement
- * @property  {mixed}     value
- * @property  {Number}    status
- * @property  {String}    responsedescription
- * @property  {String[]}  errors
+ * @param  {Node}      xmlNode              Optionally; The xmlNode describing the propstat object (should be compliant with RFC 4918)
+ * @param  {Number}    status               Optionally; The (HTTP) status code
+ * @param  {String}    responsedescription  Optionally; The response description
+ * @param  {String[]}  errors               Optionally; An array of errors
+ * @property  {String}    namespace            The namespace
+ * @property  {String}    tagname              The tag name
+ * @property  {NodeList}  xmlvalue             A NodeList with the value of this property
+ * @property  {String}    value                A textual representation of xmlvalue
+ * @property  {Number}    status               The (HTTP) status code
+ * @property  {String}    responsedescription  The response description
  */
 nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors) {
-  // Define the hidden attributes which are used by the public attributes set later on
+  // First define private attributes
   Object.defineProperty(this, '_namespace', {
     'value': null,
     'enumerable': false,
@@ -63,12 +64,6 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
     'writable': true
   });
   Object.defineProperty(this, '_status', {
-    'value': null,
-    'enumerable': false,
-    'configurable': false,
-    'writable': true
-  });
-  Object.defineProperty(this, '_error', {
     'value': null,
     'enumerable': false,
     'configurable': false,
@@ -106,6 +101,7 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
   }
 }
 
+//######################### DEFINE PUBLIC ATTRIBUTES ###########################
 Object.defineProperty(nl.sara.webdav.Property.prototype, 'namespace', {
   'set': function(value) {
     this._namespace = value;
@@ -180,15 +176,6 @@ Object.defineProperty(nl.sara.webdav.Property.prototype, 'status', {
   }
 });
 
-Object.defineProperty(nl.sara.webdav.Property.prototype, 'error', {
-  'set': function(value) {
-    this._error = value;
-  },
-  'get': function() {
-    return this._error;
-  }
-});
-
 Object.defineProperty(nl.sara.webdav.Property.prototype, 'responsedescription', {
   'set': function(value) {
     this._responsedescription = value;
@@ -198,6 +185,7 @@ Object.defineProperty(nl.sara.webdav.Property.prototype, 'responsedescription', 
   }
 });
 
+//########################## DEFINE PUBLIC METHODS #############################
 /**
 * Adds an error to this property
 *

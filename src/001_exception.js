@@ -27,8 +27,11 @@ if (nl.sara.webdav.Exception !== undefined) {
  * @class An exception
  * @param  {String}  message  Optionally; A human readable message
  * @param  {Number}  code     Optionally; The error code. It is best to use the class constants to set this.
+ * @property  {String}  message  The exception message
+ * @property  {Number}  code     The exception code
  */
 nl.sara.webdav.Exception = function(message, code) {
+  // First define public attributes
   Object.defineProperty(this, 'message', {
     'value': null,
     'enumerable': true,
@@ -64,6 +67,7 @@ nl.sara.webdav.Exception.AJAX_ERROR = 7;
 nl.sara.webdav.Exception.NOT_IMPLEMENTED = 8;
 /**#@-*/
 
+//########################## DEFINE PUBLIC METHODS #############################
 /**
  * Overloads the default toString() method so it returns the message of this exception
  *

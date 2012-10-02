@@ -26,9 +26,15 @@ if (nl.sara.webdav.Ace !== undefined) {
 /**
  * @class WebDAV property
  *
- * @param   {Node}  xmlNode  Optionally; the xmlNode describing the ace object (should be compliant with RFC 3744)
+ * @param  {Node}  xmlNode  Optionally; the xmlNode describing the ace object (should be compliant with RFC 3744)
+ * @property  {mixed}    principal        The principal. Is one of the class constants ALL, AUTHENTICATED, UNAUTHENTICATED or SELF or a String with the path to the principal or a property. See RFC 3744 for more information on this.
+ * @property  {Boolean}  invertprincipal  Whether to invert the principal; true means 'all principals except the one specified'. Default is false.
+ * @property  {Boolean}  isprotected      Whether this ACE is protected. Default is false.
+ * @property  {Number}   grantdeny        Grant or deny ACE? Is one of the class constants GRANT or DENY.
+ * @property  {mixed}    inherited        False if the ACE is not inherited, else a String with the path to the parent collection from which this ACE is inherited.
  */
 nl.sara.webdav.Ace = function(xmlNode) {
+  // First define private attributes
   Object.defineProperty(this, '_namespaces', {
     'value': {},
     'enumerable': false,
@@ -170,8 +176,8 @@ nl.sara.webdav.Ace = function(xmlNode) {
   }
 }
 
-/**
- * Class constants
+/**#@+
+ * Class constant
  */
 nl.sara.webdav.Ace.GRANT = 1;
 nl.sara.webdav.Ace.DENY = 2;
@@ -179,7 +185,9 @@ nl.sara.webdav.Ace.ALL = 3;
 nl.sara.webdav.Ace.AUTHENTICATED = 4;
 nl.sara.webdav.Ace.UNAUTHENTICATED = 5;
 nl.sara.webdav.Ace.SELF = 6;
+/**#@-*/
 
+//######################### DEFINE PUBLIC ATTRIBUTES ###########################
 Object.defineProperty(nl.sara.webdav.Ace.prototype, 'principal', {
   'set': function(value) {
     switch (value) {
@@ -244,6 +252,7 @@ Object.defineProperty(nl.sara.webdav.Ace.prototype, 'inherited', {
   }
 });
 
+//########################## DEFINE PUBLIC METHODS #############################
 /**
  * Adds a WebDAV privilege
  *

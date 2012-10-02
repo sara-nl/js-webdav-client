@@ -31,6 +31,7 @@ if (nl.sara.webdav.Client !== undefined) {
  * @param  {Number}   port         Optionally; Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS)
  */
 nl.sara.webdav.Client = function(host, useHTTPS, port) {
+  // First define private attributes
   Object.defineProperty(this, '_baseUrl', {
     'value': null,
     'enumerable': false,
@@ -58,6 +59,7 @@ nl.sara.webdav.Client.TRUNCATE_ON_OVERWRITE = 4;
 nl.sara.webdav.Client.SILENT_OVERWRITE = 5;
 /**#@-*/
 
+//########################## DEFINE PUBLIC METHODS #############################
 /**
  * Converts a path to the full url (i.e. appends the protocol and host part)
  *

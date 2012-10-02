@@ -27,14 +27,17 @@ if (nl.sara.webdav.Multistatus !== undefined) {
  * @class WebDAV Multistatus response body
  *
  * @param  {Node}  xmlNode  Optionally; the xmlNode describing the multistatus object (should be compliant with RFC 4918)
+ * @property  {String}  responsedescription  The response description
  */
 nl.sara.webdav.Multistatus = function(xmlNode) {
+  // First define private attributes
   Object.defineProperty(this, '_responses', {
     'value': {},
     'enumerable': false,
     'configurable': false,
     'writable': true
   });
+  // Second define public attributes
   Object.defineProperty(this, 'responsedescription', {
     'value': null,
     'enumerable': true,
@@ -86,6 +89,7 @@ nl.sara.webdav.Multistatus = function(xmlNode) {
   }
 }
 
+//########################## DEFINE PUBLIC METHODS #############################
 /**
  * Adds a Response
  *

@@ -26,9 +26,14 @@ if (nl.sara.webdav.Privilege !== undefined) {
 /**
  * @class WebDAV ACL privilege
  *
- * @param   {Node}  xmlNode  Optionally; the xmlNode describing the privilege object
+ * @param  {Node}  xmlNode  Optionally; the xmlNode describing the privilege object
+ * @property  {String}    namespace  The namespace
+ * @property  {String}    tagname    The tag name
+ * @property  {NodeList}  xmlvalue   A NodeList with the value of this privilege
+ * @property  {String}    value      A textual representation of xmlvalue
  */
 nl.sara.webdav.Privilege = function(xmlNode) {
+  // First define private attributes
   Object.defineProperty(this, '_namespace', {
     'value': null,
     'enumerable': false,
@@ -62,6 +67,7 @@ nl.sara.webdav.Privilege = function(xmlNode) {
   }
 }
 
+//######################### DEFINE PUBLIC ATTRIBUTES ###########################
 Object.defineProperty(nl.sara.webdav.Privilege.prototype, 'namespace', {
   'set': function(value) {
     this._namespace = value;
@@ -123,6 +129,7 @@ Object.defineProperty(nl.sara.webdav.Privilege.prototype, 'xmlvalue', {
   }
 });
 
+//########################## DEFINE PUBLIC METHODS #############################
 /**
  * Overloads the default toString() method so it returns the value of this privilege
  *

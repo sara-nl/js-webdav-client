@@ -26,9 +26,10 @@ if (nl.sara.webdav.Acl !== undefined) {
 /**
  * @class Access Control List
  *
- * @param   {Node}  xmlNode  Optionally; the xmlNode describing the acl object (should be compliant with RFC 3744)
+ * @param  {Node}  xmlNode  Optionally; the xmlNode describing the acl object (should be compliant with RFC 3744)
  */
 nl.sara.webdav.Acl = function(xmlNode) {
+  // First define private attributes
   Object.defineProperty(this, '_aces', {
     'value': [],
     'enumerable': false,
@@ -52,6 +53,7 @@ nl.sara.webdav.Acl = function(xmlNode) {
   }
 }
 
+//########################## DEFINE PUBLIC METHODS #############################
 /**
  * Adds an ACE
  *
