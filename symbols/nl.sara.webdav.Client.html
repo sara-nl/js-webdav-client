@@ -233,7 +233,7 @@ ul.inheritsList
 				Connection to a WebDAV server
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_pieterb_projects_beehub_js-webdav-client_src_client.js.html">client.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_pieterb_Documents_beehub_js-webdav-client_src_client.js.html">client.js</a>.
 				
 			</p>
 
@@ -476,13 +476,13 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 								<span class="light fixedFont">{Boolean}</span>  <b>useHTTPS</b>
 								
 							</dt>
-								<dd>If set to true, HTTPS is used. If set to false or omitted, HTTP is used</dd>
+								<dd>Optionally; If set to true, HTTPS is used. If set to false or omitted, HTTP is used</dd>
 						
 							<dt>
 								<span class="light fixedFont">{Number}</span>  <b>port</b>
 								
 							</dt>
-								<dd>Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS)</dd>
+								<dd>Optionally; Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS)</dd>
 						
 						</dl>
 					
@@ -516,7 +516,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 						Perform a WebDAV ACL request
 						
 							<br />
-							<i>Defined in: </i> <a href="../symbols/src/_Users_pieterb_projects_beehub_js-webdav-client_src_plugins_client_acl.js.html">client_acl.js</a>.
+							<i>Defined in: </i> <a href="../symbols/src/_Users_pieterb_Documents_beehub_js-webdav-client_src_plugins_client_acl.js.html">client_acl.js</a>.
 						
 						
 					</div>
@@ -566,7 +566,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 					<a name=".ajaxHandler"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
+					<span class="light">{void}</span>
 					<span class="light">nl.sara.webdav.Client.</span><b>ajaxHandler</b>(ajax, callback)
 					
 					</div>
@@ -599,6 +599,13 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{void}</span> </dd>
+							
+							</dl>
 						
 						
 						
@@ -646,13 +653,13 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 									<span class="light fixedFont">{Boolean}</span> <b>overwriteMode</b>
 									
 								</dt>
-								<dd>Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.</dd>
+								<dd>Optionally; Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{String}</span> <b>depth</b>
 									
 								</dt>
-								<dd>Should be '0' or 'infinity'. This is used in case of a collection; 0 means only copy the collection itself, infinity means copy also everything contained in the collection</dd>
+								<dd>Optionally; Should be '0' or 'infinity'. This is used in case of a collection; 0 means only copy the collection itself, infinity means copy also everything contained in the collection</dd>
 							
 							</dl>
 						
@@ -952,13 +959,13 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 									<span class="light fixedFont">{String}</span> <b>body</b>
 									
 								</dt>
-								<dd>Optional; a body to include in the MKCOL request.</dd>
+								<dd>Optionally; a body to include in the MKCOL request.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{String}</span> <b>contenttype</b>
 									
 								</dt>
-								<dd>Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/xml; charset="utf-8"' is assumed</dd>
+								<dd>Optionally; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/xml; charset="utf-8"' is assumed</dd>
 							
 							</dl>
 						
@@ -1019,7 +1026,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 									<span class="light fixedFont">{Number}</span> <b>overwriteMode</b>
 									
 								</dt>
-								<dd>Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE, TRUNCATE_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.</dd>
+								<dd>Optionally; Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE, TRUNCATE_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.</dd>
 							
 							</dl>
 						
@@ -1074,13 +1081,13 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 									<span class="light fixedFont">{String}</span> <b>body</b>
 									
 								</dt>
-								<dd>Optional; a body to include in the POST request.</dd>
+								<dd>Optionally; a body to include in the POST request.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{String}</span> <b>contenttype</b>
 									
 								</dt>
-								<dd>Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/x-www-form-urlencoded' is assumed</dd>
+								<dd>Optionally; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/x-www-form-urlencoded' is assumed</dd>
 							
 							</dl>
 						
@@ -1135,19 +1142,19 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 									<span class="light fixedFont">{String}</span> <b>depth</b>
 									
 								</dt>
-								<dd>Value for the 'depth' header, should be either '0', '1' or the class constant INFINITY. When omitted, '0' is used. See RFC 4916.</dd>
+								<dd>Optionally; Value for the 'depth' header, should be either '0', '1' or the class constant INFINITY. When omitted, '0' is used. See RFC 4916.</dd>
 							
 								<dt>
-									<b>props</b>
+									<span class="light fixedFont">{mixed}</span> <b>props</b>
 									
 								</dt>
-								<dd>The properties to fetch. Should be either one of the class constants PROPNAME or ALLPROP or an array with Property objects. When omitted, ALLPROP is assumed. See RFC 4916.</dd>
+								<dd>Optionally; The properties to fetch. Should be either one of the class constants PROPNAME or ALLPROP or an array with Property objects. When omitted, ALLPROP is assumed. See RFC 4916.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Property.html">nl.sara.webdav.Property</a>[]}</span> <b>include</b>
 									
 								</dt>
-								<dd>An array with Property objects used for the <include> element. This is only used for ALLPROP requests. When omitted, no <include> element is send. See RFC 4916.</dd>
+								<dd>Optionally; An array with Property objects used for the <include> element. This is only used for ALLPROP requests. When omitted, no <include> element is send. See RFC 4916.</dd>
 							
 							</dl>
 						
@@ -1202,13 +1209,13 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 									<span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Property.html">nl.sara.webdav.Property</a>[]}</span> <b>setProps</b>
 									
 								</dt>
-								<dd>The properties to set. If not set, delProps should be set.</dd>
+								<dd>Optionally; The properties to set. If not set, delProps should be set. Can be omitted with 'undefined'.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Property.html">nl.sara.webdav.Property</a>[]}</span> <b>delProps</b>
 									
 								</dt>
-								<dd>The properties to delete. If not set, setProps should be set.</dd>
+								<dd>Optionally; The properties to delete. If not set, setProps should be set.</dd>
 							
 							</dl>
 						
@@ -1269,7 +1276,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 									<span class="light fixedFont">{String}</span> <b>contenttype</b>
 									
 								</dt>
-								<dd>Optional; the content type of the body (i.e. value for the Content-Type header).</dd>
+								<dd>Optionally; the content type of the body (i.e. value for the Content-Type header).</dd>
 							
 							</dl>
 						
@@ -1353,7 +1360,7 @@ RFC 4918
 						Perform a WebDAV REPORT request
 						
 							<br />
-							<i>Defined in: </i> <a href="../symbols/src/_Users_pieterb_projects_beehub_js-webdav-client_src_plugins_client_acl.js.html">client_acl.js</a>.
+							<i>Defined in: </i> <a href="../symbols/src/_Users_pieterb_Documents_beehub_js-webdav-client_src_plugins_client_acl.js.html">client_acl.js</a>.
 						
 						
 					</div>
@@ -1461,7 +1468,7 @@ RFC 4918
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Sep 26 2012 23:05:12 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Oct 02 2012 11:53:28 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

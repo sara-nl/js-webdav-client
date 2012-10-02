@@ -233,7 +233,7 @@ ul.inheritsList
 				WebDAV property
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_pieterb_projects_beehub_js-webdav-client_src_plugins_ace.js.html">ace.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_pieterb_Documents_beehub_js-webdav-client_src_plugins_ace.js.html">ace.js</a>.
 				
 			</p>
 
@@ -276,12 +276,52 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								nl.sara.webdav.Ace.<b><a href="../symbols/nl.sara.webdav.Ace.html#.GRANT">GRANT</a></b>
+								<b><a href="../symbols/nl.sara.webdav.Ace.html#grantdeny">grantdeny</a></b>
 								</div>
-								<div class="description">Class constants</div>
+								<div class="description">Grant or deny ACE? Is one of the class constants GRANT or DENY.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/nl.sara.webdav.Ace.html#inherited">inherited</a></b>
+								</div>
+								<div class="description">False if the ACE is not inherited, else a String with the path to the parent collection from which this ACE is inherited.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/nl.sara.webdav.Ace.html#invertprincipal">invertprincipal</a></b>
+								</div>
+								<div class="description">Whether to invert the principal; true means 'all principals except the one specified'.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/nl.sara.webdav.Ace.html#isprotected">isprotected</a></b>
+								</div>
+								<div class="description">Whether this ACE is protected.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/nl.sara.webdav.Ace.html#principal">principal</a></b>
+								</div>
+								<div class="description">The principal.</div>
 							</td>
 						</tr>
 					
@@ -312,15 +352,6 @@ ul.inheritsList
 								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Ace.html#addPrivilege">addPrivilege</a></b>(privilege)
 								</div>
 								<div class="description">Adds a WebDAV privilege</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Ace.html#get">get</a></b>(prop)
-								</div>
-								<div class="description">Gets a property</div>
 							</td>
 						</tr>
 					
@@ -366,15 +397,6 @@ ul.inheritsList
 								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Ace.html#-parsePrivileges">parsePrivileges</a></b>(object, privilegeList)
 								</div>
 								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Ace.html#set">set</a></b>(prop, value)
-								</div>
-								<div class="description">Sets a property</div>
 							</td>
 						</tr>
 					
@@ -434,15 +456,103 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name=".GRANT"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="grantdeny"> </a>
+					<div class="fixedFont">
 					
-					
-					<span class="light">nl.sara.webdav.Ace.</span><b>GRANT</b>
+					<span class="light">{Number}</span>
+					<b>grantdeny</b>
 					
 					</div>
 					<div class="description">
-						Class constants
+						Grant or deny ACE? Is one of the class constants GRANT or DENY.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="inherited"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{mixed}</span>
+					<b>inherited</b>
+					
+					</div>
+					<div class="description">
+						False if the ACE is not inherited, else a String with the path to the parent collection from which this ACE is inherited.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="invertprincipal"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Boolean}</span>
+					<b>invertprincipal</b>
+					
+					</div>
+					<div class="description">
+						Whether to invert the principal; true means 'all principals except the one specified'. Default is false.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="isprotected"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Boolean}</span>
+					<b>isprotected</b>
+					
+					</div>
+					<div class="description">
+						Whether this ACE is protected. Default is false.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="principal"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{mixed}</span>
+					<b>principal</b>
+					
+					</div>
+					<div class="description">
+						The principal. Is one of the class constants ALL, AUTHENTICATED, UNAUTHENTICATED or SELF or a String with the path to the principal or a property. See RFC 3744 for more information on this.
 						
 						
 					</div>
@@ -499,49 +609,6 @@ ul.inheritsList
 							<dt class="heading">Returns:</dt>
 							
 								<dd><span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a>}</span> The ace itself for chaining methods</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="get"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>get</b>(prop)
-					
-					</div>
-					<div class="description">
-						Gets a property
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>prop</b>
-									
-								</dt>
-								<dd>The property to get</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd>The value of the property</dd>
 							
 							</dl>
 						
@@ -756,55 +823,6 @@ ul.inheritsList
 						
 						
 
-					<hr />
-				
-					<a name="set"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a>}</span>
-					<b>set</b>(prop, value)
-					
-					</div>
-					<div class="description">
-						Sets a property
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>prop</b>
-									
-								</dt>
-								<dd>The property to update</dd>
-							
-								<dt>
-									<b>value</b>
-									
-								</dt>
-								<dd>The value</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a>}</span> The ace itself for chaining methods</dd>
-							
-							</dl>
-						
-						
-						
-
 					
 				
 			
@@ -819,7 +837,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Sep 26 2012 23:05:12 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Oct 02 2012 11:53:28 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>
