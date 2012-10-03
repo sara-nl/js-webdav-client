@@ -1,10 +1,10 @@
-SOURCES = src/*.js src/plugins/*.js
+SOURCES = src/*.js src/plugins/*/*.js
 JSRUN = ../jsdoc-toolkit
 
 all: dist.js docs
 
 dist.js: $(SOURCES)
-	-rm $@
+	-rm -f $@
 	for SOURCEFILE in $(SOURCES); do \
 		cat $${SOURCEFILE} >> $@ && \
 		echo >> $@; \
@@ -20,6 +20,6 @@ docs: $(SOURCES)
 		"$${BASEDIR}"/src/ "$${BASEDIR}"/src/plugins/
 
 clean:
-	-rm dist.js
+	-rm -f dist.js
 	-rm -rf docs/*
-	-rm jsdoc.log
+	-rm -f jsdoc.log

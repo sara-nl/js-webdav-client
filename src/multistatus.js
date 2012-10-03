@@ -101,10 +101,6 @@ nl.sara.webdav.Multistatus.prototype.addResponse = function(response) {
     throw new nl.sara.webdav.Exception('Response should be instance of Response', nl.sara.webdav.Exception.WRONG_TYPE);
   }
   var name = response.href;
-  while (name.substring(name.length-1) == '/') {
-    name = name.substr(0, name.length-1);
-  }
-  name = name.substr(name.lastIndexOf('/')+1);
   this._responses[name] = response;
   return this;
 }

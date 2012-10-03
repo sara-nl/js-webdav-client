@@ -16,28 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
-"use strict";
+"use strict"
 
-// If nl.sara.webdav.Property is already defined, we have a namespace clash!
-if (nl.sara.webdav.Property !== undefined) {
-  throw new nl.sara.webdav.Exception('Namespace name nl.sara.webdav.Property already taken, could not load JavaScript library for WebDAV connectivity.', nl.sara.webdav.Exception.NAMESPACE_TAKEN);
+// If nl.sara.webdav.Privilege is already defined, we have a namespace clash!
+if (nl.sara.webdav.Privilege !== undefined) {
+  throw new nl.sara.webdav.Exception('Namespace nl.sara.webdav.Privilege already taken, could not load JavaScript library for WebDAV connectivity.', nl.sara.webdav.Exception.NAMESPACE_TAKEN);
 }
 
 /**
- * @class a WebDAV property
+ * @class WebDAV ACL privilege
  *
- * @param  {Node}      [xmlNode]              Optional; The xmlNode describing the propstat object (should be compliant with RFC 4918)
- * @param  {Number}    [status]               Optional; The (HTTP) status code
- * @param  {String}    [responsedescription]  Optional; The response description
- * @param  {String[]}  [errors]               Optional; An array of errors
- * @property  {String}    namespace            The namespace
- * @property  {String}    tagname              The tag name
- * @property  {NodeList}  xmlvalue             A NodeList with the value of this property
- * @property  {String}    value                A textual representation of xmlvalue
- * @property  {Number}    status               The (HTTP) status code
- * @property  {String}    responsedescription  The response description
+ * @param  {Node}  [xmlNode]  Optional; the xmlNode describing the privilege object
+ * @property  {String}    namespace  The namespace
+ * @property  {String}    tagname    The tag name
+ * @property  {NodeList}  xmlvalue   A NodeList with the value of this privilege
+ * @property  {String}    value      A textual representation of xmlvalue
  */
-nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors) {
+nl.sara.webdav.Privilege = function(xmlNode) {
   // First define private attributes
   Object.defineProperty(this, '_value', {
     'value': null,
@@ -47,12 +42,6 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
   });
   Object.defineProperty(this, '_xmlvalue', {
     'value': null,
-    'enumerable': false,
-    'configurable': false,
-    'writable': true
-  });
-  Object.defineProperty(this, '_errors', {
-    'value': [],
     'enumerable': false,
     'configurable': false,
     'writable': true
@@ -70,18 +59,6 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
     'configurable': false,
     'writable': true
   });
-  Object.defineProperty(this, 'status', {
-    'value': null,
-    'enumerable': true,
-    'configurable': false,
-    'writable': true
-  });
-  Object.defineProperty(this, 'responsedescription', {
-    'value': null,
-    'enumerable': true,
-    'configurable': false,
-    'writable': true
-  });
 
   // Constructor logic
   if (xmlNode instanceof Node) {
@@ -89,30 +66,19 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
     this.tagname = xmlNode.localName;
     this.xmlvalue = xmlNode.childNodes;
   }
-  if (status !== undefined) {
-    this.status = status;
-  }
-  if (responsedescription !== undefined) {
-    this.responsedescription = responsedescription;
-  }
-  if (errors instanceof Array) {
-    for (var i = 0; i < errors.length; i++) {
-      this.addError(errors[i]);
-    }
-  }
-};
+}
 
 //######################### DEFINE PUBLIC ATTRIBUTES ###########################
 (function() {
   // This creates a (private) static variable. It will contain all codecs
   var codecNamespaces = {};
 
-  Object.defineProperty(nl.sara.webdav.Property.prototype, 'value', {
+  Object.defineProperty(nl.sara.webdav.Privilege.prototype, 'value', {
     'set': function(value) {
       this._value = value;
 
       // Call codec to automatically create correct 'xmlvalue'
-      var xmlDoc = document.implementation.createDocument("DAV:", "property", null);
+      var xmlDoc = document.implementation.createDocument("DAV:", "privilege", null);
       if ((codecNamespaces[this.namespace] === undefined) ||
           (codecNamespaces[this.namespace][this.tagname] === undefined) ||
           (codecNamespaces[this.namespace][this.tagname]['toXML'] === undefined)) {
@@ -131,7 +97,7 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
     }
   });
 
-  Object.defineProperty(nl.sara.webdav.Property.prototype, 'xmlvalue', {
+  Object.defineProperty(nl.sara.webdav.Privilege.prototype, 'xmlvalue', {
     'set': function(value) {
       if (value === null) {
         this._value = null;
@@ -177,7 +143,7 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
   /**
    * Adds functions to encode or decode properties
    *
-   * This allows exact control in how Property.xmlvalue and Property.value are
+   * This allows exact control in how Privilege.xmlvalue and Privilege.value are
    * converted into each other. You can specify two functions: 'fromXML' and
    * 'toXML'. These should be complementary. That is, toXML should be able to
    * create a NodeList based on the output of fromXML. For example:
@@ -187,7 +153,7 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
    * @param    {nl.sara.webdav.Codec}  codec  The codec to add
    * @returns  {void}
    */
-  nl.sara.webdav.Property.addCodec = function(codec) {
+  nl.sara.webdav.Privilege.addCodec = function(codec) {
     if (typeof codec.namespace != 'string') {
       throw new nl.sara.webdav.Exception('addCodec: codec.namespace must be a String', nl.sara.webdav.Exception.WRONG_TYPE);
     }
@@ -205,25 +171,12 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
 })(); // Ends the static scope
 
 /**
-* Adds an error to this property
-*
-* @returns {Node} The Node which represents the error
-*/
-nl.sara.webdav.Property.prototype.addError = function(error) {
-  if (!(error instanceof Node)) {
-    throw new nl.sara.webdav.Exception('Error must be an instance of Node', nl.sara.webdav.Exception.WRONG_TYPE);
-  }
-  this._errors.push(error);
-  return this;
-};
+ * Overloads the default toString() method so it returns the value of this privilege
+ *
+ * @returns  {String}  A string representation of this privilege
+ */
+nl.sara.webdav.Privilege.prototype.toString = function() {
+  return this.value;
+}
 
-/**
-* Returns all errors
-*
-* @returns {array} An array of Node representing the error
-*/
-nl.sara.webdav.Property.prototype.getErrors = function() {
-  return this._errors;
-};
-
-// End of Property
+// End of library
