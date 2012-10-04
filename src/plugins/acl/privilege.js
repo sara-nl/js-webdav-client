@@ -66,7 +66,7 @@ nl.sara.webdav.Privilege = function(xmlNode) {
     this.tagname = xmlNode.localName;
     this.xmlvalue = xmlNode.childNodes;
   }
-}
+};
 
 //######################### DEFINE PUBLIC ATTRIBUTES ###########################
 (function() {
