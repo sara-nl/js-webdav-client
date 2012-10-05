@@ -26,9 +26,9 @@ if (nl.sara.webdav.Client !== undefined) {
 /**
  * @class Connection to a WebDAV server
  *
- * @param  {String}   host              The hostname or IP address of the server
- * @param  {Boolean}  [useHTTPS=false]  Optional; If set to true, HTTPS is used. If set to false or omitted, HTTP is used
- * @param  {Number}   [port]            Optional; Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS)
+ * @param  {String}   [host]            Optional; The hostname or IP address of the server. This is only needed if the host is different from the one serving this library.
+ * @param  {Boolean}  [useHTTPS=false]  Optional; If set to true, HTTPS is used. If set to false or omitted, HTTP is used. This parameter is ignored if host is not set.
+ * @param  {Number}   [port]            Optional; Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS). This parameter is ignored if host is not set.
  */
 nl.sara.webdav.Client = function(host, useHTTPS, port) {
   // First define private attributes
@@ -40,12 +40,11 @@ nl.sara.webdav.Client = function(host, useHTTPS, port) {
   });
 
   // Constructor logic
-  if (host === undefined) {
-    throw new nl.sara.webdav.Exception('WebDAV server not specified!', nl.sara.webdav.Exception.WRONG_TYPE);
+  if (host !== undefined) {
+    var protocol = (useHTTPS === true) ? 'https' : 'http';
+    port = (port != undefined) ? port : ((protocol == 'https') ? 443 : 80);
+    this._baseUrl = protocol + '://' + host + ((((protocol == 'http') && (port == 80)) || ((protocol == 'https') && (port == 443))) ? '' : ':' + port);
   }
-  var protocol = (useHTTPS === true) ? 'https' : 'http';
-  port = (port != undefined) ? port : ((protocol == 'https') ? 443 : 80);
-  this._baseUrl = protocol + '://' + host + ((((protocol == 'http') && (port == 80)) || ((protocol == 'https') && (port == 443))) ? '' : ':' + port);
 }
 
 /**#@+
@@ -70,7 +69,11 @@ nl.sara.webdav.Client.prototype.getUrl = function(path) {
   if (path.substring(0,1) != '/') {
     path = '/' + path;
   }
-  return this._baseUrl + path;
+  if (this._baseUrl !== null) {
+    return this._baseUrl + path;
+  }else{
+    return path;
+  }
 }
 
 /**
@@ -150,7 +153,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
         if (!(prop instanceof nl.sara.webdav.Property)) {
           continue;
         }
-        propertyBody.appendChild(prop.namespace, prop.tagname);
+        propertyBody.appendChild(propsBody.createElementNS(prop.namespace, prop.tagname));
       }
       if (!propertyBody.hasChildNodes()) { // But if no properties are found, then the array didn't have Property objects in it
         throw new nl.sara.webdav.Exception("Propfind parameter; if props is an array, it should be an array of Properties", nl.sara.webdav.Exception.WRONG_TYPE);
