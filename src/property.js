@@ -39,12 +39,6 @@ if (nl.sara.webdav.Property !== undefined) {
  */
 nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors) {
   // First define private attributes
-  Object.defineProperty(this, '_value', {
-    'value': null,
-    'enumerable': false,
-    'configurable': false,
-    'writable': true
-  });
   Object.defineProperty(this, '_xmlvalue', {
     'value': null,
     'enumerable': false,
@@ -107,66 +101,16 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
   // This creates a (private) static variable. It will contain all codecs
   var codecNamespaces = {};
 
-  Object.defineProperty(nl.sara.webdav.Property.prototype, 'value', {
-    'set': function(value) {
-      this._value = value;
-
-      // Call codec to automatically create correct 'xmlvalue'
-      var xmlDoc = document.implementation.createDocument("DAV:", "property", null);
-      if ((codecNamespaces[this.namespace] === undefined) ||
-          (codecNamespaces[this.namespace][this.tagname] === undefined) ||
-          (codecNamespaces[this.namespace][this.tagname]['toXML'] === undefined)) {
-        // No 'toXML' function set, so create a NodeList with just one CDATA node
-        if (value !== null) { // If the value is NULL, then we should add anything to the NodeList
-          var cdata = xmlDoc.createCDATASection(value);
-          xmlDoc.documentElement.appendChild(cdata);
-        }
-        this._xmlvalue = xmlDoc.documentElement.childNodes;
-      }else{
-        this._xmlvalue = codecNamespaces[this.namespace][this.tagname]['toXML'](value, xmlDoc);
-      }
-    },
-    'get': function() {
-      return this._value;
-    }
-  });
-
   Object.defineProperty(nl.sara.webdav.Property.prototype, 'xmlvalue', {
     'set': function(value) {
       if (value === null) {
-        this._value = null;
         this._xmlvalue = null;
         return;
       }
-
       if (!(value instanceof NodeList)) {
         throw new nl.sara.webdav.Exception('xmlvalue must be an instance of NodeList', nl.sara.webdav.Exception.WRONG_TYPE);
       }
-
       this._xmlvalue = value;
-
-      // Call codec to automatically create correct 'value'
-      if (value.length > 0) {
-        if ((codecNamespaces[this.namespace] === undefined) ||
-            (codecNamespaces[this.namespace][this.tagname] === undefined) ||
-            (codecNamespaces[this.namespace][this.tagname]['fromXML'] === undefined)) {
-          // No 'fromXML' function set, so try to create a text value based on TextNodes and CDATA nodes. If other nodes are present, set 'value' to null
-          this._value = '';
-          for (var i = 0; i < value.length; i++) {
-            var node = value.item(i);
-            if ((node.nodeType == 3) || (node.nodeType == 4)) { // Make sure text and CDATA content is stored
-              this._value += node.nodeValue;
-            }else{ // If even one of the nodes is not text or CDATA, then we don't parse a text value at all
-              this._value = null;
-              break;
-            }
-          }
-        }else{
-          this._value = codecNamespaces[this.namespace][this.tagname]['fromXML'](value);
-        }
-      }else{
-        this._value = null;
-      }
     },
     'get': function() {
       return this._xmlvalue;
@@ -177,10 +121,11 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
   /**
    * Adds functions to encode or decode properties
    *
-   * This allows exact control in how Property.xmlvalue and Property.value are
-   * converted into each other. You can specify two functions: 'fromXML' and
-   * 'toXML'. These should be complementary. That is, toXML should be able to
-   * create a NodeList based on the output of fromXML. For example:
+   * This allows exact control in how Property.xmlvalue is parsed when
+   * getParsedValue() is called or how it is rebuild when
+   * setValueAndRebuildXml() is called. You can specify two functions: 'fromXML'
+   * and 'toXML'. These should be complementary. That is, toXML should be able
+   * to create a NodeList based on the output of fromXML. For example:
    * A == toXML(fromXML(A)) &&
    * B == fromXML(toXML(B))
    *
@@ -201,6 +146,69 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
       'fromXML': (codec.fromXML ? codec.fromXML : undefined),
       'toXML': (codec.toXML ? codec.toXML : undefined)
     }
+  };
+
+  /**
+   * Sets a new value and rebuilds xmlvalue
+   *
+   * If a codec for this property is specified, it will use this codec to
+   * rebuild xmlvallue. Else it will attempt to create one CDATA element with
+   * the string value of whatever was fiven as parameter.
+   *
+   * @param   {mixed}  value  The object to base the xmlvalue on
+   * @return  {void}
+   */
+  nl.sara.webdav.Property.prototype.setValueAndRebuildXml = function(value) {
+    // Call codec to automatically create correct 'xmlvalue'
+    var xmlDoc = document.implementation.createDocument(this.namespace, this.tagname, null);
+    if ((codecNamespaces[this.namespace] === undefined) ||
+        (codecNamespaces[this.namespace][this.tagname] === undefined) ||
+        (codecNamespaces[this.namespace][this.tagname]['toXML'] === undefined)) {
+      // No 'toXML' function set, so create a NodeList with just one CDATA node
+      if (value !== null) { // If the value is NULL, then we should add anything to the NodeList
+        var cdata = xmlDoc.createCDATASection(value);
+        xmlDoc.documentElement.appendChild(cdata);
+      }
+      this._xmlvalue = xmlDoc.documentElement.childNodes;
+    }else{
+      this._xmlvalue = codecNamespaces[this.namespace][this.tagname]['toXML'](value, xmlDoc).documentElement.childNodes;
+    }
+  };
+
+  /**
+   * Parses the xmlvalue
+   *
+   * If a codec for this property is specified, it will use this codec to parse
+   * the XML nodes. Else it will attempt to parse it as text or CDATA elements.
+   *
+   * @return  {mixed}  If a codec is specified, the return type depends on that
+   * codec. If no codec is specified and at least one node in xmlvalue is not a
+   * text or CDATA node, it will return undefined. If xmlvalue is empty, it will
+   * return null.
+   */
+  nl.sara.webdav.Property.prototype.getParsedValue = function() {
+    // Call codec to automatically create correct 'value'
+    if (this._xmlvalue.length > 0) {
+      if ((codecNamespaces[this.namespace] === undefined) ||
+          (codecNamespaces[this.namespace][this.tagname] === undefined) ||
+          (codecNamespaces[this.namespace][this.tagname]['fromXML'] === undefined)) {
+        // No 'fromXML' function set, so try to create a text value based on TextNodes and CDATA nodes. If other nodes are present, set 'value' to null
+        var parsedValue = '';
+        for (var i = 0; i < this._xmlvalue.length; i++) {
+          var node = this._xmlvalue.item(i);
+          if ((node.nodeType == 3) || (node.nodeType == 4)) { // Make sure text and CDATA content is stored
+            parsedValue += node.nodeValue;
+          }else{ // If even one of the nodes is not text or CDATA, then we don't parse a text value at all
+            parsedValue = undefined;
+            break;
+          }
+        }
+        return parsedValue;
+      }else{
+        return codecNamespaces[this.namespace][this.tagname]['fromXML'](this._xmlvalue);
+      }
+    }
+    return null;
   };
 })(); // Ends the static scope
 
@@ -225,5 +233,14 @@ nl.sara.webdav.Property.prototype.addError = function(error) {
 nl.sara.webdav.Property.prototype.getErrors = function() {
   return this._errors;
 };
+
+/**
+ * Overloads the default toString() method so it returns the value of this property
+ *
+ * @returns  {String}  A string representation of this property
+ */
+nl.sara.webdav.Property.prototype.toString = function() {
+  return this.getParsedValue();
+}
 
 // End of Property

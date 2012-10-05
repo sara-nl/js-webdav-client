@@ -24,16 +24,16 @@ if (nl.sara.webdav.Codec !== undefined) {
 }
 
 /**
- * @class A codec transcodes the xml value of a property to a custom Javascript object
+ * @class A codec transcodes the xml to a custom Javascript object
  *
  * @param  {String}                    [namespace]  Optional; The namespace of the property to transcode
  * @param  {String}                    [tagname]    Optional; The tag name of the property to transcode
- * @param  {function(mixed[,xmlDoc])}  [toXML]      Optional; A NodeList with the value of this property
- * @param  {function(NodeList)}        [fromXML]    Optional; A textual representation of xmlvalue
+ * @param  {function(mixed[,xmlDoc])}  [toXML]      Optional; Function which should return a Document with the NodeList of the documentElement as the value of this property
+ * @param  {function(NodeList)}        [fromXML]    Optional; Functions which should return a representation of xmlvalue
  * @property  {String}                    namespace  The namespace of the property to transcode
  * @property  {String}                    tagname    The tag name of the property to transcode
- * @property  {function(mixed[,xmlDoc])}  toXML      A NodeList with the value of this property
- * @property  {function(NodeList)}        fromXML    A textual representation of xmlvalue
+ * @property  {function(mixed[,xmlDoc])}  toXML      Function which should return a Document with the NodeList of the documentElement as the value of this property
+ * @property  {function(NodeList)}        fromXML    Functions which should return a representation of xmlvalue
  */
 nl.sara.webdav.Codec = function(namespace, tagname, toXML, fromXML) {
   // First define public attributes

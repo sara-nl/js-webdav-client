@@ -42,86 +42,7 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
   var url = this.getUrl(path);
 
   var aclBody = document.implementation.createDocument("DAV:", "acl", null);
-  var aclLength = acl.getLength();
-  for (var i = 0; i < aclLength; i++) { // Loop over the ACE's in this ACL
-    var ace = acl.getAce(i);
-    var aceBody = aclBody.createElementNS('DAV:', 'ace');
-
-    // First create a principal node
-    var principal = aclBody.createElementNS('DAV:', 'principal');
-    var princVal = ace.principal;
-    switch (princVal) {
-      case nl.sara.webdav.Ace.ALL:
-        principal.appendChild(aclBody.createElementNS('DAV:', 'all'));
-        break;
-      case nl.sara.webdav.Ace.AUTHENTICATED:
-        principal.appendChild(aclBody.createElementNS('DAV:', 'authenticated'));
-        break;
-      case nl.sara.webdav.Ace.UNAUTHENTICATED:
-        principal.appendChild(aclBody.createElementNS('DAV:', 'unauthenticated'));
-        break;
-      case nl.sara.webdav.Ace.SELF:
-        principal.appendChild(aclBody.createElementNS('DAV:', 'self'));
-        break;
-      default: // If it isn't one of the constants, it should be either a Property object or a string/URL
-        if (!(princVal instanceof nl.sara.webdav.Property)) { // It is a string; the URL of the principal
-          var href = aclBody.createElementNS('DAV:', 'href');
-          href.appendChild(aclBody.createCDATASection(princVal));
-          principal.appendChild(href);
-        }else{ // And else it is a property
-          var property = aclBody.createElementNS('DAV:', 'property');
-          var prop = aclBody.createElementNS(princVal.namespace, princVal.tagname);
-          if (princVal.xmlvalue != null) {
-            for (var j = 0; j < princVal.xmlvalue.length; j++) {
-              prop.appendChild(princVal.xmlValue.item(j));
-            }
-          }
-          property.appendChild(prop);
-          principal.appendChild(property);
-        }
-      break;
-    }
-
-    // If the principal should be inverted, put it in an 'invert' element
-    if (ace.invertprincipal) {
-      var invert = aclBody.createElementNS('DAV:', 'invert');
-      invert.appendChild(principal);
-      aceBody.appendChild(invert);
-    }else{
-      aceBody.appendChild(principal);
-    }
-
-    // Then prepare the privileges
-    // grant or deny?
-    var privilegeParent = null;
-    if (ace.grantdeny == nl.sara.webdav.Ace.DENY) {
-      privilegeParent = aceBody.createElementNS('DAV:', 'deny');
-    }else if (ace.grantdeny == nl.sara.webdav.Ace.GRANT) {
-      privilegeParent = aceBody.createElementNS('DAV:', 'grant');
-    }else{
-      throw new nl.sara.webdav.Exception('\'grantdeny\' property not set on one of the ACE\'s in this ACL', nl.sara.webdav.Exception.WRONG_VALUE);
-    }
-    var namespaces = ace.getNamespaceNames();
-    for (var j = 0; j < namespaces.length; j++) { // loop through namespaces
-      var namespace = namespaces[j];
-      var privileges = ace.getPrivilegeNames(namespace);
-      for (var k = 0; k < privileges.length; k++) { // loop through each privilege in this namespace
-        var privilege = privileges[k];
-        var privilegeElement = aclBody.createElementNS('DAV:', 'privilege');
-        var priv = aclBody.createElementNS(privilege.namespace, privilege.tagname);
-        if (privilege.xmlvalue != null) {
-          for (var l = 0; l < privilege.xmlvalue.length; l++) {
-            priv.appendChild(privilege.xmlValue.item(j));
-          }
-        }
-        privilegeElement.appendChild(priv);
-        privilegeParent.appendChild(privilegeElement);
-      }
-    }
-    aceBody.appendChild(privilegeParent);
-
-    aclBody.documentElement.appendChild(aceBody);
-  }
+  aclBody = nl.sara.webdav.codec.AclCodec.toXML(acl, aclBody);
 
   // Create the request body string
   var serializer = new XMLSerializer();
@@ -145,10 +66,10 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
  */
 nl.sara.webdav.Client.prototype.report = function(path, callback, body) {
   if ((path === undefined) || (callback === undefined) || (body === undefined)) {
-    throw new nl.sara.webdav.Exception('POST requires the parameters path, callback and body', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
+    throw new nl.sara.webdav.Exception('REPORT requires the parameters path, callback and body', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if ((typeof path != "string") || (typeof body != 'string') || !(body instanceof Document)) {
-    throw new nl.sara.webdav.Exception('POST parameter; path should be a string, body should be an instance of Document', nl.sara.webdav.Exception.WRONG_TYPE);
+  if ((typeof path != "string") || !(body instanceof Document)) {
+    throw new nl.sara.webdav.Exception('REPORT parameter; path should be a string, body should be an instance of Document', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
   // Get the full URL, based on the specified path

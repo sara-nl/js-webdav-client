@@ -36,3 +36,7 @@ if (nl.sara.webdav === undefined) {
   /** @namespace The entire library is in this namespace. */
   nl.sara.webdav = {};
 }
+if (nl.sara.webdav.codec === undefined) {
+  /** @namespace Holds all the standard codecs */
+  nl.sara.webdav.codec = {};
+}

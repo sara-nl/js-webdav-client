@@ -204,12 +204,8 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
         continue;
       }
       var element = propsBody.createElementNS(prop.namespace, prop.tagname);
-      if (prop.xmlvalue !== null) {
-        for (var j = 0; j < prop.xmlvalue.length; j++) {
-          element.appendChild(prop.xmlvalue.item(j));
-        }
-      }else{
-        element.appendChild(propsBody.createCDATASection(prop.value));
+      for (var j = 0; j < prop.xmlvalue.length; j++) {
+        element.appendChild(prop.xmlvalue.item(j));
       }
       props.appendChild(element);
     }
