@@ -125,6 +125,6 @@ nl.sara.webdav.codec.AclCodec.toXML = function(value, xmlDoc){
   }
 };
 
-nl.sara.webdav.Property.addCodec(nl.sara.webdac.codec.AclCodec);
+nl.sara.webdav.Property.addCodec(nl.sara.webdav.codec.AclCodec);
 
 // End of file
