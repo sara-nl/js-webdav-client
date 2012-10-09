@@ -33,9 +33,10 @@ nl.sara.webdav.codec.AclCodec.tagname = 'acl';
 
 nl.sara.webdav.codec.AclCodec.fromXML = function(nodelist) {
   // The constructor of Acl will parse a DAV: acl node itself, so just make sure this nodelist is part of a DAV: acl node
-  var acl = document.implementation.createDocument("DAV:", "acl", null).documentElement;
+  var xmlDoc = document.implementation.createDocument("DAV:", "acl", null);
+  var acl = xmlDoc.documentElement;
   for (var i = 0; i < nodelist.length; i++) {
-    acl.appendChild(nodelist.item(i));
+    acl.appendChild(xmlDoc.importNode(nodelist.item(i)));
   }
   return new nl.sara.webdav.Acl(acl);
 };
@@ -120,9 +121,8 @@ nl.sara.webdav.codec.AclCodec.toXML = function(acl, xmlDoc){
     aceBody.appendChild(privilegeParent);
 
     xmlDoc.documentElement.appendChild(aceBody);
-
-    return xmlDoc;
   }
+  return xmlDoc;
 };
 
 nl.sara.webdav.Property.addCodec(nl.sara.webdav.codec.AclCodec);
