@@ -40,7 +40,7 @@ nl.sara.webdav.codec.AclCodec.fromXML = function(nodelist) {
   return new nl.sara.webdav.Acl(acl);
 };
 
-nl.sara.webdav.codec.AclCodec.toXML = function(value, xmlDoc){
+nl.sara.webdav.codec.AclCodec.toXML = function(acl, xmlDoc){
   var aclLength = acl.getLength();
   for (var i = 0; i < aclLength; i++) { // Loop over the ACE's in this ACL
     var ace = acl.getAce(i);
@@ -94,9 +94,9 @@ nl.sara.webdav.codec.AclCodec.toXML = function(value, xmlDoc){
     // grant or deny?
     var privilegeParent = null;
     if (ace.grantdeny == nl.sara.webdav.Ace.DENY) {
-      privilegeParent = aceBody.createElementNS('DAV:', 'deny');
+      privilegeParent = xmlDoc.createElementNS('DAV:', 'deny');
     }else if (ace.grantdeny == nl.sara.webdav.Ace.GRANT) {
-      privilegeParent = aceBody.createElementNS('DAV:', 'grant');
+      privilegeParent = xmlDoc.createElementNS('DAV:', 'grant');
     }else{
       throw new nl.sara.webdav.Exception('\'grantdeny\' property not set on one of the ACE\'s in this ACL', nl.sara.webdav.Exception.WRONG_VALUE);
     }
@@ -105,7 +105,7 @@ nl.sara.webdav.codec.AclCodec.toXML = function(value, xmlDoc){
       var namespace = namespaces[j];
       var privileges = ace.getPrivilegeNames(namespace);
       for (var k = 0; k < privileges.length; k++) { // loop through each privilege in this namespace
-        var privilege = privileges[k];
+        var privilege = ace.getPrivilege(namespace, privileges[k]);
         var privilegeElement = xmlDoc.createElementNS('DAV:', 'privilege');
         var priv = xmlDoc.createElementNS(privilege.namespace, privilege.tagname);
         if (privilege.xmlvalue != null) {
