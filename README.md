@@ -6,6 +6,8 @@ JavaScript. The main purpose is to support the built-in client for *BeeHub*.
 However, we attempt to make it follow the webDAV RFC 4918 and any contributions
 that help implement features of this and other webDAV standards are welcome.
 
+API reference can be found here: http://sara-nl.github.com/js-webdav-client/
+
 Directory structure
 -------------------
 
@@ -21,7 +23,7 @@ Development
 
 If you want to develope on the library code itself, you'll want to link to the
 source files from within your HTML page. You should add all needed files
-manually to the header with the default <script> tag. For example:
+manually to the header with the default script tag. For example:
 
 ```html
 <script type="text/javascript" src="/library_path/src/000_header.js"></script>
@@ -61,5 +63,5 @@ Then link this file in your HTML file before your own scripts are linked.
 ```
 
 Of course you are free to rename the dist.js file any way you like and place it
-anywhere in your public folder. As long as you change the <script> tag
+anywhere in your public folder. As long as you change the script tag
 correspondingly.
