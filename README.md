@@ -35,7 +35,7 @@ Make sure you link the source files in the same order as the Makefile will:
     -   ./src/000_header.js should be linked first
     -   ./src/001_exception.js should be linked second
     -   then the other files follow
--   Directories in ./plugins/ will be included in a sorted order next. Their
+-   Directories in ./src/plugins/ will be included in a sorted order next. Their
     files will also be included in a sorted order.
 
 This way, the basic library will be linked before the plugins are loaded
