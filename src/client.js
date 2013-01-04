@@ -568,7 +568,12 @@ nl.sara.webdav.Client.ajaxHandler = function(ajax, callback) {
     var multistatus = null;
     if (ajax.status == 207) {
       // Parse the response to a Multistatus object
-      multistatus = new nl.sara.webdav.Multistatus(ajax.responseXML.childNodes.item(0));
+      for (var counter = 0; counter < ajax.responseXML.childNodes.length; counter++) {
+        if (nl.sara.webdav.Ie.getLocalName(ajax.responseXML.childNodes.item(counter)) == 'multistatus') {
+          multistatus = new nl.sara.webdav.Multistatus(ajax.responseXML.childNodes.item(counter));
+          break;
+        }
+      }
     }
     callback(ajax.status, multistatus);
   }
