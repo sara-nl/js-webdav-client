@@ -49,7 +49,17 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
   var body = '<?xml version="1.0" encoding="utf-8" ?>' + serializer.serializeToString(aclBody);
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("ACL", url, callback);
+  var ajax = null;
+  if (nl.sara.webdav.Client.isIE) {
+    if (url.lastIndexOf('?') != -1) {
+      url = url + '&_method=acl';
+    }else{
+      url = url + '?_method=acl';
+    }
+    ajax = nl.sara.webdav.Client.getAjax('POST', url, callback);
+  }else{
+    ajax = nl.sara.webdav.Client.getAjax("ACL", url, callback);
+  }
   ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
   ajax.send(body);
 
@@ -81,7 +91,16 @@ nl.sara.webdav.Client.prototype.report = function(path, callback, body) {
 
   // And then send the request
   var ajax = null;
-  ajax = nl.sara.webdav.Client.getAjax("REPORT", url, callback);
+  if (nl.sara.webdav.Client.isIE) {
+    if (url.lastIndexOf('?') != -1) {
+      url = url + '&_method=report';
+    }else{
+      url = url + '?_method=report';
+    }
+    ajax = nl.sara.webdav.Client.getAjax('POST', url, callback);
+  }else{
+    ajax = nl.sara.webdav.Client.getAjax("REPORT", url, callback);
+  }
   ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
   ajax.send(body);
 
