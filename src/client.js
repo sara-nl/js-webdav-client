@@ -58,16 +58,6 @@ nl.sara.webdav.Client.TRUNCATE_ON_OVERWRITE = 4;
 nl.sara.webdav.Client.SILENT_OVERWRITE = 5;
 /**#@-*/
 
-/**
- * Although this library has no intent to work in IE older than versions 9, it should work in IE and sometimes requires some special attention for this wonderful browser
- *
- * @var  Boolean  True if the current browser is IE
- */
-nl.sara.webdav.Client.isIE = false;
-/*@cc_on
-nl.sara.webdav.Client.isIE = true;
-@*/
-
 //########################## DEFINE PUBLIC METHODS #############################
 /**
  * Converts a path to the full url (i.e. appends the protocol and host part)

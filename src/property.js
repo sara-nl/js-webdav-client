@@ -80,7 +80,7 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
   // Constructor logic
   if (xmlNode instanceof Node) {
     this.namespace = xmlNode.namespaceURI;
-    this.tagname = xmlNode.localName;
+    this.tagname = nl.sara.webdav.Ie.getLocalName(xmlNode);
     this.xmlvalue = xmlNode.childNodes;
   }
   if (status !== undefined) {

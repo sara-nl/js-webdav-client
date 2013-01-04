@@ -82,7 +82,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
       if ((principal.nodeType != 1) || (principal.namespaceURI == null) || (principal.namespaceURI.toLowerCase() != 'dav:')) { // Skip if not from the right namespace
         continue;
       }
-      switch (principal.localName) {
+      switch (nl.sara.webdav.Ie.getLocalName(principal)) {
         case 'href':
           object.principal = principal.childNodes.item(0).nodeValue;
           break;
@@ -110,7 +110,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
           object.principal = nl.sara.webdav.Ace.SELF;
           break;
         default:
-          throw new nl.sara.webdav.Exception('Principal XML Node contains illegal child node: ' + principal.localName, nl.sara.webdav.Exception.WRONG_XML);
+          throw new nl.sara.webdav.Exception('Principal XML Node contains illegal child node: ' + nl.sara.webdav.Ie.getLocalName(principal), nl.sara.webdav.Exception.WRONG_XML);
         break;
       }
     }
@@ -127,7 +127,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
 
   // Parse the XML
   if (xmlNode instanceof Node) {
-    if ((xmlNode.namespaceURI != 'DAV:') || (xmlNode.localName != 'ace')) {
+    if ((xmlNode.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) != 'ace')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:ace', nl.sara.webdav.Exception.WRONG_XML);
     }
     var data = xmlNode.childNodes;
@@ -136,7 +136,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
       if ((child.namespaceURI == null) || (child.namespaceURI != 'DAV:')) { // Skip if not from the right namespace
         continue;
       }
-      switch (child.localName) {
+      switch (nl.sara.webdav.Ie.getLocalName(child)) {
         case 'principal':
           this.invertprincipal = false;
           parsePrincipal(this, child);
@@ -145,7 +145,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
           this.invertprincipal = true;
           for (var j = 0; j < child.childNodes.length; j++) {
             var element = child.childNodes.item(j);
-            if ((element.namespaceURI != 'DAV:') || (element.localName != 'principal')) {
+            if ((element.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(element) != 'principal')) {
               continue;
             }
             parsePrincipal(this, element);
@@ -165,7 +165,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
         case 'inherited':
           for (var j = 0; j < child.childNodes.length; j++) {
             var element = child.childNodes.item(j);
-            if ((element.namespaceURI != 'DAV:') || (element.localName != 'href')) {
+            if ((element.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(element) != 'href')) {
               continue;
             }
             this.inherited = child.childNodes.item(j).childNodes.item(0).nodeValue;

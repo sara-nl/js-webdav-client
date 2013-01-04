@@ -50,7 +50,7 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
 
   // And then send the request
   var ajax = null;
-  if (nl.sara.webdav.Client.isIE) {
+  if (nl.sara.webdav.Ie.isIE) {
     if (url.lastIndexOf('?') != -1) {
       url = url + '&_method=acl';
     }else{
@@ -91,7 +91,7 @@ nl.sara.webdav.Client.prototype.report = function(path, callback, body) {
 
   // And then send the request
   var ajax = null;
-  if (nl.sara.webdav.Client.isIE) {
+  if (nl.sara.webdav.Ie.isIE) {
     if (url.lastIndexOf('?') != -1) {
       url = url + '&_method=report';
     }else{

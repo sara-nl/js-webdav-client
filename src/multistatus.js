@@ -47,7 +47,7 @@ nl.sara.webdav.Multistatus = function(xmlNode) {
 
   // Constructor logic
   if (xmlNode instanceof Node) {
-    if ((xmlNode.namespaceURI != 'DAV:') || (xmlNode.localName != 'multistatus')) {
+    if ((xmlNode.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) != 'multistatus')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:multistatus', nl.sara.webdav.Exception.WRONG_XML);
     }
     var data = xmlNode.childNodes;
@@ -56,7 +56,7 @@ nl.sara.webdav.Multistatus = function(xmlNode) {
       if ((child.namespaceURI == null) || (child.namespaceURI != 'DAV:')) { // Skip if not from the right namespace
         continue;
       }
-      switch (child.localName) {
+      switch (nl.sara.webdav.Ie.getLocalName(child)) {
         case 'responsedescription': // responsedescription is always CDATA, so just take the text
           this.responsedescription = child.childNodes.item(0).nodeValue;
           break;
@@ -66,7 +66,7 @@ nl.sara.webdav.Multistatus = function(xmlNode) {
           var hrefs = [];
           for (var j = 0; j < responseChilds.length; j++) {
             var responseChild = responseChilds.item(j);
-            if ((responseChild.localName == 'href') && (responseChild.namespaceURI != null) && (responseChild.namespaceURI == 'DAV:')) { // For each HREF element we create a separate response object
+            if ((nl.sara.webdav.Ie.getLocalName(responseChild) == 'href') && (responseChild.namespaceURI != null) && (responseChild.namespaceURI == 'DAV:')) { // For each HREF element we create a separate response object
               hrefs.push(responseChild.childNodes.item(0).nodeValue);
             }
           }

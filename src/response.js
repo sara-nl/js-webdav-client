@@ -75,7 +75,7 @@ nl.sara.webdav.Response = function(xmlNode) {
 
   // Constructor logic
   if (xmlNode instanceof Node) {
-    if ((xmlNode.namespaceURI != 'DAV:') || (xmlNode.localName != 'response')) {
+    if ((xmlNode.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) != 'response')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:response', nl.sara.webdav.Exception.WRONG_XML);
     }
     var data = xmlNode.childNodes;
@@ -84,16 +84,16 @@ nl.sara.webdav.Response = function(xmlNode) {
       if ((child.namespaceURI == null) || (child.namespaceURI != 'DAV:')) { // Skip if not from the right namespace
         continue;
       }
-      switch (child.localName) {
+      switch (nl.sara.webdav.Ie.getLocalName(child)) {
         case 'href':
         case 'status':
         case 'error':
         case 'responsedescription':
           // always CDATA, so just take the text
-          this[child.localName] = child.childNodes.item(0).nodeValue;
+          this[nl.sara.webdav.Ie.getLocalName(child)] = child.childNodes.item(0).nodeValue;
           break;
         case 'location':
-          this[child.localName] = child.childNodes.item(0).childNodes.item(0).nodeValue;
+          this[nl.sara.webdav.Ie.getLocalName(child)] = child.childNodes.item(0).childNodes.item(0).nodeValue;
           break;
         case 'propstat': // propstat node should be parsed further
           var propstatChilds = child.childNodes;
@@ -107,7 +107,7 @@ nl.sara.webdav.Response = function(xmlNode) {
             if ((propstatChild.nodeType != 1) || (propstatChild.namespaceURI != 'DAV:')) {
               continue;
             }
-            switch (propstatChild.localName) {
+            switch (nl.sara.webdav.Ie.getLocalName(propstatChild)) {
               case 'prop':
                 for (var k = 0; k < propstatChild.childNodes.length; k++) {
                   props.push(propstatChild.childNodes.item(k));

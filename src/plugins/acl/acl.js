@@ -40,12 +40,12 @@ nl.sara.webdav.Acl = function(xmlNode) {
   // Constructor logic
   // Parse the XML
   if (xmlNode instanceof Node) {
-    if ((xmlNode.namespaceURI != 'DAV:') || (xmlNode.localName != 'acl')) {
+    if ((xmlNode.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) != 'acl')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:acl', nl.sara.webdav.Exception.WRONG_XML);
     }
     for (var i = 0; i < xmlNode.childNodes.length; i++) {
       var child = xmlNode.childNodes.item(i);
-      if ((child.namespaceURI == null) || (child.namespaceURI != 'DAV:') || (child.localName != 'ace')) { // Skip if not the right element
+      if ((child.namespaceURI == null) || (child.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(child) != 'ace')) { // Skip if not the right element
         continue;
       }
       this.addAce(new nl.sara.webdav.Ace(child));
