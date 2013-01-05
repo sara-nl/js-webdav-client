@@ -64,7 +64,7 @@ nl.sara.webdav.codec.AclCodec.toXML = function(acl, xmlDoc){
         principal.appendChild(xmlDoc.createElementNS('DAV:', 'self'));
         break;
       default: // If it isn't one of the constants, it should be either a Property object or a string/URL
-        if (!(princVal instanceof nl.sara.webdav.Property)) { // It is a string; the URL of the principal
+        if (typeof princVal == 'string') { // It is a string; the URL of the principal
           var href = xmlDoc.createElementNS('DAV:', 'href');
           href.appendChild(xmlDoc.createCDATASection(princVal));
           principal.appendChild(href);

@@ -46,7 +46,7 @@ nl.sara.webdav.Ie.isIE = true;
  * @returns  {String}  The local name
  */
 nl.sara.webdav.Ie.getLocalName = function(node) {
-  if (nl.sara.webdav.Ie.isIE) {
+  if (nl.sara.webdav.Ie.isIE && node.baseName) {
     return node.baseName;
   }else{
     return node.localName;

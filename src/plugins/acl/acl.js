@@ -39,7 +39,7 @@ nl.sara.webdav.Acl = function(xmlNode) {
 
   // Constructor logic
   // Parse the XML
-  if (xmlNode instanceof Node) {
+  if (typeof xmlNode != 'undefined') {
     if ((xmlNode.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) != 'acl')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:acl', nl.sara.webdav.Exception.WRONG_XML);
     }
@@ -62,7 +62,7 @@ nl.sara.webdav.Acl = function(xmlNode) {
  * @returns  {nl.sara.webdav.Acl}            The ACL itself for chaining methods
  */
 nl.sara.webdav.Acl.prototype.addAce = function(ace, position) {
-  if (!(ace instanceof nl.sara.webdav.Ace)) {
+  if (!nl.sara.webdav.Ie.isIE && !(ace instanceof nl.sara.webdav.Ace)) {
     throw new nl.sara.webdav.Exception('Ace should be instance of Ace', nl.sara.webdav.Exception.WRONG_TYPE);
   }
   if ((position === undefined) || (position > (this._aces.length - 1))) {

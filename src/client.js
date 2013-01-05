@@ -133,7 +133,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
         var includeBody = propsBody.createElementNS('DAV:', 'include');
         for (var i = 0; i < include.length; i++) {
           var item = include[i];
-          if (!(item instanceof nl.sara.webdav.Property)) {
+          if (!nl.sara.webdav.Ie.isIE && !(item instanceof nl.sara.webdav.Property)) {
             continue;
           }
           includeBody.appendChild(propsBody.createElementNS(item.namespace, item.tagname));
@@ -150,7 +150,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
       var propertyBody = propsBody.createElementNS('DAV:', 'prop');
       for (var i = 0; i < props.length; i++) { // Cycle through the array
         var prop = props[i];
-        if (!(prop instanceof nl.sara.webdav.Property)) {
+        if (!nl.sara.webdav.Ie.isIE && !(prop instanceof nl.sara.webdav.Property)) {
           continue;
         }
         propertyBody.appendChild(propsBody.createElementNS(prop.namespace, prop.tagname));
@@ -200,7 +200,7 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
     var props = propsBody.createElementNS('DAV:', 'prop');
     for (var i = 0; i < setProps.length; i++) { // Cycle through the array
       var prop = setProps[i];
-      if (!(prop instanceof nl.sara.webdav.Property)) {
+      if (!nl.sara.webdav.Ie.isIE && !(prop instanceof nl.sara.webdav.Property)) {
         continue;
       }
       var element = propsBody.createElementNS(prop.namespace, prop.tagname);
@@ -220,7 +220,7 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
     var props = propsBody.createElementNS('DAV:', 'prop');
     for (var i = 0; i < delProps.length; i++) { // Cycle through the array
       var prop = delProps[i];
-      if (!(prop instanceof nl.sara.webdav.Property)) {
+      if (!nl.sara.webdav.Ie.isIE && !(prop instanceof nl.sara.webdav.Property)) {
         continue;
       }
       var element = propsBody.createElementNS(prop.namespace, prop.tagname);

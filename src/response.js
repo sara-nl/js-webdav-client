@@ -74,7 +74,7 @@ nl.sara.webdav.Response = function(xmlNode) {
   });
 
   // Constructor logic
-  if (xmlNode instanceof Node) {
+  if (typeof xmlNode != 'undefined') {
     if ((xmlNode.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) != 'response')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:response', nl.sara.webdav.Exception.WRONG_XML);
     }
@@ -147,7 +147,7 @@ nl.sara.webdav.Response = function(xmlNode) {
  * @returns  {nl.sara.webdav.Response}            The response itself for chaining methods
  */
 nl.sara.webdav.Response.prototype.addProperty = function(property) {
-  if (!(property instanceof nl.sara.webdav.Property)) {
+  if (!nl.sara.webdav.Ie.isIE && !(property instanceof nl.sara.webdav.Property)) {
     throw new nl.sara.webdav.Exception('Response property should be instance of Property', nl.sara.webdav.Exception.WRONG_TYPE);
   }
   var namespace = property.namespace;

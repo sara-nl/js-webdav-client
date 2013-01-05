@@ -34,7 +34,7 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('ACL requires the parameters path, callback and acl', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if (!(typeof path == "string") || !(acl instanceof nl.sara.webdav.Acl)) {
+  if (!(typeof path == "string") || (!nl.sara.webdav.Ie.isIE && !(acl instanceof nl.sara.webdav.Acl))) {
     throw new nl.sara.webdav.Exception('ACL parameter; path should be a string, acl should be an instance of Acl', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -78,7 +78,7 @@ nl.sara.webdav.Client.prototype.report = function(path, callback, body) {
   if ((path === undefined) || (callback === undefined) || (body === undefined)) {
     throw new nl.sara.webdav.Exception('REPORT requires the parameters path, callback and body', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if ((typeof path != "string") || !(body instanceof Document)) {
+  if ((typeof path != "string") || (!nl.sara.webdav.Ie.isIE && !(body instanceof Document))) {
     throw new nl.sara.webdav.Exception('REPORT parameter; path should be a string, body should be an instance of Document', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 

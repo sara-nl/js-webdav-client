@@ -46,7 +46,7 @@ nl.sara.webdav.Multistatus = function(xmlNode) {
   });
 
   // Constructor logic
-  if (xmlNode instanceof Node) {
+  if (typeof xmlNode != 'undefined') {
     if ((xmlNode.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) != 'multistatus')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:multistatus', nl.sara.webdav.Exception.WRONG_XML);
     }
@@ -97,7 +97,7 @@ nl.sara.webdav.Multistatus = function(xmlNode) {
  * @returns  {nl.sara.webdav.Multistatus}            The multistatus itself for chaining methods
  */
 nl.sara.webdav.Multistatus.prototype.addResponse = function(response) {
-  if (!(response instanceof nl.sara.webdav.Response)) {
+  if (!nl.sara.webdav.Ie.isIE && !(response instanceof nl.sara.webdav.Response)) {
     throw new nl.sara.webdav.Exception('Response should be instance of Response', nl.sara.webdav.Exception.WRONG_TYPE);
   }
   var name = response.href;

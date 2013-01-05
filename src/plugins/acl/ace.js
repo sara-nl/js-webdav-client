@@ -74,7 +74,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
 
   // Constructor logic
   function parsePrincipal(object, child) {
-    if (!(child instanceof Node)) {
+    if (!nl.sara.webdav.Ie.isIE && !(child instanceof Node)) {
       throw new nl.sara.webdav.Exception('Principal XML node not recognized!', nl.sara.webdav.Exception.WRONG_XML);
     }
     for (var j = 0; j < child.childNodes.length; j++) {
@@ -126,7 +126,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
   }
 
   // Parse the XML
-  if (xmlNode instanceof Node) {
+  if (typeof xmlNode != 'undefined') {
     if ((xmlNode.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) != 'ace')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:ace', nl.sara.webdav.Exception.WRONG_XML);
     }
@@ -197,7 +197,7 @@ Object.defineProperty(nl.sara.webdav.Ace.prototype, 'principal', {
       case nl.sara.webdav.Ace.SELF:
         break;
       default: // If it isn't one of the constants, it should be either a Property object or a string/URL
-        if (!(value instanceof nl.sara.webdav.Property)) {
+        if (typeof value != 'string') {
           value = String(value);
         }
       break;
@@ -260,7 +260,7 @@ Object.defineProperty(nl.sara.webdav.Ace.prototype, 'inherited', {
  * @returns  {nl.sara.webdav.Ace}                   The ace itself for chaining methods
  */
 nl.sara.webdav.Ace.prototype.addPrivilege = function(privilege) {
-  if (!(privilege instanceof nl.sara.webdav.Privilege)) {
+  if (!nl.sara.webdav.Ie.isIE && !(privilege instanceof nl.sara.webdav.Privilege)) {
     throw new nl.sara.webdav.Exception('Privilege should be instance of Privilege', nl.sara.webdav.Exception.WRONG_TYPE);
   }
   var namespace = privilege.namespace;

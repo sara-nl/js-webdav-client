@@ -55,7 +55,7 @@ nl.sara.webdav.Privilege = function(xmlNode) {
   });
 
   // Constructor logic
-  if (xmlNode instanceof Node) {
+  if (typeof xmlNode != 'undefined') {
     this.namespace = xmlNode.namespaceURI;
     this.tagname = nl.sara.webdav.Ie.getLocalName(xmlNode);
     this.xmlvalue = xmlNode.childNodes;
@@ -73,7 +73,7 @@ nl.sara.webdav.Privilege = function(xmlNode) {
         this._xmlvalue = null;
         return;
       }
-      if (!(value instanceof NodeList)) {
+      if (!nl.sara.webdav.Ie.isIE && !(value instanceof NodeList)) {
         throw new nl.sara.webdav.Exception('xmlvalue must be an instance of NodeList', nl.sara.webdav.Exception.WRONG_TYPE);
       }
       this._xmlvalue = value;

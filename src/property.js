@@ -78,7 +78,7 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
   });
 
   // Constructor logic
-  if (xmlNode instanceof Node) {
+  if (typeof xmlNode != 'undefined') {
     this.namespace = xmlNode.namespaceURI;
     this.tagname = nl.sara.webdav.Ie.getLocalName(xmlNode);
     this.xmlvalue = xmlNode.childNodes;
@@ -107,7 +107,7 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
         this._xmlvalue = null;
         return;
       }
-      if (!(value instanceof NodeList)) {
+      if (!nl.sara.webdav.Ie.isIE && !(value instanceof NodeList)) {
         throw new nl.sara.webdav.Exception('xmlvalue must be an instance of NodeList', nl.sara.webdav.Exception.WRONG_TYPE);
       }
       this._xmlvalue = value;
@@ -218,7 +218,7 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
 * @returns {Node} The Node which represents the error
 */
 nl.sara.webdav.Property.prototype.addError = function(error) {
-  if (!(error instanceof Node)) {
+  if (!nl.sara.webdav.Ie.isIE && !(error instanceof Node)) {
     throw new nl.sara.webdav.Exception('Error must be an instance of Node', nl.sara.webdav.Exception.WRONG_TYPE);
   }
   this._errors.push(error);
