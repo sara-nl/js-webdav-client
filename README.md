@@ -34,6 +34,7 @@ Make sure you link the source files in the same order as the Makefile will:
 -   Files in ./src will be included in a sorted order first. This means:
     -   ./src/000_header.js should be linked first
     -   ./src/001_exception.js should be linked second
+    -   ./src/002_iehacks.js should be linked second
     -   then the other files follow
 -   Directories in ./src/plugins/ will be included in a sorted order next. Their
     files will also be included in a sorted order.
