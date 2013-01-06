@@ -78,7 +78,7 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
   });
 
   // Constructor logic
-  if (typeof xmlNode != 'undefined') {
+  if ((typeof xmlNode != 'undefined') && (xmlNode.nodeType == 1)) {
     this.namespace = xmlNode.namespaceURI;
     this.tagname = nl.sara.webdav.Ie.getLocalName(xmlNode);
     this.xmlvalue = xmlNode.childNodes;

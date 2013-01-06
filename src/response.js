@@ -130,8 +130,10 @@ nl.sara.webdav.Response = function(xmlNode) {
 
           // Then create and add a new property for each element found in DAV:prop
           for (j = 0; j < props.length; j++) {
-            var property = new nl.sara.webdav.Property(props[j], status, responsedescription, errors);
-            this.addProperty(property);
+            if (props[j].nodeType == 1) {
+              var property = new nl.sara.webdav.Property(props[j], status, responsedescription, errors);
+              this.addProperty(property);
+            }
           }
         break;
       }
