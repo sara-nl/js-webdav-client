@@ -79,7 +79,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
     }
     for (var j = 0; j < child.childNodes.length; j++) {
       var principal = child.childNodes.item(j);
-      if ((principal.nodeType != 1) || (principal.namespaceURI == null) || (principal.namespaceURI.toLowerCase() != 'dav:')) { // Skip if not from the right namespace
+      if ((principal.nodeType != 1) || (principal.namespaceURI == null) || (principal.namespaceURI != 'DAV:')) { // Skip if not from the right namespace
         continue;
       }
       switch (nl.sara.webdav.Ie.getLocalName(principal)) {
@@ -197,7 +197,7 @@ Object.defineProperty(nl.sara.webdav.Ace.prototype, 'principal', {
       case nl.sara.webdav.Ace.SELF:
         break;
       default: // If it isn't one of the constants, it should be either a Property object or a string/URL
-        if (typeof value != 'string') {
+        if (!nl.sara.webdav.Ie.isIE && !(value instanceof nl.sara.webdav.Property)) {
           value = String(value);
         }
       break;
