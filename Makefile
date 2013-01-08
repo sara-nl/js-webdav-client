@@ -14,7 +14,7 @@ dist.js: $(SOURCES)
 
 docs: $(SOURCES)
 	@if /usr/bin/test -d $(JSRUN) ; then \
-		BASEDIR="$$(pwd)" && cd "$(JSRUN)" && ./jsrun.sh \
+		BASEDIR="$$(pwd)" && cd "$(JSRUN)" && bash ./jsrun.sh \
 			--allfunctions \
 			--directory="$${BASEDIR}"/$@ \
 			--out="$${BASEDIR}"/jsdoc.log \
