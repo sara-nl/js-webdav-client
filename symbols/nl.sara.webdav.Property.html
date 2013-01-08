@@ -197,17 +197,17 @@ ul.inheritsList
 	
 	<li><a href="../symbols/nl.sara.webdav.html">nl.sara.webdav</a></li>
 	
-	<li><a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a></li>
-	
-	<li><a href="../symbols/nl.sara.webdav.Acl.html">nl.sara.webdav.Acl</a></li>
-	
 	<li><a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.Codec.html">nl.sara.webdav.Codec</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.codec.html">nl.sara.webdav.codec</a></li>
 	
 	<li><a href="../symbols/nl.sara.webdav.Exception.html">nl.sara.webdav.Exception</a></li>
 	
-	<li><a href="../symbols/nl.sara.webdav.Multistatus.html">nl.sara.webdav.Multistatus</a></li>
+	<li><a href="../symbols/nl.sara.webdav.Ie.html">nl.sara.webdav.Ie</a></li>
 	
-	<li><a href="../symbols/nl.sara.webdav.Privilege.html">nl.sara.webdav.Privilege</a></li>
+	<li><a href="../symbols/nl.sara.webdav.Multistatus.html">nl.sara.webdav.Multistatus</a></li>
 	
 	<li><a href="../symbols/nl.sara.webdav.Property.html">nl.sara.webdav.Property</a></li>
 	
@@ -233,7 +233,7 @@ ul.inheritsList
 				a WebDAV property
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_pieterb_Documents_beehub_js-webdav-client_src_property.js.html">property.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_home_niekb_js-webdav-client_src_property.js.html">property.js</a>.
 				
 			</p>
 
@@ -357,6 +357,19 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">nl.sara.webdav.Property.<b><a href="../symbols/nl.sara.webdav.Property.html#.addCodec">addCodec</a></b>(codec)
+								</div>
+								<div class="description">Adds functions to encode or decode properties
+
+This allows exact control in how Property.xmlvalue is parsed when
+getParsedValue() is called or how it is rebuild when
+setValueAndRebuildXml() is called.</div>
+							</td>
+						</tr>
+					
+						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#addError">addError</a></b>(error)
@@ -371,6 +384,39 @@ ul.inheritsList
 								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#getErrors">getErrors</a></b>()
 								</div>
 								<div class="description">Returns all errors</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#getParsedValue">getParsedValue</a></b>()
+								</div>
+								<div class="description">Parses the xmlvalue
+
+If a codec for this property is specified, it will use this codec to parse
+the XML nodes.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#setValueAndRebuildXml">setValueAndRebuildXml</a></b>(value)
+								</div>
+								<div class="description">Sets a new value and rebuilds xmlvalue
+
+If a codec for this property is specified, it will use this codec to
+rebuild xmlvallue.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#toString">toString</a></b>()
+								</div>
+								<div class="description">Overloads the default toString() method so it returns the value of this property</div>
 							</td>
 						</tr>
 					
@@ -408,27 +454,27 @@ ul.inheritsList
 						
 							<dt>
 								<span class="light fixedFont">{Node}</span>  <b>xmlNode</b>
-								
+								<i>Optional</i>
 							</dt>
-								<dd>Optionally; The xmlNode describing the propstat object (should be compliant with RFC 4918)</dd>
+								<dd>Optional; The xmlNode describing the propstat object (should be compliant with RFC 4918)</dd>
 						
 							<dt>
 								<span class="light fixedFont">{Number}</span>  <b>status</b>
-								
+								<i>Optional</i>
 							</dt>
-								<dd>Optionally; The (HTTP) status code</dd>
+								<dd>Optional; The (HTTP) status code</dd>
 						
 							<dt>
 								<span class="light fixedFont">{String}</span>  <b>responsedescription</b>
-								
+								<i>Optional</i>
 							</dt>
-								<dd>Optionally; The response description</dd>
+								<dd>Optional; The response description</dd>
 						
 							<dt>
 								<span class="light fixedFont">{String[]}</span>  <b>errors</b>
-								
+								<i>Optional</i>
 							</dt>
-								<dd>Optionally; An array of errors</dd>
+								<dd>Optional; An array of errors</dd>
 						
 						</dl>
 					
@@ -588,6 +634,57 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
+					<a name=".addCodec"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{void}</span>
+					<span class="light">nl.sara.webdav.Property.</span><b>addCodec</b>(codec)
+					
+					</div>
+					<div class="description">
+						Adds functions to encode or decode properties
+
+This allows exact control in how Property.xmlvalue is parsed when
+getParsedValue() is called or how it is rebuild when
+setValueAndRebuildXml() is called. You can specify two functions: 'fromXML'
+and 'toXML'. These should be complementary. That is, toXML should be able
+to create a NodeList based on the output of fromXML. For example:
+A == toXML(fromXML(A)) &&
+B == fromXML(toXML(B))
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Codec.html">nl.sara.webdav.Codec</a>}</span> <b>codec</b>
+									
+								</dt>
+								<dd>The codec to add</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{void}</span> </dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
 					<a name="addError"> </a>
 					<div class="fixedFont">
 					
@@ -661,6 +758,123 @@ ul.inheritsList
 						
 						
 
+					<hr />
+				
+					<a name="getParsedValue"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{mixed}</span>
+					<b>getParsedValue</b>()
+					
+					</div>
+					<div class="description">
+						Parses the xmlvalue
+
+If a codec for this property is specified, it will use this codec to parse
+the XML nodes. Else it will attempt to parse it as text or CDATA elements.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{mixed}</span> If a codec is specified, the return type depends on that
+codec. If no codec is specified and at least one node in xmlvalue is not a
+text or CDATA node, it will return undefined. If xmlvalue is empty, it will
+return null.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="setValueAndRebuildXml"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{void}</span>
+					<b>setValueAndRebuildXml</b>(value)
+					
+					</div>
+					<div class="description">
+						Sets a new value and rebuilds xmlvalue
+
+If a codec for this property is specified, it will use this codec to
+rebuild xmlvallue. Else it will attempt to create one CDATA element with
+the string value of whatever was fiven as parameter.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{mixed}</span> <b>value</b>
+									
+								</dt>
+								<dd>The object to base the xmlvalue on</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{void}</span> </dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="toString"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{String}</span>
+					<b>toString</b>()
+					
+					</div>
+					<div class="description">
+						Overloads the default toString() method so it returns the value of this property
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String}</span> A string representation of this property</dd>
+							
+							</dl>
+						
+						
+						
+
 					
 				
 			
@@ -675,7 +889,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Oct 02 2012 11:53:28 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Jan 08 2013 14:57:36 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

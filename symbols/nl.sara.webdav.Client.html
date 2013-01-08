@@ -197,17 +197,17 @@ ul.inheritsList
 	
 	<li><a href="../symbols/nl.sara.webdav.html">nl.sara.webdav</a></li>
 	
-	<li><a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a></li>
-	
-	<li><a href="../symbols/nl.sara.webdav.Acl.html">nl.sara.webdav.Acl</a></li>
-	
 	<li><a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.Codec.html">nl.sara.webdav.Codec</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.codec.html">nl.sara.webdav.codec</a></li>
 	
 	<li><a href="../symbols/nl.sara.webdav.Exception.html">nl.sara.webdav.Exception</a></li>
 	
-	<li><a href="../symbols/nl.sara.webdav.Multistatus.html">nl.sara.webdav.Multistatus</a></li>
+	<li><a href="../symbols/nl.sara.webdav.Ie.html">nl.sara.webdav.Ie</a></li>
 	
-	<li><a href="../symbols/nl.sara.webdav.Privilege.html">nl.sara.webdav.Privilege</a></li>
+	<li><a href="../symbols/nl.sara.webdav.Multistatus.html">nl.sara.webdav.Multistatus</a></li>
 	
 	<li><a href="../symbols/nl.sara.webdav.Property.html">nl.sara.webdav.Property</a></li>
 	
@@ -233,7 +233,7 @@ ul.inheritsList
 				Connection to a WebDAV server
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_pieterb_Documents_beehub_js-webdav-client_src_client.js.html">client.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_home_niekb_js-webdav-client_src_client.js.html">client.js</a>.
 				
 			</p>
 
@@ -277,15 +277,6 @@ ul.inheritsList
 						</tr>
 					</thead>
 					<tbody>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#acl">acl</a></b>(path, callback, acl)
-								</div>
-								<div class="description">Perform a WebDAV ACL request</div>
-							</td>
-						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
@@ -419,15 +410,6 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#report">report</a></b>(path, callback, body)
-								</div>
-								<div class="description">Perform a WebDAV REPORT request</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#unlock">unlock</a></b>(path, callback)
 								</div>
 								<div class="description">Perform a WebDAV UNLOCK request</div>
@@ -468,21 +450,21 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 						
 							<dt>
 								<span class="light fixedFont">{String}</span>  <b>host</b>
-								
+								<i>Optional</i>
 							</dt>
-								<dd>The hostname or IP address of the server</dd>
+								<dd>Optional; The hostname or IP address of the server. This is only needed if the host is different from the one serving this library.</dd>
 						
 							<dt>
 								<span class="light fixedFont">{Boolean}</span>  <b>useHTTPS</b>
-								
+								<i>Optional, Default: false</i>
 							</dt>
-								<dd>Optionally; If set to true, HTTPS is used. If set to false or omitted, HTTP is used</dd>
+								<dd>Optional; If set to true, HTTPS is used. If set to false or omitted, HTTP is used. This parameter is ignored if host is not set.</dd>
 						
 							<dt>
 								<span class="light fixedFont">{Number}</span>  <b>port</b>
-								
+								<i>Optional</i>
 							</dt>
-								<dd>Optionally; Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS)</dd>
+								<dd>Optional; Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS). This parameter is ignored if host is not set.</dd>
 						
 						</dl>
 					
@@ -504,64 +486,6 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 				<div class="sectionTitle">
 					Method Detail
 				</div>
-				
-					<a name="acl"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>acl</b>(path, callback, acl)
-					
-					</div>
-					<div class="description">
-						Perform a WebDAV ACL request
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/_Users_pieterb_Documents_beehub_js-webdav-client_src_plugins_client_acl.js.html">client_acl.js</a>.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>path</b>
-									
-								</dt>
-								<dd>The path to perform ACL on</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
-									
-								</dt>
-								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
-							
-								<dt>
-									<span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Acl.html">nl.sara.webdav.Acl</a>}</span> <b>acl</b>
-									
-								</dt>
-								<dd>The ACL to submit</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span> The client itself for chaining methods</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
 				
 					<a name=".ajaxHandler"> </a>
 					<div class="fixedFont">&lt;static&gt; 
@@ -651,15 +575,15 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 							
 								<dt>
 									<span class="light fixedFont">{Boolean}</span> <b>overwriteMode</b>
-									
+									<i>Optional, Default: SILENT_OVERWRITE</i>
 								</dt>
-								<dd>Optionally; Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.</dd>
+								<dd>Optional; Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{String}</span> <b>depth</b>
-									
+									<i>Optional</i>
 								</dt>
-								<dd>Optionally; Should be '0' or 'infinity'. This is used in case of a collection; 0 means only copy the collection itself, infinity means copy also everything contained in the collection</dd>
+								<dd>Optional; Should be '0' or 'infinity'. This is used in case of a collection; 0 means only copy the collection itself, infinity means copy also everything contained in the collection</dd>
 							
 							</dl>
 						
@@ -852,7 +776,8 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 								<dd>The path to perform HEAD on</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|headers)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|headels
+rs)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
@@ -957,15 +882,15 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 							
 								<dt>
 									<span class="light fixedFont">{String}</span> <b>body</b>
-									
+									<i>Optional</i>
 								</dt>
-								<dd>Optionally; a body to include in the MKCOL request.</dd>
+								<dd>Optional; a body to include in the MKCOL request.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{String}</span> <b>contenttype</b>
-									
+									<i>Optional, Default: 'application/xml; charset="utf-8"'</i>
 								</dt>
-								<dd>Optionally; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/xml; charset="utf-8"' is assumed</dd>
+								<dd>Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/xml; charset="utf-8"' is assumed</dd>
 							
 							</dl>
 						
@@ -1024,9 +949,9 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 							
 								<dt>
 									<span class="light fixedFont">{Number}</span> <b>overwriteMode</b>
-									
+									<i>Optional, Default: SILENT_OVERWRITE</i>
 								</dt>
-								<dd>Optionally; Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE, TRUNCATE_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.</dd>
+								<dd>Optional; Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE, TRUNCATE_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.</dd>
 							
 							</dl>
 						
@@ -1079,15 +1004,15 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 							
 								<dt>
 									<span class="light fixedFont">{String}</span> <b>body</b>
-									
+									<i>Optional</i>
 								</dt>
-								<dd>Optionally; a body to include in the POST request.</dd>
+								<dd>Optional; a body to include in the POST request.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{String}</span> <b>contenttype</b>
-									
+									<i>Optional, Default: 'application/x-www-form-urlencoded'</i>
 								</dt>
-								<dd>Optionally; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/x-www-form-urlencoded' is assumed</dd>
+								<dd>Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/x-www-form-urlencoded' is assumed</dd>
 							
 							</dl>
 						
@@ -1140,21 +1065,21 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 							
 								<dt>
 									<span class="light fixedFont">{String}</span> <b>depth</b>
-									
+									<i>Optional, Default: 0</i>
 								</dt>
-								<dd>Optionally; Value for the 'depth' header, should be either '0', '1' or the class constant INFINITY. When omitted, '0' is used. See RFC 4916.</dd>
+								<dd>Optional; Value for the 'depth' header, should be either '0', '1' or the class constant INFINITY. When omitted, '0' is used. See RFC 4916.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{mixed}</span> <b>props</b>
-									
+									<i>Optional, Default: ALLPROP</i>
 								</dt>
-								<dd>Optionally; The properties to fetch. Should be either one of the class constants PROPNAME or ALLPROP or an array with Property objects. When omitted, ALLPROP is assumed. See RFC 4916.</dd>
+								<dd>Optional; The properties to fetch. Should be either one of the class constants PROPNAME or ALLPROP or an array with Property objects. When omitted, ALLPROP is assumed. See RFC 4916.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Property.html">nl.sara.webdav.Property</a>[]}</span> <b>include</b>
-									
+									<i>Optional</i>
 								</dt>
-								<dd>Optionally; An array with Property objects used for the <include> element. This is only used for ALLPROP requests. When omitted, no <include> element is send. See RFC 4916.</dd>
+								<dd>Optional; An array with Property objects used for the <include> element. This is only used for ALLPROP requests. When omitted, no <include> element is send. See RFC 4916.</dd>
 							
 							</dl>
 						
@@ -1207,15 +1132,15 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 							
 								<dt>
 									<span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Property.html">nl.sara.webdav.Property</a>[]}</span> <b>setProps</b>
-									
+									<i>Optional</i>
 								</dt>
-								<dd>Optionally; The properties to set. If not set, delProps should be set. Can be omitted with 'undefined'.</dd>
+								<dd>Optional; The properties to set. If not set, delProps should be set. Can be omitted with 'undefined'.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Property.html">nl.sara.webdav.Property</a>[]}</span> <b>delProps</b>
-									
+									<i>Optional</i>
 								</dt>
-								<dd>Optionally; The properties to delete. If not set, setProps should be set.</dd>
+								<dd>Optional; The properties to delete. If not set, setProps should be set.</dd>
 							
 							</dl>
 						
@@ -1274,9 +1199,9 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 							
 								<dt>
 									<span class="light fixedFont">{String}</span> <b>contenttype</b>
-									
+									<i>Optional</i>
 								</dt>
-								<dd>Optionally; the content type of the body (i.e. value for the Content-Type header).</dd>
+								<dd>Optional; the content type of the body (i.e. value for the Content-Type header).</dd>
 							
 							</dl>
 						
@@ -1330,64 +1255,6 @@ RFC 4918
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span> The client itself for chaining methods</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="report"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>report</b>(path, callback, body)
-					
-					</div>
-					<div class="description">
-						Perform a WebDAV REPORT request
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/_Users_pieterb_Documents_beehub_js-webdav-client_src_plugins_client_acl.js.html">client_acl.js</a>.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>path</b>
-									
-								</dt>
-								<dd>The path to perform REPORT on</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
-									
-								</dt>
-								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Document}</span> <b>body</b>
-									
-								</dt>
-								<dd>The (XML DOM) document to parse and send as the request body</dd>
 							
 							</dl>
 						
@@ -1468,7 +1335,7 @@ RFC 4918
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Oct 02 2012 11:53:28 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Jan 08 2013 14:57:36 GMT+0100 (CET)
 		</div>
 	</body>
 </html>
