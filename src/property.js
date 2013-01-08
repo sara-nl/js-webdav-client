@@ -33,7 +33,6 @@ if (nl.sara.webdav.Property !== undefined) {
  * @property  {String}    namespace            The namespace
  * @property  {String}    tagname              The tag name
  * @property  {NodeList}  xmlvalue             A NodeList with the value of this property
- * @property  {String}    value                A textual representation of xmlvalue
  * @property  {Number}    status               The (HTTP) status code
  * @property  {String}    responsedescription  The response description
  */
