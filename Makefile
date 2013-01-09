@@ -14,13 +14,14 @@ dist.js: $(SOURCES)
 
 docs: $(SOURCES)
 	@if /usr/bin/test -d $(JSRUN) ; then \
-		BASEDIR="$$(pwd)" && cd "$(JSRUN)" && bash ./jsrun.sh \
+		export JSDOCDIR=$(JSRUN) ; \
+		bash $(JSRUN)/jsrun.sh \
 			--allfunctions \
-			--directory="$${BASEDIR}"/$@ \
-			--out="$${BASEDIR}"/jsdoc.log \
+			--directory=./$@ \
+			--out=./jsdoc.log \
 			--private \
-			--template=templates/jsdoc \
-			"$${BASEDIR}"/src/ "$${BASEDIR}"/src/plugins/ ; \
+			--template=$(JSRUN)/templates/jsdoc \
+			"src/" "src/plugins/" ; \
 	else \
 		echo "Unable to find jsdoc toolkit in $(JSRUN); no documentation created!"; \
 	fi
