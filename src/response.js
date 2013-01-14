@@ -120,10 +120,11 @@ nl.sara.webdav.Response = function(xmlNode) {
                 break;
                 break;
               case 'status': // always CDATA, so just take the text
-                status = child.childNodes.item(0).nodeValue;
+                status = propstatChild.childNodes.item(0).nodeValue;
+                status = parseInt(status.substr(status.indexOf(' ') + 1, 3));
                 break;
               case 'responsedescription': // always CDATA, so just take the text
-                responsedescription = child.childNodes.item(0).nodeValue;
+                responsedescription = propstatChild.childNodes.item(0).nodeValue;
               break;
             }
           }
