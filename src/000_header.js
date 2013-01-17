@@ -37,6 +37,6 @@ if (nl.sara.webdav === undefined) {
   nl.sara.webdav = {};
 }
 if (nl.sara.webdav.codec === undefined) {
-  /** @namespace Holds all the standard codecs */
+  /** @namespace Holds all the standard codecs for converting properties */
   nl.sara.webdav.codec = {};
 }
