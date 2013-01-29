@@ -205,7 +205,8 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
       }
       var element = propsBody.createElementNS(prop.namespace, prop.tagname);
       for (var j = 0; j < prop.xmlvalue.length; j++) {
-        element.appendChild(prop.xmlvalue.item(j));
+        var nodeCopy = propsBody.importNode(prop.xmlvalue.item(j), true);
+        element.appendChild(nodeCopy);
       }
       props.appendChild(element);
     }

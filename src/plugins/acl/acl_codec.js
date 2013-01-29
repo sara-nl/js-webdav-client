@@ -73,7 +73,8 @@ nl.sara.webdav.codec.AclCodec.toXML = function(acl, xmlDoc){
           var prop = xmlDoc.createElementNS(princVal.namespace, princVal.tagname);
           if (princVal.xmlvalue != null) {
             for (var j = 0; j < princVal.xmlvalue.length; j++) {
-              prop.appendChild(princVal.xmlValue.item(j));
+              var nodeCopy = xmlDoc.importNode(princVal.xmlValue.item(j), true);
+              prop.appendChild(nodeCopy);
             }
           }
           property.appendChild(prop);
@@ -111,7 +112,8 @@ nl.sara.webdav.codec.AclCodec.toXML = function(acl, xmlDoc){
         var priv = xmlDoc.createElementNS(privilege.namespace, privilege.tagname);
         if (privilege.xmlvalue != null) {
           for (var l = 0; l < privilege.xmlvalue.length; l++) {
-            priv.appendChild(privilege.xmlValue.item(j));
+            var nodeCopy = xmlDoc.importNode(privilege.xmlValue.item(j), true);
+            priv.appendChild(nodeCopy);
           }
         }
         privilegeElement.appendChild(priv);
