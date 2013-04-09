@@ -84,9 +84,10 @@ nl.sara.webdav.Client.prototype.getUrl = function(path) {
  * @param    {String}                        [depth=0]        Optional; Value for the 'depth' header, should be either '0', '1' or the class constant INFINITY. When omitted, '0' is used. See RFC 4916.
  * @param    {mixed}                         [props=ALLPROP]  Optional; The properties to fetch. Should be either one of the class constants PROPNAME or ALLPROP or an array with Property objects. When omitted, ALLPROP is assumed. See RFC 4916.
  * @param    {nl.sara.webdav.Property[]}     [include]        Optional; An array with Property objects used for the <include> element. This is only used for ALLPROP requests. When omitted, no <include> element is send. See RFC 4916.
+ * @param    {Array}                         headers          Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                          The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props, include) {
+nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props, include, headers) {
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('PROPFIND requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
@@ -165,7 +166,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
   var body = '<?xml version="1.0" encoding="utf-8" ?>' + serializer.serializeToString(propsBody);
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("PROPFIND", url, callback);
+  var ajax = nl.sara.webdav.Client.getAjax("PROPFIND", url, callback, headers);
   ajax.setRequestHeader('Depth', depthHeader);
   ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
   ajax.send(body);
@@ -180,9 +181,10 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
  * @param    {Function(status,Multistatus)}  callback    Querying the server is done asynchronously, this callback function is called when the results are in
  * @param    {nl.sara.webdav.Property[]}     [setProps]  Optional; The properties to set. If not set, delProps should be set. Can be omitted with 'undefined'.
  * @param    {nl.sara.webdav.Property[]}     [delProps]  Optional; The properties to delete. If not set, setProps should be set.
+ * @param    {Array}                         headers     Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                     The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, delProps) {
+nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, delProps, headers) {
   if ((path === undefined) || (callback === undefined) || ((setProps === undefined) && (delProps === undefined))) {
     throw new nl.sara.webdav.Exception('PROPPATCH requires the parameters path, callback and at least one of setProps or delProps', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
@@ -238,7 +240,7 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
   var body = '<?xml version="1.0" encoding="utf-8" ?>' + serializer.serializeToString(propsBody);
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("PROPPATCH", url, callback);
+  var ajax = nl.sara.webdav.Client.getAjax("PROPPATCH", url, callback, headers);
   ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
   ajax.send(body);
 
@@ -252,9 +254,10 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
  * @param    {Function(status,Multistatus)}  callback                                          Querying the server is done asynchronously, this callback function is called when the results are in
  * @param    {String}                        [body]                                            Optional; a body to include in the MKCOL request.
  * @param    {String}                        [contenttype='application/xml; charset="utf-8"']  Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/xml; charset="utf-8"' is assumed
+ * @param    {Array}                         headers                                           Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                                                           The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contenttype) {
+nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contenttype, headers) {
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('MKCOL requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
@@ -266,7 +269,7 @@ nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contentty
   var url = this.getUrl(path);
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("MKCOL", url, callback);
+  var ajax = nl.sara.webdav.Client.getAjax("MKCOL", url, callback, headers);
   if (body !== undefined) {
     if (contenttype !== undefined) {
       ajax.setRequestHeader('Content-Type', contenttype);
@@ -290,9 +293,10 @@ nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contentty
  *
  * @param    {String}                        path      The path to perform DELETE on
  * @param    {Function(status,Multistatus)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {Array}                         headers   Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                   The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.remove = function(path, callback) {
+nl.sara.webdav.Client.prototype.remove = function(path, callback, headers) {
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('DELETE requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
@@ -304,7 +308,7 @@ nl.sara.webdav.Client.prototype.remove = function(path, callback) {
   var url = this.getUrl(path);
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("DELETE", url, callback);
+  var ajax = nl.sara.webdav.Client.getAjax("DELETE", url, callback, headers);
   ajax.send();
 
   return this;
@@ -315,9 +319,10 @@ nl.sara.webdav.Client.prototype.remove = function(path, callback) {
  *
  * @param    {String}                    path      The path to GET
  * @param    {Function(status,content)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {Array}                     headers   Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}               The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.get = function(path, callback) {
+nl.sara.webdav.Client.prototype.get = function(path, callback, headers) {
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('GET requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
@@ -332,7 +337,7 @@ nl.sara.webdav.Client.prototype.get = function(path, callback) {
   var ajax = null;
   ajax = nl.sara.webdav.Client.getAjax("GET", url, function(status) {
     callback(status, ajax.responseText);
-  });
+  }, headers);
   ajax.send();
 
   return this;
@@ -342,11 +347,11 @@ nl.sara.webdav.Client.prototype.get = function(path, callback) {
  * Perform a WebDAV HEAD request
  *
  * @param    {String}                    path      The path to perform HEAD on
- * @param    {Function(status,headels
- * rs)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {Function(status,headers)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {Array}                     headers   Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}               The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.head = function(path, callback) {
+nl.sara.webdav.Client.prototype.head = function(path, callback, headers) {
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('HEAD requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
@@ -361,7 +366,7 @@ nl.sara.webdav.Client.prototype.head = function(path, callback) {
   var ajax = null;
   ajax = nl.sara.webdav.Client.getAjax("HEAD", url, function(status) {
     callback(status, ajax.getAllResponseHeaders());
-  });
+  }, headers);
   ajax.send();
 
   return this;
@@ -374,9 +379,10 @@ nl.sara.webdav.Client.prototype.head = function(path, callback) {
  * @param    {Function(status,Multistatus)}  callback       Querying the server is done asynchronously, this callback function is called when the results are in
  * @param    {String}                        body           The content to include in the PUT request.
  * @param    {String}                        [contenttype]  Optional; the content type of the body (i.e. value for the Content-Type header).
+ * @param    {Array}                         headers        Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                        The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype) {
+nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype, headers) {
   if ((path === undefined) || (callback === undefined) || (body === undefined)) {
     throw new nl.sara.webdav.Exception('PUT requires the parameters path, callback and body', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
@@ -389,7 +395,7 @@ nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype
 
   // And then send the request
   var ajax = null;
-  ajax = nl.sara.webdav.Client.getAjax("PUT", url, callback);
+  ajax = nl.sara.webdav.Client.getAjax("PUT", url, callback, headers);
   if (contenttype !== undefined) {
     ajax.setRequestHeader('Content-Type', contenttype);
   }
@@ -405,9 +411,10 @@ nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype
  * @param    {Function(status,Multistatus)}  callback                                           Querying the server is done asynchronously, this callback function is called when the results are in
  * @param    {String}                        [body]                                             Optional; a body to include in the POST request.
  * @param    {String}                        [contenttype='application/x-www-form-urlencoded']  Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/x-www-form-urlencoded' is assumed
+ * @param    {Array}                         headers                                            Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                                                            The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttype) {
+nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttype, headers) {
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('POST requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
@@ -420,7 +427,7 @@ nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttyp
 
   // And then send the request
   var ajax = null;
-  ajax = nl.sara.webdav.Client.getAjax("POST", url, callback);
+  ajax = nl.sara.webdav.Client.getAjax("POST", url, callback, headers);
   if (body !== undefined){
     if (contenttype !== undefined) {
       ajax.setRequestHeader('Content-Type', contenttype);
@@ -443,9 +450,10 @@ nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttyp
  * @param    {String}                        destination                       The destination to copy to. Should be either a full URL or a path from the root on this server (i.e. it should start with a /)
  * @param    {Boolean}                       [overwriteMode=SILENT_OVERWRITE]  Optional; Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.
  * @param    {String}                        [depth]                           Optional; Should be '0' or 'infinity'. This is used in case of a collection; 0 means only copy the collection itself, infinity means copy also everything contained in the collection
+ * @param    {Array}                         headers                           Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                                           The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.copy = function(path, callback, destination, overwriteMode, depth) {
+nl.sara.webdav.Client.prototype.copy = function(path, callback, destination, overwriteMode, depth, headers) {
   if ((path === undefined) || (callback === undefined) || (destination === undefined)) {
     throw new nl.sara.webdav.Exception('COPY requires the parameters path, callback and destination', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
@@ -462,7 +470,7 @@ nl.sara.webdav.Client.prototype.copy = function(path, callback, destination, ove
   } // Else I assume it is a complete URL already
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("COPY", url, callback);
+  var ajax = nl.sara.webdav.Client.getAjax("COPY", url, callback, headers);
   ajax.setRequestHeader('Destination', destination);
   if (depth !== undefined) {
     if ((depth != 0) && (depth != 'infinity')) {
@@ -485,9 +493,10 @@ nl.sara.webdav.Client.prototype.copy = function(path, callback, destination, ove
  * @param    {Function(status,Multistatus)}  callback                          Querying the server is done asynchronously, this callback function is called when the results are in
  * @param    {String}                        destination                       The destination to move to. Should be either a full URL or a path from the root on this server (i.e. it should start with a /)
  * @param    {Number}                        [overwriteMode=SILENT_OVERWRITE]  Optional; Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE, TRUNCATE_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.
+ * @param    {Array}                         headers                           Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                                           The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.move = function(path, callback, destination, overwriteMode) {
+nl.sara.webdav.Client.prototype.move = function(path, callback, destination, overwriteMode, headers) {
   if ((path === undefined) || (callback === undefined) || (destination === undefined)) {
     throw new nl.sara.webdav.Exception('MOVE requires the parameters path, callback and destination', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
@@ -504,7 +513,7 @@ nl.sara.webdav.Client.prototype.move = function(path, callback, destination, ove
   } // Else I assume it is a complete URL already
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("MOVE", url, callback);
+  var ajax = nl.sara.webdav.Client.getAjax("MOVE", url, callback, headers);
   ajax.setRequestHeader('Destination', destination);
   if (overwriteMode == nl.sara.webdav.Client.FAIL_ON_OVERWRITE) {
     ajax.setRequestHeader('Overwrite', 'F');
@@ -521,9 +530,10 @@ nl.sara.webdav.Client.prototype.move = function(path, callback, destination, ove
  *
  * @param    {String}                        path      The path to perform LOCK on
  * @param    {Function(status,Multistatus)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {Array}                         headers   Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                   The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.lock = function(path, callback) {
+nl.sara.webdav.Client.prototype.lock = function(path, callback, headers) {
   throw new nl.sara.webdav.Exception('LOCK is not implemented yet', nl.sara.webdav.Exception.NOT_IMPLEMENTED);
   return this;
 }
@@ -533,9 +543,10 @@ nl.sara.webdav.Client.prototype.lock = function(path, callback) {
  *
  * @param    {String}                        path      The path to perform UNLOCK on
  * @param    {Function(status,Multistatus)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {Array}                         headers   Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                   The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.unlock = function(path, callback) {
+nl.sara.webdav.Client.prototype.unlock = function(path, callback, headers) {
   throw new nl.sara.webdav.Exception('UNLOCK is not implemented yet', nl.sara.webdav.Exception.NOT_IMPLEMENTED);
   return this;
 }
@@ -547,9 +558,10 @@ nl.sara.webdav.Client.prototype.unlock = function(path, callback) {
  * @param    {String}                        method    The HTTP/webDAV method to use (e.g. GET, POST, PROPFIND)
  * @param    {String}                        url       The url to connect to
  * @param    {Function(status,Multistatus)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {Array}                         headers   Additional headers to set
  * @returns  {XMLHttpRequest}                          A prepared XMLHttpRequest
  */
-nl.sara.webdav.Client.getAjax = function(method, url, callback) {
+nl.sara.webdav.Client.getAjax = function(method, url, callback, headers) {
   var /** @type XMLHttpRequest */ ajax = new XMLHttpRequest();
   ajax.open(method, url, true);
   ajax.onreadystatechange=function(){nl.sara.webdav.Client.ajaxHandler(ajax, callback);}
