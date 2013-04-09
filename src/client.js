@@ -562,7 +562,7 @@ nl.sara.webdav.Client.getAjax = function(method, url, callback, headers) {
   ajax.open(method, url, true);
   ajax.onreadystatechange=function(){nl.sara.webdav.Client.ajaxHandler(ajax, callback);}
   for (var header in headers) {
-    setRequestHeader(header, headers[header]);
+    ajax.setRequestHeader(header, headers[header]);
   }
   return ajax;
 }
