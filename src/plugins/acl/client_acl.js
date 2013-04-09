@@ -25,11 +25,11 @@
 /**
  * Perform a WebDAV ACL request
  *
- * @param    {String}                        path      The path to perform ACL on
- * @param    {Function(status,Multistatus)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
- * @param    {nl.sara.webdav.Acl}            acl       The ACL to submit
- * @param    {Array}                         headers   Optional; Additional headers to set
- * @returns  {nl.sara.webdav.Client}                   The client itself for chaining methods
+ * @param    {String}                         path      The path to perform ACL on
+ * @param    {Function(status,body,headers)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {nl.sara.webdav.Acl}             acl       The ACL to submit
+ * @param    {Array}                          headers   Optional; Additional headers to set
+ * @returns  {nl.sara.webdav.Client}                    The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.acl = function(path, callback, acl, headers) {
   if ((path === undefined) || (callback === undefined)) {
@@ -70,11 +70,11 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl, headers) {
 /**
  * Perform a WebDAV REPORT request
  *
- * @param    {String}                        path         The path to perform REPORT on
- * @param    {Function(status,Multistatus)}  callback     Querying the server is done asynchronously, this callback function is called when the results are in
- * @param    {Document}                      body         The (XML DOM) document to parse and send as the request body
- * @param    {Array}                         headers      Optional; Additional headers to set
- * @returns  {nl.sara.webdav.Client}                      The client itself for chaining methods
+ * @param    {String}                         path         The path to perform REPORT on
+ * @param    {Function(status,body,headers)}  callback     Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {Document}                       body         The (XML DOM) document to parse and send as the request body
+ * @param    {Array}                          headers      Optional; Additional headers to set
+ * @returns  {nl.sara.webdav.Client}                       The client itself for chaining methods
  */
 nl.sara.webdav.Client.prototype.report = function(path, callback, body, headers) {
   if ((path === undefined) || (callback === undefined) || (body === undefined)) {
