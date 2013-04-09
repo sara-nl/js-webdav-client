@@ -28,9 +28,10 @@
  * @param    {String}                        path      The path to perform ACL on
  * @param    {Function(status,Multistatus)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
  * @param    {nl.sara.webdav.Acl}            acl       The ACL to submit
+ * @param    {Array}                         headers   Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                   The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
+nl.sara.webdav.Client.prototype.acl = function(path, callback, acl, headers) {
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('ACL requires the parameters path, callback and acl', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
@@ -56,9 +57,9 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
     }else{
       url = url + '?_method=acl';
     }
-    ajax = nl.sara.webdav.Client.getAjax('POST', url, callback);
+    ajax = nl.sara.webdav.Client.getAjax('POST', url, callback, headers);
   }else{
-    ajax = nl.sara.webdav.Client.getAjax("ACL", url, callback);
+    ajax = nl.sara.webdav.Client.getAjax("ACL", url, callback, headers);
   }
   ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
   ajax.send(body);
@@ -72,9 +73,10 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl) {
  * @param    {String}                        path         The path to perform REPORT on
  * @param    {Function(status,Multistatus)}  callback     Querying the server is done asynchronously, this callback function is called when the results are in
  * @param    {Document}                      body         The (XML DOM) document to parse and send as the request body
+ * @param    {Array}                         headers      Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                      The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.report = function(path, callback, body) {
+nl.sara.webdav.Client.prototype.report = function(path, callback, body, headers) {
   if ((path === undefined) || (callback === undefined) || (body === undefined)) {
     throw new nl.sara.webdav.Exception('REPORT requires the parameters path, callback and body', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
@@ -97,9 +99,9 @@ nl.sara.webdav.Client.prototype.report = function(path, callback, body) {
     }else{
       url = url + '?_method=report';
     }
-    ajax = nl.sara.webdav.Client.getAjax('POST', url, callback);
+    ajax = nl.sara.webdav.Client.getAjax('POST', url, callback, headers);
   }else{
-    ajax = nl.sara.webdav.Client.getAjax("REPORT", url, callback);
+    ajax = nl.sara.webdav.Client.getAjax("REPORT", url, callback, headers);
   }
   ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
   ajax.send(body);
