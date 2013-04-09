@@ -290,7 +290,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#copy">copy</a></b>(path, callback, destination, overwriteMode, depth)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#copy">copy</a></b>(path, callback, destination, overwriteMode, depth, headers)
 								</div>
 								<div class="description">Perform a WebDAV COPY request</div>
 							</td>
@@ -299,7 +299,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#get">get</a></b>(path, callback)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#get">get</a></b>(path, callback, headers)
 								</div>
 								<div class="description">Perform a WebDAV GET request</div>
 							</td>
@@ -308,7 +308,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">nl.sara.webdav.Client.<b><a href="../symbols/nl.sara.webdav.Client.html#.getAjax">getAjax</a></b>(method, url, callback)
+								<div class="fixedFont">nl.sara.webdav.Client.<b><a href="../symbols/nl.sara.webdav.Client.html#.getAjax">getAjax</a></b>(method, url, callback, headers)
 								</div>
 								<div class="description">Prepares a XMLHttpRequest object to be used for an AJAX request</div>
 							</td>
@@ -326,7 +326,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#head">head</a></b>(path, callback)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#head">head</a></b>(path, callback, headers)
 								</div>
 								<div class="description">Perform a WebDAV HEAD request</div>
 							</td>
@@ -335,7 +335,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#lock">lock</a></b>(path, callback)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#lock">lock</a></b>(path, callback, headers)
 								</div>
 								<div class="description">Perform a WebDAV LOCK request</div>
 							</td>
@@ -344,7 +344,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#mkcol">mkcol</a></b>(path, callback, body, contenttype)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#mkcol">mkcol</a></b>(path, callback, body, contenttype, headers)
 								</div>
 								<div class="description">Perform a WebDAV MKCOL request</div>
 							</td>
@@ -353,7 +353,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#move">move</a></b>(path, callback, destination, overwriteMode)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#move">move</a></b>(path, callback, destination, overwriteMode, headers)
 								</div>
 								<div class="description">Perform a WebDAV MOVE request</div>
 							</td>
@@ -362,7 +362,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#post">post</a></b>(path, callback, body, contenttype)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#post">post</a></b>(path, callback, body, contenttype, headers)
 								</div>
 								<div class="description">Perform a WebDAV POST request</div>
 							</td>
@@ -371,7 +371,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#propfind">propfind</a></b>(path, callback, depth, props, include)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#propfind">propfind</a></b>(path, callback, depth, props, include, headers)
 								</div>
 								<div class="description">Perform a WebDAV PROPFIND request</div>
 							</td>
@@ -380,7 +380,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#proppatch">proppatch</a></b>(path, callback, setProps, delProps)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#proppatch">proppatch</a></b>(path, callback, setProps, delProps, headers)
 								</div>
 								<div class="description">Perform a WebDAV PROPPATCH request</div>
 							</td>
@@ -389,7 +389,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#put">put</a></b>(path, callback, body, contenttype)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#put">put</a></b>(path, callback, body, contenttype, headers)
 								</div>
 								<div class="description">Perform a WebDAV PUT request</div>
 							</td>
@@ -398,7 +398,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#remove">remove</a></b>(path, callback)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#remove">remove</a></b>(path, callback, headers)
 								</div>
 								<div class="description">Perform a WebDAV DELETE request
 
@@ -410,7 +410,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#unlock">unlock</a></b>(path, callback)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#unlock">unlock</a></b>(path, callback, headers)
 								</div>
 								<div class="description">Perform a WebDAV UNLOCK request</div>
 							</td>
@@ -513,7 +513,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 								<dd>The XMLHttpRequest object which performed the request</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
@@ -540,7 +540,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>copy</b>(path, callback, destination, overwriteMode, depth)
+					<b>copy</b>(path, callback, destination, overwriteMode, depth, headers)
 					
 					</div>
 					<div class="description">
@@ -562,7 +562,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 								<dd>The path to perform COPY on</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
@@ -584,6 +584,12 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 									<i>Optional</i>
 								</dt>
 								<dd>Optional; Should be '0' or 'infinity'. This is used in case of a collection; 0 means only copy the collection itself, infinity means copy also everything contained in the collection</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
 							
 							</dl>
 						
@@ -607,7 +613,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>get</b>(path, callback)
+					<b>get</b>(path, callback, headers)
 					
 					</div>
 					<div class="description">
@@ -634,6 +640,12 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
 							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
+							
 							</dl>
 						
 						
@@ -656,7 +668,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 					<div class="fixedFont">&lt;static&gt; 
 					
 					<span class="light">{XMLHttpRequest}</span>
-					<span class="light">nl.sara.webdav.Client.</span><b>getAjax</b>(method, url, callback)
+					<span class="light">nl.sara.webdav.Client.</span><b>getAjax</b>(method, url, callback, headers)
 					
 					</div>
 					<div class="description">
@@ -684,10 +696,16 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 								<dd>The url to connect to</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Additional headers to set</dd>
 							
 							</dl>
 						
@@ -754,7 +772,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>head</b>(path, callback)
+					<b>head</b>(path, callback, headers)
 					
 					</div>
 					<div class="description">
@@ -776,11 +794,16 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 								<dd>The path to perform HEAD on</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|headels
-rs)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
 							
 							</dl>
 						
@@ -804,7 +827,7 @@ rs)}</span> <b>callback</b>
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>lock</b>(path, callback)
+					<b>lock</b>(path, callback, headers)
 					
 					</div>
 					<div class="description">
@@ -826,10 +849,16 @@ rs)}</span> <b>callback</b>
 								<dd>The path to perform LOCK on</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
 							
 							</dl>
 						
@@ -853,7 +882,7 @@ rs)}</span> <b>callback</b>
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>mkcol</b>(path, callback, body, contenttype)
+					<b>mkcol</b>(path, callback, body, contenttype, headers)
 					
 					</div>
 					<div class="description">
@@ -875,7 +904,7 @@ rs)}</span> <b>callback</b>
 								<dd>The path to perform MKCOL on</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
@@ -891,6 +920,12 @@ rs)}</span> <b>callback</b>
 									<i>Optional, Default: 'application/xml; charset="utf-8"'</i>
 								</dt>
 								<dd>Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/xml; charset="utf-8"' is assumed</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
 							
 							</dl>
 						
@@ -914,7 +949,7 @@ rs)}</span> <b>callback</b>
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>move</b>(path, callback, destination, overwriteMode)
+					<b>move</b>(path, callback, destination, overwriteMode, headers)
 					
 					</div>
 					<div class="description">
@@ -936,7 +971,7 @@ rs)}</span> <b>callback</b>
 								<dd>The path to perform MOVE on</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
@@ -952,6 +987,12 @@ rs)}</span> <b>callback</b>
 									<i>Optional, Default: SILENT_OVERWRITE</i>
 								</dt>
 								<dd>Optional; Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE, TRUNCATE_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
 							
 							</dl>
 						
@@ -975,7 +1016,7 @@ rs)}</span> <b>callback</b>
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>post</b>(path, callback, body, contenttype)
+					<b>post</b>(path, callback, body, contenttype, headers)
 					
 					</div>
 					<div class="description">
@@ -997,7 +1038,7 @@ rs)}</span> <b>callback</b>
 								<dd>The path to perform POST on</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
@@ -1013,6 +1054,12 @@ rs)}</span> <b>callback</b>
 									<i>Optional, Default: 'application/x-www-form-urlencoded'</i>
 								</dt>
 								<dd>Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/x-www-form-urlencoded' is assumed</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
 							
 							</dl>
 						
@@ -1036,7 +1083,7 @@ rs)}</span> <b>callback</b>
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>propfind</b>(path, callback, depth, props, include)
+					<b>propfind</b>(path, callback, depth, props, include, headers)
 					
 					</div>
 					<div class="description">
@@ -1058,7 +1105,7 @@ rs)}</span> <b>callback</b>
 								<dd>The path get a PROPFIND for</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
@@ -1080,6 +1127,12 @@ rs)}</span> <b>callback</b>
 									<i>Optional</i>
 								</dt>
 								<dd>Optional; An array with Property objects used for the <include> element. This is only used for ALLPROP requests. When omitted, no <include> element is send. See RFC 4916.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
 							
 							</dl>
 						
@@ -1103,7 +1156,7 @@ rs)}</span> <b>callback</b>
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>proppatch</b>(path, callback, setProps, delProps)
+					<b>proppatch</b>(path, callback, setProps, delProps, headers)
 					
 					</div>
 					<div class="description">
@@ -1125,7 +1178,7 @@ rs)}</span> <b>callback</b>
 								<dd>The path do a PROPPATCH on</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
@@ -1141,6 +1194,12 @@ rs)}</span> <b>callback</b>
 									<i>Optional</i>
 								</dt>
 								<dd>Optional; The properties to delete. If not set, setProps should be set.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
 							
 							</dl>
 						
@@ -1164,7 +1223,7 @@ rs)}</span> <b>callback</b>
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>put</b>(path, callback, body, contenttype)
+					<b>put</b>(path, callback, body, contenttype, headers)
 					
 					</div>
 					<div class="description">
@@ -1186,7 +1245,7 @@ rs)}</span> <b>callback</b>
 								<dd>The path to perform PUT on</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
@@ -1202,6 +1261,12 @@ rs)}</span> <b>callback</b>
 									<i>Optional</i>
 								</dt>
 								<dd>Optional; the content type of the body (i.e. value for the Content-Type header).</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
 							
 							</dl>
 						
@@ -1225,7 +1290,7 @@ rs)}</span> <b>callback</b>
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>remove</b>(path, callback)
+					<b>remove</b>(path, callback, headers)
 					
 					</div>
 					<div class="description">
@@ -1251,10 +1316,16 @@ RFC 4918
 								<dd>The path to perform DELETE on</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
 							
 							</dl>
 						
@@ -1278,7 +1349,7 @@ RFC 4918
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
-					<b>unlock</b>(path, callback)
+					<b>unlock</b>(path, callback, headers)
 					
 					</div>
 					<div class="description">
@@ -1300,10 +1371,16 @@ RFC 4918
 								<dd>The path to perform UNLOCK on</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function(status|Multistatus)}</span> <b>callback</b>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
 									
 								</dt>
 								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
 							
 							</dl>
 						
@@ -1335,7 +1412,7 @@ RFC 4918
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Jan 09 2013 08:51:36 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Apr 09 2013 11:53:28 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>
