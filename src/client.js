@@ -261,8 +261,8 @@ nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contentty
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('MKCOL requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if ((typeof path != "string") || ((body !== undefined) && (typeof body != 'string')) || ((contenttype !== undefined) && (typeof contenttype != 'string'))) {
-    throw new nl.sara.webdav.Exception('MKCOL parameter; path and body should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
+  if ((typeof path != "string") || ((contenttype !== undefined) && (typeof contenttype != 'string'))) {
+    throw new nl.sara.webdav.Exception('MKCOL parameter; path and contenttype should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
   // Get the full URL, based on the specified path
@@ -273,8 +273,6 @@ nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contentty
   if (body !== undefined) {
     if (contenttype !== undefined) {
       ajax.setRequestHeader('Content-Type', contenttype);
-    }else{
-      ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
     }
     ajax.send(body);
   }else{
@@ -382,8 +380,8 @@ nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype
   if ((path === undefined) || (callback === undefined) || (body === undefined)) {
     throw new nl.sara.webdav.Exception('PUT requires the parameters path, callback and body', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if ((typeof path != "string") || (typeof body != 'string') || ((contenttype !== undefined) && (typeof contenttype != 'string'))) {
-    throw new nl.sara.webdav.Exception('PUT parameter; path, body and contenttype should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
+  if ((typeof path != "string") || ((contenttype !== undefined) && (typeof contenttype != 'string'))) {
+    throw new nl.sara.webdav.Exception('PUT parameter; path and contenttype should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
   // Get the full URL, based on the specified path
@@ -424,11 +422,9 @@ nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttyp
   // And then send the request
   var ajax = null;
   ajax = nl.sara.webdav.Client.getAjax("POST", url, callback, headers);
-  if (body !== undefined){
+  if ( body !== undefined ) {
     if (contenttype !== undefined) {
       ajax.setRequestHeader('Content-Type', contenttype);
-    }else{
-      ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     }
     ajax.send(body);
   }else{
