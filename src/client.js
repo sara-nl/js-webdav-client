@@ -425,6 +425,8 @@ nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttyp
   if ( body !== undefined ) {
     if (contenttype !== undefined) {
       ajax.setRequestHeader('Content-Type', contenttype);
+    }else{
+      ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     }
     ajax.send(body);
   }else{
