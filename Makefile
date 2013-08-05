@@ -1,7 +1,7 @@
 SOURCES = src/*.js src/plugins/*/*.js
 JSRUN = ../jsdoc-toolkit
 
-all: dist.js docs
+all: dist.js docs tests
 
 dist.js: $(SOURCES)
 	@-rm -f $@
@@ -26,7 +26,15 @@ docs: $(SOURCES)
 		echo "Unable to find jsdoc toolkit in $(JSRUN); no documentation created!"; \
 	fi
 
+tests: dist.js
+	@if /usr/bin/test ! -e 'tests/resources' ; then \
+		mkdir tests/resources ; \
+		curl http://code.jquery.com/qunit/qunit-1.12.0.css > tests/resources/qunit.css ; \
+		curl http://code.jquery.com/qunit/qunit-1.12.0.js > tests/resources/qunit.js ; \
+	fi
+
 clean:
 	@-rm -f dist.js
 	@-rm -rf docs/*
 	@-rm -f jsdoc.log
+	@-rm -rf tests/resources

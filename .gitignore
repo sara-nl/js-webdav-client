@@ -1,5 +1,6 @@
 dist*
 test/
+tests/resources/
 .project
 jsdoc.log
 nbproject
