@@ -2,3 +2,4 @@ dist*
 test/
 .project
 jsdoc.log
+nbproject
