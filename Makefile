@@ -29,9 +29,10 @@ docs: $(SOURCES)
 tests: dist.js
 	@if /usr/bin/test ! -e 'tests/resources' ; then \
 		mkdir tests/resources ; \
-		curl http://code.jquery.com/qunit/qunit-1.12.0.css > tests/resources/qunit.css ; \
-		curl http://code.jquery.com/qunit/qunit-1.12.0.js > tests/resources/qunit.js ; \
-	fi
+	fi ; \
+  curl http://code.jquery.com/qunit/qunit-1.12.0.css > tests/resources/qunit.css ; \
+  curl http://code.jquery.com/qunit/qunit-1.12.0.js > tests/resources/qunit.js ; \
+  curl https://raw.github.com/philikon/MockHttpRequest/master/lib/mock.js > tests/resources/mock.js
 
 clean:
 	@-rm -f dist.js
