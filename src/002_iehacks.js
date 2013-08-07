@@ -26,8 +26,7 @@ if (nl.sara.webdav.Ie !== undefined) {
 /**
  * @class This class holds all IE hacks
  */
-nl.sara.webdav.Ie = function() {
-}
+nl.sara.webdav.Ie = {};
 
 /**
  * Although this library has no intent to work in IE older than versions 9, it should work in IE and sometimes requires some special attention for this wonderful browser
