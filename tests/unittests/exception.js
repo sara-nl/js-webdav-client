@@ -42,3 +42,5 @@ test( 'Exception; constructor', function() {
   deepEqual( exceptionTwoParams.message, testMessage, "Exception with all parameters should have the message set correctly" );
   deepEqual( exceptionTwoParams.code   , testCode   , "Exception with all parameters should have the code set correctly" );
 } );
+
+// End of file

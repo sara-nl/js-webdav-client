@@ -171,3 +171,5 @@ test( 'Property; checking and adding (webDAV) errors', function() {
   deepEqual( allReturnedErrors[1], secondError, 'The second error added, should also be the second element in the error array' );
   deepEqual( allReturnedErrors[2], thirdError, 'The third error added, should also be the third element in the error array' );
 } );
+
+// End of file

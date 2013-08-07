@@ -68,3 +68,5 @@ test( 'Codec; constructor', function() {
   deepEqual( codecFourParams.toXML()  , testToXMLReturnValue  , "Codec with four constructors parameters should have toXML property set properly" );
   deepEqual( codecFourParams.fromXML(), testFromXMLReturnValue, "Codec with four constructors parameters should have fromXML property set properly" );
 } );
+
+// End of file
