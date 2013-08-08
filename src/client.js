@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
-"use strict"
+"use strict";
 
 // If nl.sara.webdav.Client is already defined, we have a namespace clash!
 if (nl.sara.webdav.Client !== undefined) {
@@ -42,10 +42,10 @@ nl.sara.webdav.Client = function(host, useHTTPS, port) {
   // Constructor logic
   if (host !== undefined) {
     var protocol = (useHTTPS === true) ? 'https' : 'http';
-    port = (port != undefined) ? port : ((protocol == 'https') ? 443 : 80);
-    this._baseUrl = protocol + '://' + host + ((((protocol == 'http') && (port == 80)) || ((protocol == 'https') && (port == 443))) ? '' : ':' + port);
+    port = (port !== undefined) ? port : ((protocol === 'https') ? 443 : 80);
+    this._baseUrl = protocol + '://' + host + ((((protocol === 'http') && (port === 80)) || ((protocol === 'https') && (port === 443))) ? '' : ':' + port);
   }
-}
+};
 
 /**#@+
  * Class constant
@@ -66,7 +66,7 @@ nl.sara.webdav.Client.SILENT_OVERWRITE = 5;
  * @returns {String}        The full url to the path
  */
 nl.sara.webdav.Client.prototype.getUrl = function(path) {
-  if (path.substring(0,1) != '/') {
+  if (path.substring(0,1) !== '/') {
     path = '/' + path;
   }
   if (this._baseUrl !== null) {
@@ -74,7 +74,7 @@ nl.sara.webdav.Client.prototype.getUrl = function(path) {
   }else{
     return path;
   }
-}
+};
 
 /**
  * Perform a WebDAV PROPFIND request
@@ -91,7 +91,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('PROPFIND requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if (!(typeof path == "string")) {
+  if (!(typeof path === "string")) {
     throw new nl.sara.webdav.Exception('PROPFIND parameter; path should be a string', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -172,7 +172,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
   ajax.send(body);
 
   return this;
-}
+};
 
 /**
  * Perform a WebDAV PROPPATCH request
@@ -188,7 +188,7 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
   if ((path === undefined) || (callback === undefined) || ((setProps === undefined) && (delProps === undefined))) {
     throw new nl.sara.webdav.Exception('PROPPATCH requires the parameters path, callback and at least one of setProps or delProps', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if (!(typeof path == "string") || ((setProps !== undefined) && !(setProps instanceof Array)) || ((delProps !== undefined) && !(delProps instanceof Array))) {
+  if (!(typeof path === "string") || ((setProps !== undefined) && !(setProps instanceof Array)) || ((delProps !== undefined) && !(delProps instanceof Array))) {
     throw new nl.sara.webdav.Exception('PROPPATCH parameter; path should be a string, setProps and delProps should be arrays', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -245,7 +245,7 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
   ajax.send(body);
 
   return this;
-}
+};
 
 /**
  * Perform a WebDAV MKCOL request
@@ -261,7 +261,7 @@ nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contentty
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('MKCOL requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if ((typeof path != "string") || ((contenttype !== undefined) && (typeof contenttype != 'string'))) {
+  if ((typeof path !== "string") || ((contenttype !== undefined) && (typeof contenttype !== 'string'))) {
     throw new nl.sara.webdav.Exception('MKCOL parameter; path and contenttype should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -280,7 +280,7 @@ nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contentty
   }
 
   return this;
-}
+};
 
 /**
  * Perform a WebDAV DELETE request
@@ -298,7 +298,7 @@ nl.sara.webdav.Client.prototype.remove = function(path, callback, headers) {
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('DELETE requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if (typeof path != "string"){
+  if (typeof path !== "string"){
     throw new nl.sara.webdav.Exception('DELETE parameter; path should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -310,7 +310,7 @@ nl.sara.webdav.Client.prototype.remove = function(path, callback, headers) {
   ajax.send();
 
   return this;
-}
+};
 
 /**
  * Perform a WebDAV GET request
@@ -324,7 +324,7 @@ nl.sara.webdav.Client.prototype.get = function(path, callback, headers) {
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('GET requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if (typeof path != "string"){
+  if (typeof path !== "string"){
     throw new nl.sara.webdav.Exception('GET parameter; path should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -337,7 +337,7 @@ nl.sara.webdav.Client.prototype.get = function(path, callback, headers) {
   ajax.send();
 
   return this;
-}
+};
 
 /**
  * Perform a WebDAV HEAD request
@@ -351,7 +351,7 @@ nl.sara.webdav.Client.prototype.head = function(path, callback, headers) {
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('HEAD requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if (typeof path != "string"){
+  if (typeof path !== "string"){
     throw new nl.sara.webdav.Exception('HEAD parameter; path should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -364,7 +364,7 @@ nl.sara.webdav.Client.prototype.head = function(path, callback, headers) {
   ajax.send();
 
   return this;
-}
+};
 
 /**
  * Perform a WebDAV PUT request
@@ -380,7 +380,7 @@ nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype
   if ((path === undefined) || (callback === undefined) || (body === undefined)) {
     throw new nl.sara.webdav.Exception('PUT requires the parameters path, callback and body', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if ((typeof path != "string") || ((contenttype !== undefined) && (typeof contenttype != 'string'))) {
+  if ((typeof path !== "string") || ((contenttype !== undefined) && (typeof contenttype !== 'string'))) {
     throw new nl.sara.webdav.Exception('PUT parameter; path and contenttype should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -396,7 +396,7 @@ nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype
   ajax.send(body);
 
   return this;
-}
+};
 
 /**
  * Perform a WebDAV POST request
@@ -412,7 +412,7 @@ nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttyp
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('POST requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if ((typeof path != "string") || ((body !== undefined) && (typeof body != 'string')) || ((contenttype !== undefined) && (typeof contenttype != 'string'))) {
+  if ((typeof path !== "string") || ((body !== undefined) && (typeof body !== 'string')) || ((contenttype !== undefined) && (typeof contenttype !== 'string'))) {
     throw new nl.sara.webdav.Exception('POST parameter; path, body and contenttype should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -434,7 +434,7 @@ nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttyp
   }
 
   return this;
-}
+};
 
 /**
  * Perform a WebDAV COPY request
@@ -442,7 +442,7 @@ nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttyp
  * @param    {String}                         path                              The path to perform COPY on
  * @param    {Function(status,body,headers)}  callback                          Querying the server is done asynchronously, this callback function is called when the results are in
  * @param    {String}                         destination                       The destination to copy to. Should be either a full URL or a path from the root on this server (i.e. it should start with a /)
- * @param    {Boolean}                        [overwriteMode=SILENT_OVERWRITE]  Optional; Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.
+ * @param    {Integer}                        [overwriteMode=SILENT_OVERWRITE]  Optional; Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.
  * @param    {String}                         [depth]                           Optional; Should be '0' or 'infinity'. This is used in case of a collection; 0 means only copy the collection itself, infinity means copy also everything contained in the collection
  * @param    {Array}                          headers                           Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                                            The client itself for chaining methods
@@ -451,7 +451,7 @@ nl.sara.webdav.Client.prototype.copy = function(path, callback, destination, ove
   if ((path === undefined) || (callback === undefined) || (destination === undefined)) {
     throw new nl.sara.webdav.Exception('COPY requires the parameters path, callback and destination', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if ((typeof path != "string") || (typeof destination != "string")){
+  if ((typeof path !== "string") || (typeof destination !== "string")){
     throw new nl.sara.webdav.Exception('COPY parameter; path and destination should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -459,7 +459,7 @@ nl.sara.webdav.Client.prototype.copy = function(path, callback, destination, ove
   var url = this.getUrl(path);
 
   // If the destination starts with a / it is a absolute url on the same host, so prepare a complete URL
-  if (destination.substr(0,1) == '/') {
+  if (destination.substr(0,1) === '/') {
     destination = this.getUrl(destination);
   } // Else I assume it is a complete URL already
 
@@ -467,18 +467,18 @@ nl.sara.webdav.Client.prototype.copy = function(path, callback, destination, ove
   var ajax = nl.sara.webdav.Client.getAjax("COPY", url, callback, headers);
   ajax.setRequestHeader('Destination', destination);
   if (depth !== undefined) {
-    if ((depth != 0) && (depth != 'infinity')) {
+    if ((depth !== 0) && (depth !== 'infinity')) {
       throw new nl.sara.webdav.Exception("COPY parameter; depth should be '0' or 'infinity'", nl.sara.webdav.Exception.WRONG_VALUE);
     }
     ajax.setRequestHeader('Depth', depth);
   }
-  if (overwriteMode == nl.sara.webdav.Client.FAIL_ON_OVERWRITE) {
+  if (overwriteMode === nl.sara.webdav.Client.FAIL_ON_OVERWRITE) {
     ajax.setRequestHeader('Overwrite', 'F');
   }
   ajax.send();
 
   return this;
-}
+};
 
 /**
  * Perform a WebDAV MOVE request
@@ -494,7 +494,7 @@ nl.sara.webdav.Client.prototype.move = function(path, callback, destination, ove
   if ((path === undefined) || (callback === undefined) || (destination === undefined)) {
     throw new nl.sara.webdav.Exception('MOVE requires the parameters path, callback and destination', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if ((typeof path != "string") || (typeof destination != "string")){
+  if ((typeof path !== "string") || (typeof destination !== "string")){
     throw new nl.sara.webdav.Exception('MOVE parameter; path and destination should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -502,22 +502,22 @@ nl.sara.webdav.Client.prototype.move = function(path, callback, destination, ove
   var url = this.getUrl(path);
 
   // If the destination starts with a / it is a absolute url on the same host, so prepare a complete URL
-  if (destination.substr(0,1) == '/') {
+  if (destination.substr(0,1) === '/') {
     destination = this.getUrl(destination);
   } // Else I assume it is a complete URL already
 
   // And then send the request
   var ajax = nl.sara.webdav.Client.getAjax("MOVE", url, callback, headers);
   ajax.setRequestHeader('Destination', destination);
-  if (overwriteMode == nl.sara.webdav.Client.FAIL_ON_OVERWRITE) {
+  if (overwriteMode === nl.sara.webdav.Client.FAIL_ON_OVERWRITE) {
     ajax.setRequestHeader('Overwrite', 'F');
-  }else if (overwriteMode == nl.sara.webdav.Client.TRUNCATE_ON_OVERWRITE) {
+  }else if (overwriteMode === nl.sara.webdav.Client.TRUNCATE_ON_OVERWRITE) {
     ajax.setRequestHeader('Overwrite', 'T');
   }
   ajax.send();
 
   return this;
-}
+};
 
 /**
  * Perform a WebDAV LOCK request
@@ -530,7 +530,7 @@ nl.sara.webdav.Client.prototype.move = function(path, callback, destination, ove
 nl.sara.webdav.Client.prototype.lock = function(path, callback, headers) {
   throw new nl.sara.webdav.Exception('LOCK is not implemented yet', nl.sara.webdav.Exception.NOT_IMPLEMENTED);
   return this;
-}
+};
 
 /**
  * Perform a WebDAV UNLOCK request
@@ -543,7 +543,7 @@ nl.sara.webdav.Client.prototype.lock = function(path, callback, headers) {
 nl.sara.webdav.Client.prototype.unlock = function(path, callback, headers) {
   throw new nl.sara.webdav.Exception('UNLOCK is not implemented yet', nl.sara.webdav.Exception.NOT_IMPLEMENTED);
   return this;
-}
+};
 
 /**
  * Prepares a XMLHttpRequest object to be used for an AJAX request
@@ -558,12 +558,14 @@ nl.sara.webdav.Client.prototype.unlock = function(path, callback, headers) {
 nl.sara.webdav.Client.getAjax = function(method, url, callback, headers) {
   var /** @type XMLHttpRequest */ ajax = new XMLHttpRequest();
   ajax.open(method, url, true);
-  ajax.onreadystatechange=function(){nl.sara.webdav.Client.ajaxHandler(ajax, callback);}
+  ajax.onreadystatechange = function() {
+    nl.sara.webdav.Client.ajaxHandler( ajax, callback );
+  };
   for (var header in headers) {
     ajax.setRequestHeader(header, headers[header]);
   }
   return ajax;
-}
+};
 
 /**
  * AJAX request handler. Parses Multistatus (if available) and call a user specified callback function
@@ -574,12 +576,12 @@ nl.sara.webdav.Client.getAjax = function(method, url, callback, headers) {
  * @returns  {void}
  */
 nl.sara.webdav.Client.ajaxHandler = function(ajax, callback) {
-  if (ajax.readyState==4){ //if request has completed
+  if (ajax.readyState === 4){ //if request has completed
     var body = ajax.responseText;
-    if (ajax.status == 207) {
+    if (ajax.status === 207) {
       // Parse the response to a Multistatus object
       for (var counter = 0; counter < ajax.responseXML.childNodes.length; counter++) {
-        if (nl.sara.webdav.Ie.getLocalName(ajax.responseXML.childNodes.item(counter)) == 'multistatus') {
+        if (nl.sara.webdav.Ie.getLocalName(ajax.responseXML.childNodes.item(counter)) === 'multistatus') {
           body = new nl.sara.webdav.Multistatus(ajax.responseXML.childNodes.item(counter));
           break;
         }
@@ -587,6 +589,6 @@ nl.sara.webdav.Client.ajaxHandler = function(ajax, callback) {
     }
     callback(ajax.status, body, ajax.getAllResponseHeaders());
   }
-}
+};
 
 // End of library
