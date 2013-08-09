@@ -414,8 +414,160 @@ asyncTest( 'Client: post', function() {
 /**
  * Test propfind()
  */
-test( 'Client: propfind', function() {
-  ok( false, 'ToDo: implement' );
+asyncTest( 'Client: propfind', function() {
+  // Prepare test values
+  var testUrl = '/old_resource';
+  var testDepth = 0;
+  var testProps = nl.sara.webdav.Client.ALLPROP;
+  var testNamespace1 = 'DAV:';
+  var testNamespace2 = 'tests://beehub.nl/';
+  var testProp1 = 'includeprop1';
+  var testProp2 = 'includeprop2';
+  var testInclude = [];
+  var testHeader = 'X-Test-Header';
+  var testHeaderValue = 'this is a useless header';
+  var testStatus = 207;
+  var testMultistatusStatus = 'HTTP/1.1 423 Locked';
+  
+  // Create two properties to use as parameters;
+  var prop1 = new nl.sara.webdav.Property();
+  prop1.namespace = testNamespace1;
+  prop1.tagname = testProp1;
+  var prop2 = new nl.sara.webdav.Property();
+  prop2.namespace = testNamespace2;
+  prop2.tagname = testProp2;
+  
+  // Prepare to mock AJAX
+  var server = new MockHttpServer( function ( request ) {
+    start();
+    deepEqual( request.method                        , 'PROPFIND'     , 'propfind() should initiate a PROPFIND AJAX request');
+    deepEqual( request.url                           , testUrl        , 'propfind() AJAX request should use the correct URL');
+    if ( testDepth === nl.sara.webdav.Client.INFINITY ) {
+      deepEqual( request.getRequestHeader( 'depth' ) , 'infinity'     , 'propfind() AJAX request with infinite depth should use \'infinity\' as Depth header');
+    }else{
+      deepEqual( request.getRequestHeader( 'depth' ) , testDepth      , 'propfind() AJAX request should use the correct Depth header');
+    }
+    deepEqual( request.getRequestHeader( testHeader ), testHeaderValue, 'propfind() AJAX request should use the correct custom header');
+
+    // And the assertions to check whether the XML was well formed
+    var xmlDoc;
+    if (window.DOMParser) {
+      var parser = new DOMParser();
+      xmlDoc = parser.parseFromString( request.requestText, "text/xml" );
+    }else{ // Internet Explorer
+      xmlDoc = new ActiveXObject( "Microsoft.XMLDOM" );
+      xmlDoc.async = false;
+      xmlDoc.loadXML( request.requestText );
+    }
+    //<?xml version="1.0" encoding="utf-8" ?><propfind xmlns="DAV:"><prop><acl/></prop></propfind>
+    deepEqual( xmlDoc.documentElement.namespaceURI, 'DAV:'    , 'PROPFIND request should have DAV: as namespace for the root element');
+    deepEqual( xmlDoc.documentElement.nodeName    , 'propfind', 'PROPFIND request should have propfind as nodeName for the root element');
+    var firstElement = xmlDoc.documentElement.childNodes.item( 0 );
+    deepEqual( firstElement.namespaceURI, 'DAV:', 'PROPFIND request should have \'DAV:\' as namespace for the first child element');
+    switch ( testProps ) {
+      case nl.sara.webdav.Client.PROPNAME:
+        deepEqual( firstElement.nodeName    , 'propname' , 'PROPFIND request with propname should have \'propname\' as nodeName for the first child element');
+        deepEqual( xmlDoc.documentElement.childNodes.length, 1, 'PROPFIND request with propname should not have a second child element for the root' );
+        break;
+      case nl.sara.webdav.Client.ALLPROP:
+        deepEqual( firstElement.nodeName    , 'allprop' , 'PROPFIND request with allprop should have \'allprop\' as nodeName for the first child element');
+        if ( testInclude.length > 0 ) {
+          var secondElement = xmlDoc.documentElement.childNodes.item( 1 );
+          deepEqual( secondElement.namespaceURI, 'DAV:'  , 'PROPFIND request with include should have \'DAV:\' as namespace for the second child element');
+          deepEqual( secondElement.nodeName    , 'include', 'PROPFIND request with include should have \'include\' as nodeName for the second child element');
+          var firstIncludeElement = secondElement.childNodes.item( 0 );
+          deepEqual( firstIncludeElement.namespaceURI, testNamespace1  , 'First include prop should have the correct namespace');
+          deepEqual( firstIncludeElement.nodeName    , testProp1, 'First include prop to add should have the correct prop name');
+          var secondIncludeElement = secondElement.childNodes.item( 1 );
+          deepEqual( secondIncludeElement.namespaceURI, testNamespace2  , 'Second include prop should have the correct namespace');
+          deepEqual( secondIncludeElement.nodeName    , testProp2, 'Second include prop should have the correct prop name');
+        }
+        break;
+      default:
+        deepEqual( firstElement.nodeName    , 'prop' , 'PROPFIND request with specified properties should have \'prop\' as nodeName for the first child element');
+        deepEqual( xmlDoc.documentElement.childNodes.length, 1, 'PROPFIND request with specified properties should not have a second child element for the root' );
+        var firstPropElement = firstElement.childNodes.item( 0 );
+        deepEqual( firstPropElement.namespaceURI, testNamespace1  , 'First requested prop should have the correct namespace');
+        deepEqual( firstPropElement.nodeName    , testProp1, 'First requested prop to add should have the correct prop name');
+        var secondPropElement = firstElement.childNodes.item( 1 );
+        deepEqual( secondPropElement.namespaceURI, testNamespace2  , 'Second requested prop should have the correct namespace');
+        deepEqual( secondPropElement.nodeName    , testProp2, 'Second requested prop should have the correct prop name');
+      break;
+    }
+    
+    stop();
+    
+    // Prepare a response
+    request.receive( testStatus,
+  '<?xml version="1.0" encoding="utf-8" ?> \
+  <d:multistatus xmlns:d="DAV:"> \
+    <d:response> \
+      <d:href>' + testUrl + '</d:href> \
+      <d:status>' + testMultistatusStatus + '</d:status> \
+      <d:error><d:lock-token-submitted/></d:error>\
+    </d:response> \
+  </d:multistatus>' );
+  } );
+  server.start();
+  
+  // Start the actual request we want to test
+  function propfindCallback( status, data ) {
+    start();
+    deepEqual( status, testStatus, 'PROPFIND requests should return with the correct status code' );
+    if ( status === 207 ) {
+      deepEqual( data.getResponse( testUrl ).status, testMultistatusStatus, 'PROPFIND response with status code 207 return with a multistatus object with the correct path and status' );
+    }
+  }
+  var client = new nl.sara.webdav.Client();
+  var customHeaders = {};
+  customHeaders[ testHeader ] = testHeaderValue;
+  client.propfind(
+          testUrl,
+          propfindCallback,
+          undefined, // undefined should be depth 0
+          undefined, // undefined should be allprop
+          undefined, // undefined should not set the include element
+          customHeaders
+  );
+  stop();
+  // And one with allprop and include
+  testDepth = 1;
+  testProps = nl.sara.webdav.Client.ALLPROP;
+  testInclude = [ prop1, prop2 ];
+  client.propfind(
+          testUrl,
+          propfindCallback,
+          testDepth,
+          testProps,
+          testInclude,
+          customHeaders
+  );
+  stop();
+  // And one with propname
+  testDepth = nl.sara.webdav.Client.INFINITY;
+  testProps = nl.sara.webdav.Client.PROPNAME;
+  client.propfind(
+          testUrl,
+          propfindCallback,
+          testDepth,
+          testProps,
+          testInclude,
+          customHeaders
+  );
+  stop();
+  // And one with specific properties
+  testProps = [ prop1, prop2 ];
+  client.propfind(
+          testUrl,
+          propfindCallback,
+          testDepth,
+          testProps,
+          testInclude,
+          customHeaders
+  );
+  
+  // End mocking of AJAX
+  server.stop();
 } );
 
 /**
@@ -603,10 +755,7 @@ asyncTest( 'Client: remove', function() {
   </d:multistatus>' );
   } );
   server.start();
-  
-  // Prepare the callback, as we need it multiple times
 
-  
   // Start the actual request we want to test
   var client = new nl.sara.webdav.Client();
   var customHeaders = {};
