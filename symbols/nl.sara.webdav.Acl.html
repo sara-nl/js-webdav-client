@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - nl.sara</title>
+		<title>JsDoc Reference - nl.sara.webdav.Acl</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -238,7 +238,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace nl.sara
+				Class nl.sara.webdav.Acl
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -246,17 +246,17 @@ ul.inheritsList
 				
 				
 			
+				Access Control List
 				
 				
-				
-					<br /><i>Defined in: </i> <a href="../symbols/src/src_000_header.js.html">000_header.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/src_plugins_acl_acl.js.html">acl.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class nl.sara.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class nl.sara.webdav.Acl.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -268,7 +268,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.html#constructor">nl.sara</a></b>
+								<b><a href="../symbols/nl.sara.webdav.Acl.html#constructor">nl.sara.webdav.Acl</a></b>(xmlNode)
 							</div>
 							<div class="description"></div>
 						</td>
@@ -279,13 +279,62 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
-				
-				
-				
-				
-			
 
 <!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class nl.sara.webdav.Acl.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Acl.html#addAce">addAce</a></b>(ace, position)
+								</div>
+								<div class="description">Adds an ACE</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Acl.html#getAce">getAce</a></b>(position)
+								</div>
+								<div class="description">Gets one ACE from a certain position</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Acl.html#getAces">getAces</a></b>()
+								</div>
+								<div class="description">Gets the ACL as an array</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Acl.html#getLength">getLength</a></b>()
+								</div>
+								<div class="description">Gets the length of the ACL</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
 			
 <!-- ============================== events summary ======================== -->
 			
@@ -294,11 +343,11 @@ ul.inheritsList
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>nl.sara</b>
+						<b>nl.sara.webdav.Acl</b>(xmlNode)
 				</div>
 				
 				<div class="description">
@@ -309,6 +358,17 @@ ul.inheritsList
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{Node}</span>  <b>xmlNode</b>
+								<i>Optional</i>
+							</dt>
+								<dd>Optional; the xmlNode describing the acl object (should be compliant with RFC 3744)</dd>
+						
+						</dl>
 					
 					
 					
@@ -324,6 +384,167 @@ ul.inheritsList
 			
 
 <!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="addAce"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/nl.sara.webdav.Acl.html">nl.sara.webdav.Acl</a>}</span>
+					<b>addAce</b>(ace, position)
+					
+					</div>
+					<div class="description">
+						Adds an ACE
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a>}</span> <b>ace</b>
+									
+								</dt>
+								<dd>The ACE to add</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>position</b>
+									
+								</dt>
+								<dd>Optional; The position to add this ACE. If the position is lower than 1, 0 is assumed, of the position is higher than the current length of the ACL or not specified, the ACE is appended to the end.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Acl.html">nl.sara.webdav.Acl</a>}</span> The ACL itself for chaining methods</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getAce"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a>}</span>
+					<b>getAce</b>(position)
+					
+					</div>
+					<div class="description">
+						Gets one ACE from a certain position
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>position</b>
+									
+								</dt>
+								<dd>The position of the ACE</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a>}</span> The ACE</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getAces"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a>[]}</span>
+					<b>getAces</b>()
+					
+					</div>
+					<div class="description">
+						Gets the ACL as an array
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a>[]}</span> An array of the ACE's in this ACL</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getLength"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>getLength</b>()
+					
+					</div>
+					<div class="description">
+						Gets the length of the ACL
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The length of the ACL</dd>
+							
+							</dl>
+						
+						
+						
+
+					
+				
 			
 			
 <!-- ============================== event details ========================= -->		

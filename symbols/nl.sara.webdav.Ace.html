@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - nl.sara.webdav.Property</title>
+		<title>JsDoc Reference - nl.sara.webdav.Ace</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -238,7 +238,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class nl.sara.webdav.Property
+				Class nl.sara.webdav.Ace
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -246,16 +246,16 @@ ul.inheritsList
 				
 				
 			
-				a WebDAV property
+				WebDAV property
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/src_property.js.html">property.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/src_plugins_acl_ace.js.html">ace.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class nl.sara.webdav.Property.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class nl.sara.webdav.Ace.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -268,7 +268,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Property.html#constructor">nl.sara.webdav.Property</a></b>(xmlNode, status, responsedescription, errors)
+								<b><a href="../symbols/nl.sara.webdav.Ace.html#constructor">nl.sara.webdav.Ace</a></b>(xmlNode)
 							</div>
 							<div class="description"></div>
 						</td>
@@ -281,7 +281,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class nl.sara.webdav.Property.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class nl.sara.webdav.Ace.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -295,9 +295,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Property.html#namespace">namespace</a></b>
+								<b><a href="../symbols/nl.sara.webdav.Ace.html#grantdeny">grantdeny</a></b>
 								</div>
-								<div class="description">The namespace</div>
+								<div class="description">Grant or deny ACE? Is one of the class constants GRANT or DENY.</div>
 							</td>
 						</tr>
 					
@@ -305,9 +305,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Property.html#responsedescription">responsedescription</a></b>
+								<b><a href="../symbols/nl.sara.webdav.Ace.html#inherited">inherited</a></b>
 								</div>
-								<div class="description">The response description</div>
+								<div class="description">False if the ACE is not inherited, else a String with the path to the parent collection from which this ACE is inherited.</div>
 							</td>
 						</tr>
 					
@@ -315,9 +315,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Property.html#status">status</a></b>
+								<b><a href="../symbols/nl.sara.webdav.Ace.html#invertprincipal">invertprincipal</a></b>
 								</div>
-								<div class="description">The (HTTP) status code</div>
+								<div class="description">Whether to invert the principal; true means 'all principals except the one specified'.</div>
 							</td>
 						</tr>
 					
@@ -325,9 +325,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Property.html#tagname">tagname</a></b>
+								<b><a href="../symbols/nl.sara.webdav.Ace.html#isprotected">isprotected</a></b>
 								</div>
-								<div class="description">The tag name</div>
+								<div class="description">Whether this ACE is protected.</div>
 							</td>
 						</tr>
 					
@@ -335,9 +335,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Property.html#xmlvalue">xmlvalue</a></b>
+								<b><a href="../symbols/nl.sara.webdav.Ace.html#principal">principal</a></b>
 								</div>
-								<div class="description">A NodeList with the value of this property</div>
+								<div class="description">The principal.</div>
 							</td>
 						</tr>
 					
@@ -352,7 +352,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class nl.sara.webdav.Property.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class nl.sara.webdav.Ace.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -363,66 +363,56 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">nl.sara.webdav.Property.<b><a href="../symbols/nl.sara.webdav.Property.html#.addCodec">addCodec</a></b>(codec)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Ace.html#addPrivilege">addPrivilege</a></b>(privilege)
 								</div>
-								<div class="description">Adds functions to encode or decode properties
-
-This allows exact control in how Property.xmlvalue is parsed when
-getParsedValue() is called or how it is rebuild when
-setValueAndRebuildXml() is called.</div>
+								<div class="description">Adds a WebDAV privilege</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#addError">addError</a></b>(error)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Ace.html#getNamespaceNames">getNamespaceNames</a></b>()
 								</div>
-								<div class="description">Adds an error to this property</div>
+								<div class="description">Gets the namespace names</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#getErrors">getErrors</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Ace.html#getPrivilege">getPrivilege</a></b>(namespace, privilege)
 								</div>
-								<div class="description">Returns all errors</div>
+								<div class="description">Gets a WebDAV privilege</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#getParsedValue">getParsedValue</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Ace.html#getPrivilegeNames">getPrivilegeNames</a></b>(namespace)
 								</div>
-								<div class="description">Parses the xmlvalue
-
-If a codec for this property is specified, it will use this codec to parse
-the XML nodes.</div>
+								<div class="description">Gets the privilege names of a namespace</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#setValueAndRebuildXml">setValueAndRebuildXml</a></b>(value)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Ace.html#-parsePrincipal">parsePrincipal</a></b>(object, child)
 								</div>
-								<div class="description">Sets a new value and rebuilds xmlvalue
-
-If a codec for this property is specified, it will use this codec to
-rebuild xmlvallue.</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#toString">toString</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Ace.html#-parsePrivileges">parsePrivileges</a></b>(object, privilegeList)
 								</div>
-								<div class="description">Overloads the default toString() method so it returns the value of this property</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -443,7 +433,7 @@ rebuild xmlvallue.</div>
 				</div>
 				
 				<div class="fixedFont">
-						<b>nl.sara.webdav.Property</b>(xmlNode, status, responsedescription, errors)
+						<b>nl.sara.webdav.Ace</b>(xmlNode)
 				</div>
 				
 				<div class="description">
@@ -462,25 +452,7 @@ rebuild xmlvallue.</div>
 								<span class="light fixedFont">{Node}</span>  <b>xmlNode</b>
 								<i>Optional</i>
 							</dt>
-								<dd>Optional; The xmlNode describing the propstat object (should be compliant with RFC 4918)</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>status</b>
-								<i>Optional</i>
-							</dt>
-								<dd>Optional; The (HTTP) status code</dd>
-						
-							<dt>
-								<span class="light fixedFont">{String}</span>  <b>responsedescription</b>
-								<i>Optional</i>
-							</dt>
-								<dd>Optional; The response description</dd>
-						
-							<dt>
-								<span class="light fixedFont">{String[]}</span>  <b>errors</b>
-								<i>Optional</i>
-							</dt>
-								<dd>Optional; An array of errors</dd>
+								<dd>Optional; the xmlNode describing the ace object (should be compliant with RFC 3744)</dd>
 						
 						</dl>
 					
@@ -500,59 +472,15 @@ rebuild xmlvallue.</div>
 					Field Detail
 				</div>
 				
-					<a name="namespace"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{String}</span>
-					<b>namespace</b>
-					
-					</div>
-					<div class="description">
-						The namespace
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="responsedescription"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{String}</span>
-					<b>responsedescription</b>
-					
-					</div>
-					<div class="description">
-						The response description
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="status"> </a>
+					<a name="grantdeny"> </a>
 					<div class="fixedFont">
 					
 					<span class="light">{Number}</span>
-					<b>status</b>
+					<b>grantdeny</b>
 					
 					</div>
 					<div class="description">
-						The (HTTP) status code
+						Grant or deny ACE? Is one of the class constants GRANT or DENY.
 						
 						
 					</div>
@@ -566,15 +494,15 @@ rebuild xmlvallue.</div>
 
 					<hr />
 				
-					<a name="tagname"> </a>
+					<a name="inherited"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{String}</span>
-					<b>tagname</b>
+					<span class="light">{mixed}</span>
+					<b>inherited</b>
 					
 					</div>
 					<div class="description">
-						The tag name
+						False if the ACE is not inherited, else a String with the path to the parent collection from which this ACE is inherited.
 						
 						
 					</div>
@@ -588,15 +516,59 @@ rebuild xmlvallue.</div>
 
 					<hr />
 				
-					<a name="xmlvalue"> </a>
+					<a name="invertprincipal"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{NodeList}</span>
-					<b>xmlvalue</b>
+					<span class="light">{Boolean}</span>
+					<b>invertprincipal</b>
 					
 					</div>
 					<div class="description">
-						A NodeList with the value of this property
+						Whether to invert the principal; true means 'all principals except the one specified'. Default is false.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="isprotected"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Boolean}</span>
+					<b>isprotected</b>
+					
+					</div>
+					<div class="description">
+						Whether this ACE is protected. Default is false.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="principal"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{mixed}</span>
+					<b>principal</b>
+					
+					</div>
+					<div class="description">
+						The principal. Is one of the class constants ALL, AUTHENTICATED, UNAUTHENTICATED or SELF or a String with the path to the principal or a property. See RFC 3744 for more information on this.
 						
 						
 					</div>
@@ -618,23 +590,15 @@ rebuild xmlvallue.</div>
 					Method Detail
 				</div>
 				
-					<a name=".addCodec"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="addPrivilege"> </a>
+					<div class="fixedFont">
 					
-					<span class="light">{void}</span>
-					<span class="light">nl.sara.webdav.Property.</span><b>addCodec</b>(codec)
+					<span class="light">{<a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a>}</span>
+					<b>addPrivilege</b>(privilege)
 					
 					</div>
 					<div class="description">
-						Adds functions to encode or decode properties
-
-This allows exact control in how Property.xmlvalue is parsed when
-getParsedValue() is called or how it is rebuild when
-setValueAndRebuildXml() is called. You can specify two functions: 'fromXML'
-and 'toXML'. These should be complementary. That is, toXML should be able
-to create a NodeList based on the output of fromXML. For example:
-A == toXML(fromXML(A)) &&
-B == fromXML(toXML(B))
+						Adds a WebDAV privilege
 						
 						
 					</div>
@@ -646,10 +610,10 @@ B == fromXML(toXML(B))
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Codec.html">nl.sara.webdav.Codec</a>}</span> <b>codec</b>
+									<span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Privilege.html">nl.sara.webdav.Privilege</a>}</span> <b>privilege</b>
 									
 								</dt>
-								<dd>The codec to add</dd>
+								<dd>The privilege to add</dd>
 							
 							</dl>
 						
@@ -660,7 +624,7 @@ B == fromXML(toXML(B))
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{void}</span> </dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a>}</span> The ace itself for chaining methods</dd>
 							
 							</dl>
 						
@@ -669,15 +633,47 @@ B == fromXML(toXML(B))
 
 					<hr />
 				
-					<a name="addError"> </a>
+					<a name="getNamespaceNames"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Node}</span>
-					<b>addError</b>(error)
+					<span class="light">{String[]}</span>
+					<b>getNamespaceNames</b>()
 					
 					</div>
 					<div class="description">
-						Adds an error to this property
+						Gets the namespace names
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String[]}</span> The names of the different namespaces</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getPrivilege"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/nl.sara.webdav.Privilege.html">nl.sara.webdav.Privilege</a>}</span>
+					<b>getPrivilege</b>(namespace, privilege)
+					
+					</div>
+					<div class="description">
+						Gets a WebDAV privilege
 						
 						
 					</div>
@@ -689,7 +685,105 @@ B == fromXML(toXML(B))
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>error</b>
+									<span class="light fixedFont">{String}</span> <b>namespace</b>
+									
+								</dt>
+								<dd>The namespace of the privilege</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>privilege</b>
+									
+								</dt>
+								<dd>The privilege to get</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Privilege.html">nl.sara.webdav.Privilege</a>}</span> The value of the privilege or undefined if the privilege doesn't exist</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getPrivilegeNames"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{String[]}</span>
+					<b>getPrivilegeNames</b>(namespace)
+					
+					</div>
+					<div class="description">
+						Gets the privilege names of a namespace
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>namespace</b>
+									
+								</dt>
+								<dd>The namespace of the privilege</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String[]}</span> The names of the different privilege of a namespace</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="-parsePrincipal"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					
+					<b>parsePrincipal</b>(object, child)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>object</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>child</b>
 									
 								</dt>
 								<dd></dd>
@@ -700,101 +794,20 @@ B == fromXML(toXML(B))
 						
 						
 						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Node}</span> The Node which represents the error</dd>
-							
-							</dl>
-						
 						
 						
 
 					<hr />
 				
-					<a name="getErrors"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{array}</span>
-					<b>getErrors</b>()
-					
-					</div>
-					<div class="description">
-						Returns all errors
-						
-						
-					</div>
+					<a name="-parsePrivileges"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
 					
 					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{array}</span> An array of Node representing the error</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getParsedValue"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{mixed}</span>
-					<b>getParsedValue</b>()
+					<b>parsePrivileges</b>(object, privilegeList)
 					
 					</div>
 					<div class="description">
-						Parses the xmlvalue
-
-If a codec for this property is specified, it will use this codec to parse
-the XML nodes. Else it will attempt to parse it as text or CDATA elements.
 						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{mixed}</span> If a codec is specified, the return type depends on that
-codec. If no codec is specified and at least one node in xmlvalue is not a
-text or CDATA node, it will return undefined. If xmlvalue is empty, it will
-return null.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="setValueAndRebuildXml"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{void}</span>
-					<b>setValueAndRebuildXml</b>(value)
-					
-					</div>
-					<div class="description">
-						Sets a new value and rebuilds xmlvalue
-
-If a codec for this property is specified, it will use this codec to
-rebuild xmlvallue. Else it will attempt to create one CDATA element with
-the string value of whatever was fiven as parameter.
 						
 						
 					</div>
@@ -806,55 +819,22 @@ the string value of whatever was fiven as parameter.
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{mixed}</span> <b>value</b>
+									<b>object</b>
 									
 								</dt>
-								<dd>The object to base the xmlvalue on</dd>
+								<dd></dd>
+							
+								<dt>
+									<b>privilegeList</b>
+									
+								</dt>
+								<dd></dd>
 							
 							</dl>
 						
 						
 						
 						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{void}</span> </dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="toString"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{String}</span>
-					<b>toString</b>()
-					
-					</div>
-					<div class="description">
-						Overloads the default toString() method so it returns the value of this property
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{String}</span> A string representation of this property</dd>
-							
-							</dl>
 						
 						
 						
@@ -873,7 +853,7 @@ the string value of whatever was fiven as parameter.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Aug 20 2013 16:15:01 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Aug 20 2013 16:15:00 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

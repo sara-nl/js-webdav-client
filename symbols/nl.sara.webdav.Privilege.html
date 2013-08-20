@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - nl.sara.webdav.Property</title>
+		<title>JsDoc Reference - nl.sara.webdav.Privilege</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -238,7 +238,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class nl.sara.webdav.Property
+				Class nl.sara.webdav.Privilege
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -246,16 +246,16 @@ ul.inheritsList
 				
 				
 			
-				a WebDAV property
+				WebDAV ACL privilege
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/src_property.js.html">property.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/src_plugins_acl_privilege.js.html">privilege.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class nl.sara.webdav.Property.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class nl.sara.webdav.Privilege.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -268,7 +268,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Property.html#constructor">nl.sara.webdav.Property</a></b>(xmlNode, status, responsedescription, errors)
+								<b><a href="../symbols/nl.sara.webdav.Privilege.html#constructor">nl.sara.webdav.Privilege</a></b>(xmlNode)
 							</div>
 							<div class="description"></div>
 						</td>
@@ -281,7 +281,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class nl.sara.webdav.Property.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class nl.sara.webdav.Privilege.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -295,7 +295,7 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Property.html#namespace">namespace</a></b>
+								<b><a href="../symbols/nl.sara.webdav.Privilege.html#namespace">namespace</a></b>
 								</div>
 								<div class="description">The namespace</div>
 							</td>
@@ -305,27 +305,7 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Property.html#responsedescription">responsedescription</a></b>
-								</div>
-								<div class="description">The response description</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Property.html#status">status</a></b>
-								</div>
-								<div class="description">The (HTTP) status code</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Property.html#tagname">tagname</a></b>
+								<b><a href="../symbols/nl.sara.webdav.Privilege.html#tagname">tagname</a></b>
 								</div>
 								<div class="description">The tag name</div>
 							</td>
@@ -335,9 +315,19 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Property.html#xmlvalue">xmlvalue</a></b>
+								<b><a href="../symbols/nl.sara.webdav.Privilege.html#value">value</a></b>
 								</div>
-								<div class="description">A NodeList with the value of this property</div>
+								<div class="description">A textual representation of xmlvalue</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/nl.sara.webdav.Privilege.html#xmlvalue">xmlvalue</a></b>
+								</div>
+								<div class="description">A NodeList with the value of this privilege</div>
 							</td>
 						</tr>
 					
@@ -352,7 +342,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class nl.sara.webdav.Property.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class nl.sara.webdav.Privilege.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -365,12 +355,12 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">nl.sara.webdav.Property.<b><a href="../symbols/nl.sara.webdav.Property.html#.addCodec">addCodec</a></b>(codec)
+								<div class="fixedFont">nl.sara.webdav.Privilege.<b><a href="../symbols/nl.sara.webdav.Privilege.html#.addCodec">addCodec</a></b>(codec)
 								</div>
 								<div class="description">Adds functions to encode or decode properties
 
-This allows exact control in how Property.xmlvalue is parsed when
-getParsedValue() is called or how it is rebuild when
+This allows exact control in how Privilege.xmlvalue is parsed when
+getParsedValue() is called and how XML is rebuild when
 setValueAndRebuildXml() is called.</div>
 							</td>
 						</tr>
@@ -378,29 +368,11 @@ setValueAndRebuildXml() is called.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#addError">addError</a></b>(error)
-								</div>
-								<div class="description">Adds an error to this property</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#getErrors">getErrors</a></b>()
-								</div>
-								<div class="description">Returns all errors</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#getParsedValue">getParsedValue</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Privilege.html#getParsedValue">getParsedValue</a></b>()
 								</div>
 								<div class="description">Parses the xmlvalue
 
-If a codec for this property is specified, it will use this codec to parse
+If a codec for this privilege is specified, it will use this codec to parse
 the XML nodes.</div>
 							</td>
 						</tr>
@@ -408,11 +380,11 @@ the XML nodes.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#setValueAndRebuildXml">setValueAndRebuildXml</a></b>(value)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Privilege.html#setValueAndRebuildXml">setValueAndRebuildXml</a></b>(value)
 								</div>
 								<div class="description">Sets a new value and rebuilds xmlvalue
 
-If a codec for this property is specified, it will use this codec to
+If a codec for this privilege is specified, it will use this codec to
 rebuild xmlvallue.</div>
 							</td>
 						</tr>
@@ -420,9 +392,9 @@ rebuild xmlvallue.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Property.html#toString">toString</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Privilege.html#toString">toString</a></b>()
 								</div>
-								<div class="description">Overloads the default toString() method so it returns the value of this property</div>
+								<div class="description">Overloads the default toString() method so it returns the value of this privilege</div>
 							</td>
 						</tr>
 					
@@ -443,7 +415,7 @@ rebuild xmlvallue.</div>
 				</div>
 				
 				<div class="fixedFont">
-						<b>nl.sara.webdav.Property</b>(xmlNode, status, responsedescription, errors)
+						<b>nl.sara.webdav.Privilege</b>(xmlNode)
 				</div>
 				
 				<div class="description">
@@ -462,25 +434,7 @@ rebuild xmlvallue.</div>
 								<span class="light fixedFont">{Node}</span>  <b>xmlNode</b>
 								<i>Optional</i>
 							</dt>
-								<dd>Optional; The xmlNode describing the propstat object (should be compliant with RFC 4918)</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>status</b>
-								<i>Optional</i>
-							</dt>
-								<dd>Optional; The (HTTP) status code</dd>
-						
-							<dt>
-								<span class="light fixedFont">{String}</span>  <b>responsedescription</b>
-								<i>Optional</i>
-							</dt>
-								<dd>Optional; The response description</dd>
-						
-							<dt>
-								<span class="light fixedFont">{String[]}</span>  <b>errors</b>
-								<i>Optional</i>
-							</dt>
-								<dd>Optional; An array of errors</dd>
+								<dd>Optional; the xmlNode describing the privilege object</dd>
 						
 						</dl>
 					
@@ -522,50 +476,6 @@ rebuild xmlvallue.</div>
 
 					<hr />
 				
-					<a name="responsedescription"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{String}</span>
-					<b>responsedescription</b>
-					
-					</div>
-					<div class="description">
-						The response description
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="status"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>status</b>
-					
-					</div>
-					<div class="description">
-						The (HTTP) status code
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name="tagname"> </a>
 					<div class="fixedFont">
 					
@@ -588,6 +498,28 @@ rebuild xmlvallue.</div>
 
 					<hr />
 				
+					<a name="value"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{String}</span>
+					<b>value</b>
+					
+					</div>
+					<div class="description">
+						A textual representation of xmlvalue
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="xmlvalue"> </a>
 					<div class="fixedFont">
 					
@@ -596,7 +528,7 @@ rebuild xmlvallue.</div>
 					
 					</div>
 					<div class="description">
-						A NodeList with the value of this property
+						A NodeList with the value of this privilege
 						
 						
 					</div>
@@ -622,15 +554,15 @@ rebuild xmlvallue.</div>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					<span class="light">{void}</span>
-					<span class="light">nl.sara.webdav.Property.</span><b>addCodec</b>(codec)
+					<span class="light">nl.sara.webdav.Privilege.</span><b>addCodec</b>(codec)
 					
 					</div>
 					<div class="description">
 						Adds functions to encode or decode properties
 
-This allows exact control in how Property.xmlvalue is parsed when
-getParsedValue() is called or how it is rebuild when
-setValueAndRebuildXml() is called. You can specify two functions: 'fromXML'
+This allows exact control in how Privilege.xmlvalue is parsed when
+getParsedValue() is called and how XML is rebuild when
+setValueAndRebuildXml() is called. You can specify two functions: 'fromXML
 and 'toXML'. These should be complementary. That is, toXML should be able
 to create a NodeList based on the output of fromXML. For example:
 A == toXML(fromXML(A)) &&
@@ -669,81 +601,6 @@ B == fromXML(toXML(B))
 
 					<hr />
 				
-					<a name="addError"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Node}</span>
-					<b>addError</b>(error)
-					
-					</div>
-					<div class="description">
-						Adds an error to this property
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>error</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Node}</span> The Node which represents the error</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getErrors"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{array}</span>
-					<b>getErrors</b>()
-					
-					</div>
-					<div class="description">
-						Returns all errors
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{array}</span> An array of Node representing the error</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
 					<a name="getParsedValue"> </a>
 					<div class="fixedFont">
 					
@@ -754,7 +611,7 @@ B == fromXML(toXML(B))
 					<div class="description">
 						Parses the xmlvalue
 
-If a codec for this property is specified, it will use this codec to parse
+If a codec for this privilege is specified, it will use this codec to parse
 the XML nodes. Else it will attempt to parse it as text or CDATA elements.
 						
 						
@@ -792,7 +649,7 @@ return null.</dd>
 					<div class="description">
 						Sets a new value and rebuilds xmlvalue
 
-If a codec for this property is specified, it will use this codec to
+If a codec for this privilege is specified, it will use this codec to
 rebuild xmlvallue. Else it will attempt to create one CDATA element with
 the string value of whatever was fiven as parameter.
 						
@@ -837,7 +694,7 @@ the string value of whatever was fiven as parameter.
 					
 					</div>
 					<div class="description">
-						Overloads the default toString() method so it returns the value of this property
+						Overloads the default toString() method so it returns the value of this privilege
 						
 						
 					</div>
@@ -852,7 +709,7 @@ the string value of whatever was fiven as parameter.
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{String}</span> A string representation of this property</dd>
+								<dd><span class="light fixedFont">{String}</span> A string representation of this privilege</dd>
 							
 							</dl>
 						

@@ -197,17 +197,33 @@ ul.inheritsList
 	
 	<li><a href="../symbols/nl.sara.webdav.html">nl.sara.webdav</a></li>
 	
+	<li><a href="../symbols/nl.sara.webdav.Ace.html">nl.sara.webdav.Ace</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.Acl.html">nl.sara.webdav.Acl</a></li>
+	
 	<li><a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.codec.html">nl.sara.webdav.codec</a></li>
 	
 	<li><a href="../symbols/nl.sara.webdav.Codec.html">nl.sara.webdav.Codec</a></li>
 	
-	<li><a href="../symbols/nl.sara.webdav.codec.html">nl.sara.webdav.codec</a></li>
+	<li><a href="../symbols/nl.sara.webdav.codec.AclCodec.html">nl.sara.webdav.codec.AclCodec</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.codec.CreationdateCodec.html">nl.sara.webdav.codec.CreationdateCodec</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.codec.GetcontentlengthCodec.html">nl.sara.webdav.codec.GetcontentlengthCodec</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.codec.GetlastmodifiedCodec.html">nl.sara.webdav.codec.GetlastmodifiedCodec</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.codec.ResourcetypeCodec.html">nl.sara.webdav.codec.ResourcetypeCodec</a></li>
 	
 	<li><a href="../symbols/nl.sara.webdav.Exception.html">nl.sara.webdav.Exception</a></li>
 	
 	<li><a href="../symbols/nl.sara.webdav.Ie.html">nl.sara.webdav.Ie</a></li>
 	
 	<li><a href="../symbols/nl.sara.webdav.Multistatus.html">nl.sara.webdav.Multistatus</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.Privilege.html">nl.sara.webdav.Privilege</a></li>
 	
 	<li><a href="../symbols/nl.sara.webdav.Property.html">nl.sara.webdav.Property</a></li>
 	
@@ -277,6 +293,15 @@ ul.inheritsList
 						</tr>
 					</thead>
 					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#acl">acl</a></b>(path, callback, acl, headers)
+								</div>
+								<div class="description">Perform a WebDAV ACL request</div>
+							</td>
+						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
@@ -410,6 +435,15 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#report">report</a></b>(path, callback, body, headers)
+								</div>
+								<div class="description">Perform a WebDAV REPORT request</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#unlock">unlock</a></b>(path, callback, headers)
 								</div>
 								<div class="description">Perform a WebDAV UNLOCK request</div>
@@ -486,6 +520,70 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 				<div class="sectionTitle">
 					Method Detail
 				</div>
+				
+					<a name="acl"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
+					<b>acl</b>(path, callback, acl, headers)
+					
+					</div>
+					<div class="description">
+						Perform a WebDAV ACL request
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/src_plugins_acl_client_acl.js.html">client_acl.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>path</b>
+									
+								</dt>
+								<dd>The path to perform ACL on</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
+									
+								</dt>
+								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Acl.html">nl.sara.webdav.Acl</a>}</span> <b>acl</b>
+									
+								</dt>
+								<dd>The ACL to submit</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span> The client itself for chaining methods</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
 				
 					<a name=".ajaxHandler"> </a>
 					<div class="fixedFont">&lt;static&gt; 
@@ -1345,6 +1443,70 @@ RFC 4918
 
 					<hr />
 				
+					<a name="report"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span>
+					<b>report</b>(path, callback, body, headers)
+					
+					</div>
+					<div class="description">
+						Perform a WebDAV REPORT request
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/src_plugins_acl_client_acl.js.html">client_acl.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>path</b>
+									
+								</dt>
+								<dd>The path to perform REPORT on</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Function(status|body|headers)}</span> <b>callback</b>
+									
+								</dt>
+								<dd>Querying the server is done asynchronously, this callback function is called when the results are in</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Document}</span> <b>body</b>
+									
+								</dt>
+								<dd>The (XML DOM) document to parse and send as the request body</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>headers</b>
+									
+								</dt>
+								<dd>Optional; Additional headers to set</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a>}</span> The client itself for chaining methods</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
 					<a name="unlock"> </a>
 					<div class="fixedFont">
 					
@@ -1412,7 +1574,7 @@ RFC 4918
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Apr 09 2013 11:53:28 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Aug 20 2013 16:15:01 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>
