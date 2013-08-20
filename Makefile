@@ -21,7 +21,7 @@ docs: $(SOURCES)
 			--out=./jsdoc.log \
 			--private \
 			--template=$(JSRUN)/templates/jsdoc \
-			"src/" "src/plugins/" ; \
+			"src/" "src/plugins/" "src/plugins/acl" "src/plugins/webdav_default_codecs" ; \
 	else \
 		echo "Unable to find jsdoc toolkit in $(JSRUN); no documentation created!"; \
 	fi
