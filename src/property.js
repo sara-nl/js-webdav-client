@@ -77,7 +77,7 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
   });
 
   // Constructor logic
-  if ((typeof xmlNode != 'undefined') && (xmlNode.nodeType == 1)) {
+  if ((typeof xmlNode !== 'undefined') && (xmlNode.nodeType === 1)) {
     this.namespace = xmlNode.namespaceURI;
     this.tagname = nl.sara.webdav.Ie.getLocalName(xmlNode);
     this.xmlvalue = xmlNode.childNodes;
@@ -132,10 +132,10 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
    * @returns  {void}
    */
   nl.sara.webdav.Property.addCodec = function(codec) {
-    if (typeof codec.namespace != 'string') {
+    if (typeof codec.namespace !== 'string') {
       throw new nl.sara.webdav.Exception('addCodec: codec.namespace must be a String', nl.sara.webdav.Exception.WRONG_TYPE);
     }
-    if (typeof codec.tagname != 'string') {
+    if (typeof codec.tagname !== 'string') {
       throw new nl.sara.webdav.Exception('addCodec: codec.tagname must be a String', nl.sara.webdav.Exception.WRONG_TYPE);
     }
     if (codecNamespaces[codec.namespace] === undefined) {
@@ -144,7 +144,7 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
     codecNamespaces[codec.namespace][codec.tagname] = {
       'fromXML': (codec.fromXML ? codec.fromXML : undefined),
       'toXML': (codec.toXML ? codec.toXML : undefined)
-    }
+    };
   };
 
   /**
@@ -195,7 +195,7 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
         var parsedValue = '';
         for (var i = 0; i < this._xmlvalue.length; i++) {
           var node = this._xmlvalue.item(i);
-          if ((node.nodeType == 3) || (node.nodeType == 4)) { // Make sure text and CDATA content is stored
+          if ((node.nodeType === 3) || (node.nodeType === 4)) { // Make sure text and CDATA content is stored
             parsedValue += node.nodeValue;
           }else{ // If even one of the nodes is not text or CDATA, then we don't parse a text value at all
             parsedValue = undefined;
@@ -214,7 +214,8 @@ nl.sara.webdav.Property = function(xmlNode, status, responsedescription, errors)
 /**
 * Adds an error to this property
 *
-* @returns {Node} The Node which represents the error
+* @param    {Node}      error  The Node which represents the error
+* @returns  {Property}         Itself for chaining multiple methods
 */
 nl.sara.webdav.Property.prototype.addError = function(error) {
   if (!nl.sara.webdav.Ie.isIE && !(error instanceof Node)) {
@@ -240,6 +241,6 @@ nl.sara.webdav.Property.prototype.getErrors = function() {
  */
 nl.sara.webdav.Property.prototype.toString = function() {
   return this.getParsedValue();
-}
+};
 
 // End of Property

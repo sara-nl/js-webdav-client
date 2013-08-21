@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
-"use strict"
+"use strict";
 
 // If nl.sara.webdav.Response is already defined, we have a namespace clash!
 if (nl.sara.webdav.Response !== undefined) {
@@ -74,14 +74,14 @@ nl.sara.webdav.Response = function(xmlNode) {
   });
 
   // Constructor logic
-  if (typeof xmlNode != 'undefined') {
-    if ((xmlNode.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) != 'response')) {
+  if (typeof xmlNode !== 'undefined') {
+    if ((xmlNode.namespaceURI !== 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) !== 'response')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:response', nl.sara.webdav.Exception.WRONG_XML);
     }
     var data = xmlNode.childNodes;
     for (var i = 0; i < data.length; i++) {
       var child = data.item(i);
-      if ((child.namespaceURI == null) || (child.namespaceURI != 'DAV:')) { // Skip if not from the right namespace
+      if ((child.namespaceURI === null) || (child.namespaceURI !== 'DAV:')) { // Skip if not from the right namespace
         continue;
       }
       switch (nl.sara.webdav.Ie.getLocalName(child)) {
@@ -104,7 +104,7 @@ nl.sara.webdav.Response = function(xmlNode) {
           var props = [];
           for (var j = 0; j < propstatChilds.length; j++) { // Parse the child nodes of the propstat element
             var propstatChild = propstatChilds.item(j);
-            if ((propstatChild.nodeType != 1) || (propstatChild.namespaceURI != 'DAV:')) {
+            if ((propstatChild.nodeType !== 1) || (propstatChild.namespaceURI !== 'DAV:')) {
               continue;
             }
             switch (nl.sara.webdav.Ie.getLocalName(propstatChild)) {
@@ -131,7 +131,7 @@ nl.sara.webdav.Response = function(xmlNode) {
 
           // Then create and add a new property for each element found in DAV:prop
           for (j = 0; j < props.length; j++) {
-            if (props[j].nodeType == 1) {
+            if (props[j].nodeType === 1) {
               var property = new nl.sara.webdav.Property(props[j], status, responsedescription, errors);
               this.addProperty(property);
             }
@@ -140,7 +140,7 @@ nl.sara.webdav.Response = function(xmlNode) {
       }
     }
   }
-}
+};
 
 //########################## DEFINE PUBLIC METHODS #############################
 /**
@@ -154,7 +154,7 @@ nl.sara.webdav.Response.prototype.addProperty = function(property) {
     throw new nl.sara.webdav.Exception('Response property should be instance of Property', nl.sara.webdav.Exception.WRONG_TYPE);
   }
   var namespace = property.namespace;
-  if (typeof namespace != 'string') {
+  if (typeof namespace !== 'string') {
     namespace = '';
   }
   if (this._namespaces[namespace] === undefined) {
@@ -163,7 +163,7 @@ nl.sara.webdav.Response.prototype.addProperty = function(property) {
 
   this._namespaces[namespace][property.tagname] = property;
   return this;
-}
+};
 
 /**
  * Gets a WebDAV property
@@ -177,7 +177,7 @@ nl.sara.webdav.Response.prototype.getProperty = function(namespace, prop) {
     return undefined;
   }
   return this._namespaces[namespace][prop];
-}
+};
 
 /**
  * Gets the namespace names
@@ -186,7 +186,7 @@ nl.sara.webdav.Response.prototype.getProperty = function(namespace, prop) {
  */
 nl.sara.webdav.Response.prototype.getNamespaceNames = function() {
   return Object.keys(this._namespaces);
-}
+};
 
 /**
  * Gets the property names of a namespace
@@ -199,6 +199,6 @@ nl.sara.webdav.Response.prototype.getPropertyNames = function(namespace) {
     return new Array();
   }
   return Object.keys(this._namespaces[namespace]);
-}
+};
 
 // End of library

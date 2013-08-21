@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
-"use strict"
+"use strict";
 
 /**
  * A webDAV client library for JavaScript

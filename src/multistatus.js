@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
-"use strict"
+"use strict";
 
 // If nl.sara.webdav.Multistatus is already defined, we have a namespace clash!
 if (nl.sara.webdav.Multistatus !== undefined) {
@@ -46,14 +46,14 @@ nl.sara.webdav.Multistatus = function(xmlNode) {
   });
 
   // Constructor logic
-  if (typeof xmlNode != 'undefined') {
-    if ((xmlNode.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) != 'multistatus')) {
+  if (typeof xmlNode !== 'undefined') {
+    if ((xmlNode.namespaceURI !== 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) !== 'multistatus')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:multistatus', nl.sara.webdav.Exception.WRONG_XML);
     }
     var data = xmlNode.childNodes;
     for (var i = 0; i < data.length; i++) {
       var child = data.item(i);
-      if ((child.namespaceURI == null) || (child.namespaceURI != 'DAV:')) { // Skip if not from the right namespace
+      if ((child.namespaceURI === null) || (child.namespaceURI !== 'DAV:')) { // Skip if not from the right namespace
         continue;
       }
       switch (nl.sara.webdav.Ie.getLocalName(child)) {
@@ -66,7 +66,7 @@ nl.sara.webdav.Multistatus = function(xmlNode) {
           var hrefs = [];
           for (var j = 0; j < responseChilds.length; j++) {
             var responseChild = responseChilds.item(j);
-            if ((nl.sara.webdav.Ie.getLocalName(responseChild) == 'href') && (responseChild.namespaceURI != null) && (responseChild.namespaceURI == 'DAV:')) { // For each HREF element we create a separate response object
+            if ((nl.sara.webdav.Ie.getLocalName(responseChild) === 'href') && (responseChild.namespaceURI !== null) && (responseChild.namespaceURI === 'DAV:')) { // For each HREF element we create a separate response object
               hrefs.push(responseChild.childNodes.item(0).nodeValue);
             }
           }
@@ -87,7 +87,7 @@ nl.sara.webdav.Multistatus = function(xmlNode) {
       }
     }
   }
-}
+};
 
 //########################## DEFINE PUBLIC METHODS #############################
 /**
@@ -103,7 +103,7 @@ nl.sara.webdav.Multistatus.prototype.addResponse = function(response) {
   var name = response.href;
   this._responses[name] = response;
   return this;
-}
+};
 
 /**
  * Gets a Response
@@ -113,7 +113,7 @@ nl.sara.webdav.Multistatus.prototype.addResponse = function(response) {
  */
 nl.sara.webdav.Multistatus.prototype.getResponse = function(name) {
   return this._responses[name];
-}
+};
 
 /**
  * Gets the response names
@@ -122,6 +122,6 @@ nl.sara.webdav.Multistatus.prototype.getResponse = function(name) {
  */
 nl.sara.webdav.Multistatus.prototype.getResponseNames = function() {
   return Object.keys(this._responses);
-}
+};
 
 // End of library

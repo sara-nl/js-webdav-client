@@ -76,6 +76,6 @@ nl.sara.webdav.Codec = function(namespace, tagname, toXML, fromXML) {
   if (fromXML !== undefined) {
     this.fromXML = fromXML;
   }
-}
+};
 
 // End of file

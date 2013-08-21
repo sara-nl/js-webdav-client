@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
-"use strict"
+"use strict";
 
 // If nl.sara.webdav.Exception is already defined, we have a namespace clash!
 if (nl.sara.webdav.Exception !== undefined) {
@@ -52,7 +52,7 @@ nl.sara.webdav.Exception = function(message, code) {
   if (code !== undefined) {
     this.code = code;
   }
-}
+};
 
 /**#@+
  * Declaration of the error code constants
@@ -75,6 +75,6 @@ nl.sara.webdav.Exception.NOT_IMPLEMENTED = 8;
  */
 nl.sara.webdav.Exception.prototype.toString = function() {
   return this.message;
-}
+};
 
 // End of library

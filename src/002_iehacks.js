@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
-"use strict"
+"use strict";
 
 // If nl.sara.webdav.Ie is already defined, we have a namespace clash!
 if (nl.sara.webdav.Ie !== undefined) {
@@ -42,7 +42,8 @@ nl.sara.webdav.Ie.isIE = true;
 /**
  * Returns the localName of a DOM Node object
  *
- * @returns  {String}  The local name
+ * @param    {Node}    node  The node to determine the localname for
+ * @returns  {String}        The local name
  */
 nl.sara.webdav.Ie.getLocalName = function(node) {
   if (nl.sara.webdav.Ie.isIE && node.baseName) {
@@ -50,6 +51,6 @@ nl.sara.webdav.Ie.getLocalName = function(node) {
   }else{
     return node.localName;
   }
-}
+};
 
 // End of library
