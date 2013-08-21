@@ -36,7 +36,9 @@ test( 'Acl; constructor', function() {
   principalHrefNode.appendChild( xmlDoc.createCDATASection( principal ) );
   var principalNode1 = xmlDoc.createElementNS( 'DAV:', 'principal' );
   principalNode1.appendChild( principalHrefNode );
-  var privilegeNode1 = xmlDoc.createElementNS( privilegeNS1, privilegeName1 );
+  var privilegeTypeNode1 = xmlDoc.createElementNS( privilegeNS1, privilegeName1 );
+  var privilegeNode1 = xmlDoc.createElementNS( 'DAV:', 'privilege' );
+  privilegeNode1.appendChild( privilegeTypeNode1 );
   var grantNode = xmlDoc.createElementNS( 'DAV:', 'grant' );
   grantNode.appendChild( privilegeNode1 );
   var aceNode1 = xmlDoc.createElementNS( 'DAV:', 'ace' );
@@ -49,7 +51,9 @@ test( 'Acl; constructor', function() {
   principalNode2.appendChild( principalAllNode );
   var invertNode = xmlDoc.createElementNS( 'DAV:', 'invert' );
   invertNode.appendChild( principalNode2 );
-  var privilegeNode2 = xmlDoc.createElementNS( privilegeNS2, privilegeName2 );
+  var privilegeTypeNode2 = xmlDoc.createElementNS( privilegeNS2, privilegeName2 );
+  var privilegeNode2 = xmlDoc.createElementNS( 'DAV:', 'privilege' );
+  privilegeNode2.appendChild( privilegeTypeNode2 );
   var denyNode = xmlDoc.createElementNS( 'DAV:', 'deny' );
   denyNode.appendChild( privilegeNode2 );
   var protectedNode = xmlDoc.createElementNS( 'DAV:', 'protected' );
@@ -116,7 +120,9 @@ test( 'Acl; add and retrieve Ace\'s', function() {
   var principalAllNode = xmlDoc.createElementNS( 'DAV:', 'all' );
   var principalNode1 = xmlDoc.createElementNS( 'DAV:', 'principal' );
   principalNode1.appendChild( principalAllNode );
-  var privilegeNode1 = xmlDoc.createElementNS( privilegeNS1, privilegeName1 );
+  var privilegeTypeNode1 = xmlDoc.createElementNS( privilegeNS1, privilegeName1 );
+  var privilegeNode1 = xmlDoc.createElementNS( 'DAV:', 'privilege' );
+  privilegeNode1.appendChild( privilegeTypeNode1 );
   var grantNode = xmlDoc.createElementNS( 'DAV:', 'grant' );
   grantNode.appendChild( privilegeNode1 );
   var aceNode1 = xmlDoc.createElementNS( 'DAV:', 'ace' );
@@ -126,7 +132,9 @@ test( 'Acl; add and retrieve Ace\'s', function() {
   var principalAuthenticatedNode = xmlDoc.createElementNS( 'DAV:', 'authenticated' );
   var principalNode2 = xmlDoc.createElementNS( 'DAV:', 'principal' );
   principalNode2.appendChild( principalAuthenticatedNode );
-  var privilegeNode2 = xmlDoc.createElementNS( privilegeNS2, privilegeName2 );
+  var privilegeTypeNode2 = xmlDoc.createElementNS( privilegeNS2, privilegeName2 );
+  var privilegeNode2 = xmlDoc.createElementNS( 'DAV:', 'privilege' );
+  privilegeNode2.appendChild( privilegeTypeNode2 );
   var denyNode = xmlDoc.createElementNS( 'DAV:', 'deny' );
   denyNode.appendChild( privilegeNode2 );
   var aceNode2 = xmlDoc.createElementNS( 'DAV:', 'ace' );
@@ -136,7 +144,9 @@ test( 'Acl; add and retrieve Ace\'s', function() {
   var principalUnauthenticatedNode = xmlDoc.createElementNS( 'DAV:', 'unauthenticated' );
   var principalNode3 = xmlDoc.createElementNS( 'DAV:', 'principal' );
   principalNode3.appendChild( principalUnauthenticatedNode );
-  var privilegeNode3 = xmlDoc.createElementNS( privilegeNS3, privilegeName3 );
+  var privilegeTypeNode3 = xmlDoc.createElementNS( privilegeNS3, privilegeName3 );
+  var privilegeNode3 = xmlDoc.createElementNS( 'DAV:', 'privilege' );
+  privilegeNode3.appendChild( privilegeTypeNode3 );
   var denyNode = xmlDoc.createElementNS( 'DAV:', 'allow' );
   denyNode.appendChild( privilegeNode3 );
   var aceNode3 = xmlDoc.createElementNS( 'DAV:', 'ace' );

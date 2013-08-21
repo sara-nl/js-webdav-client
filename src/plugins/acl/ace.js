@@ -119,8 +119,10 @@ nl.sara.webdav.Ace = function(xmlNode) {
   function parsePrivileges(object, privilegeList) {
     for (var i = 0; i < privilegeList.length; i++) {
       var privilege = privilegeList.item(i);
-      if (privilege.nodeType === 1) {
-        object.addPrivilege(new nl.sara.webdav.Privilege(privilege));
+      if ( ( privilege.nodeType === 1 ) &&
+           ( privilege.namespaceURI === 'DAV:' ) &&
+           ( nl.sara.webdav.Ie.getLocalName( privilege ) === 'privilege' ) ) {
+        object.addPrivilege( new nl.sara.webdav.Privilege( privilege.childNodes[0] ) );
       }
     }
   }

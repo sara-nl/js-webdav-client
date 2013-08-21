@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
-"use strict"
+"use strict";
 
 /**
  * This plugin adds acl capabilities to the WebDAV client class
@@ -35,7 +35,7 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl, headers) {
   if ((path === undefined) || (callback === undefined)) {
     throw new nl.sara.webdav.Exception('ACL requires the parameters path, callback and acl', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if (!(typeof path == "string") || (!nl.sara.webdav.Ie.isIE && !(acl instanceof nl.sara.webdav.Acl))) {
+  if (!(typeof path === "string") || (!nl.sara.webdav.Ie.isIE && !(acl instanceof nl.sara.webdav.Acl))) {
     throw new nl.sara.webdav.Exception('ACL parameter; path should be a string, acl should be an instance of Acl', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -52,7 +52,7 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl, headers) {
   // And then send the request
   var ajax = null;
   if (nl.sara.webdav.Ie.isIE) {
-    if (url.lastIndexOf('?') != -1) {
+    if (url.lastIndexOf('?') !== -1) {
       url = url + '&_method=acl';
     }else{
       url = url + '?_method=acl';
@@ -65,7 +65,7 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl, headers) {
   ajax.send(body);
 
   return this;
-}
+};
 
 /**
  * Perform a WebDAV REPORT request
@@ -80,7 +80,7 @@ nl.sara.webdav.Client.prototype.report = function(path, callback, body, headers)
   if ((path === undefined) || (callback === undefined) || (body === undefined)) {
     throw new nl.sara.webdav.Exception('REPORT requires the parameters path, callback and body', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
   }
-  if ((typeof path != "string") || (!nl.sara.webdav.Ie.isIE && !(body instanceof Document))) {
+  if ((typeof path !== "string") || (!nl.sara.webdav.Ie.isIE && !(body instanceof Document))) {
     throw new nl.sara.webdav.Exception('REPORT parameter; path should be a string, body should be an instance of Document', nl.sara.webdav.Exception.WRONG_TYPE);
   }
 
@@ -94,7 +94,7 @@ nl.sara.webdav.Client.prototype.report = function(path, callback, body, headers)
   // And then send the request
   var ajax = null;
   if (nl.sara.webdav.Ie.isIE) {
-    if (url.lastIndexOf('?') != -1) {
+    if (url.lastIndexOf('?') !== -1) {
       url = url + '&_method=report';
     }else{
       url = url + '?_method=report';
@@ -107,6 +107,6 @@ nl.sara.webdav.Client.prototype.report = function(path, callback, body, headers)
   ajax.send(body);
 
   return this;
-}
+};
 
 // End of library

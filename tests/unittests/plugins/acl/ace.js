@@ -36,7 +36,9 @@ test( 'Ace; constructor', function() {
   principalHrefNode.appendChild( xmlDoc.createCDATASection( principal ) );
   var principalNode = xmlDoc.createElementNS( 'DAV:', 'principal' );
   principalNode.appendChild( principalHrefNode );
-  var privilegeNode = xmlDoc.createElementNS( privilegeNS, privilegeName );
+  var privilegeTypeNode = xmlDoc.createElementNS( privilegeNS, privilegeName );
+  var privilegeNode = xmlDoc.createElementNS( 'DAV:', 'privilege' );
+  privilegeNode.appendChild( privilegeTypeNode );
   var grantNode = xmlDoc.createElementNS( 'DAV:', 'grant' );
   grantNode.appendChild( privilegeNode );
   var denyNode = xmlDoc.createElementNS( 'DAV:', 'deny' );
@@ -66,18 +68,19 @@ test( 'Ace; constructor', function() {
   // Assertions for the constructor with a href principal being granted some privilege
   xmlDoc.documentElement.appendChild( principalNode );
   xmlDoc.documentElement.appendChild( grantNode );
+  
   var aceGrantHref = new nl.sara.webdav.Ace( xmlDoc.documentElement );
   deepEqual( aceGrantHref.grantdeny      , nl.sara.webdav.Ace.GRANT, 'Ace with grant and href principal should have GRANT value as grantdeny' );
-  deepEqual( aceGrantHref.inherited      , false                   , 'Ace with grant and href principal should have NULL value as inherited' );
-  deepEqual( aceGrantHref.invertprincipal, false                   , 'Ace with grant and href principal should have NULL value as invertprincipal' );
-  deepEqual( aceGrantHref.isprotected    , false                   , 'Ace with grant and href principal should have NULL value as isprotected' );
+  deepEqual( aceGrantHref.inherited      , false                   , 'Ace with grant and href principal should have false value as inherited' );
+  deepEqual( aceGrantHref.invertprincipal, false                   , 'Ace with grant and href principal should have false value as invertprincipal' );
+  deepEqual( aceGrantHref.isprotected    , false                   , 'Ace with grant and href principal should have false value as isprotected' );
   deepEqual( aceGrantHref.principal      , principal               , 'Ace with grant and href principal should have correct value as principal' );
   var namespaces = aceGrantHref.getNamespaceNames();
-  deepEqual( namespaces.length           , 1                       , 'Ace with grant and href principal should have one namespace for properties' );
-  deepEqual( namespaces[0]               , privilegeNS             , 'Ace with grant and href principal should have the correct namespace for its properties' );
+  deepEqual( namespaces.length           , 1                       , 'Ace with grant and href principal should have one namespace for privileges' );
+  deepEqual( namespaces[0]               , privilegeNS             , 'Ace with grant and href principal should have the correct namespace for its privileges' );
   var privileges = aceGrantHref.getPrivilegeNames( privilegeNS );
-  deepEqual( privileges.length           , 1                       , 'Ace with grant and href principal should have one properties' );
-  deepEqual( privileges[0]               , privilegeName           , 'Ace with grant and href principal should have the correct property name' );
+  deepEqual( privileges.length           , 1                       , 'Ace with grant and href principal should have one privileges' );
+  deepEqual( privileges[0]               , privilegeName           , 'Ace with grant and href principal should have the correct privilege name' );
   
   // Assertions for the constructor with an inverted 'all' principal being denied some privilege, which is protected and inherited
   denyNode.appendChild( privilegeNode );

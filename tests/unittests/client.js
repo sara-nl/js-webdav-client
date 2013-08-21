@@ -459,7 +459,6 @@ asyncTest( 'Client: propfind', function() {
       xmlDoc.async = false;
       xmlDoc.loadXML( request.requestText );
     }
-    //<?xml version="1.0" encoding="utf-8" ?><propfind xmlns="DAV:"><prop><acl/></prop></propfind>
     deepEqual( xmlDoc.documentElement.namespaceURI, 'DAV:'    , 'PROPFIND request should have DAV: as namespace for the root element');
     deepEqual( xmlDoc.documentElement.nodeName    , 'propfind', 'PROPFIND request should have propfind as nodeName for the root element');
     var firstElement = xmlDoc.documentElement.childNodes.item( 0 );
