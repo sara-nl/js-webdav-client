@@ -143,11 +143,11 @@ test( 'Response; add and retrieve properties', function() {
   
   // Assertions with 2 property added
   resp.addProperty( prop2 );
-  deepEqual( resp.getNamespaceNames().length                            , 2                  , 'After adding 2 property, there should be 2 namespaces for properties' );
-  deepEqual( resp.getPropertyNames( propNamespace1 )                    , [ propTagname1 ]   , 'After adding 2 property, the first namespaces should contain the first property' );
-  deepEqual( resp.getProperty( propNamespace1, propTagname1 ).toString(), propValue1         , 'After adding 2 property, the first properties should be available' );
-  deepEqual( resp.getPropertyNames( propNamespace2 )                    , [ propTagname2 ]   , 'After adding 2 property, the second namespaces should contain the second property' );
-  deepEqual( resp.getProperty( propNamespace2, propTagname2 ).toString(), propValue2         , 'After adding 2 property, the second property should be available' );
+  deepEqual( resp.getNamespaceNames().length                            , 2                  , 'After adding 2 properties, there should be 2 namespaces for properties' );
+  deepEqual( resp.getPropertyNames( propNamespace1 )                    , [ propTagname1 ]   , 'After adding 2 properties, the first namespaces should contain the first property' );
+  deepEqual( resp.getProperty( propNamespace1, propTagname1 ).toString(), propValue1         , 'After adding 2 properties, the first properties should be available' );
+  deepEqual( resp.getPropertyNames( propNamespace2 )                    , [ propTagname2 ]   , 'After adding 2 properties, the second namespaces should contain the second property' );
+  deepEqual( resp.getProperty( propNamespace2, propTagname2 ).toString(), propValue2         , 'After adding 2 properties, the second property should be available' );
 } );
 
 // End of file

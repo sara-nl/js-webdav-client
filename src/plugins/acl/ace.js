@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
-"use strict"
+"use strict";
 
 // If nl.sara.webdav.Ace is already defined, we have a namespace clash!
 if (nl.sara.webdav.Ace !== undefined) {
@@ -79,7 +79,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
     }
     for (var j = 0; j < child.childNodes.length; j++) {
       var principal = child.childNodes.item(j);
-      if ((principal.nodeType != 1) || (principal.namespaceURI == null) || (principal.namespaceURI != 'DAV:')) { // Skip if not from the right namespace
+      if ((principal.nodeType !== 1) || (principal.namespaceURI === null) || (principal.namespaceURI !== 'DAV:')) { // Skip if not from the right namespace
         continue;
       }
       switch (nl.sara.webdav.Ie.getLocalName(principal)) {
@@ -98,7 +98,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
         case 'property':
           for (var k = 0; k < principal.childNodes.length; k++) {
             var element = principal.childNodes.item(k);
-            if (element.nodeType != 1) {
+            if (element.nodeType !== 1) {
               continue;
             }
             var prop = new nl.sara.webdav.Property(element);
@@ -119,21 +119,21 @@ nl.sara.webdav.Ace = function(xmlNode) {
   function parsePrivileges(object, privilegeList) {
     for (var i = 0; i < privilegeList.length; i++) {
       var privilege = privilegeList.item(i);
-      if (privilege.nodeType == 1) {
+      if (privilege.nodeType === 1) {
         object.addPrivilege(new nl.sara.webdav.Privilege(privilege));
       }
     }
   }
 
   // Parse the XML
-  if (typeof xmlNode != 'undefined') {
-    if ((xmlNode.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) != 'ace')) {
+  if (typeof xmlNode !== 'undefined') {
+    if ((xmlNode.namespaceURI !== 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) !== 'ace')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:ace', nl.sara.webdav.Exception.WRONG_XML);
     }
     var data = xmlNode.childNodes;
     for (var i = 0; i < data.length; i++) {
       var child = data.item(i);
-      if ((child.namespaceURI == null) || (child.namespaceURI != 'DAV:')) { // Skip if not from the right namespace
+      if ((child.namespaceURI === null) || (child.namespaceURI !== 'DAV:')) { // Skip if not from the right namespace
         continue;
       }
       switch (nl.sara.webdav.Ie.getLocalName(child)) {
@@ -145,7 +145,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
           this.invertprincipal = true;
           for (var j = 0; j < child.childNodes.length; j++) {
             var element = child.childNodes.item(j);
-            if ((element.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(element) != 'principal')) {
+            if ((element.namespaceURI !== 'DAV:') || (nl.sara.webdav.Ie.getLocalName(element) !== 'principal')) {
               continue;
             }
             parsePrincipal(this, element);
@@ -165,7 +165,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
         case 'inherited':
           for (var j = 0; j < child.childNodes.length; j++) {
             var element = child.childNodes.item(j);
-            if ((element.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(element) != 'href')) {
+            if ((element.namespaceURI !== 'DAV:') || (nl.sara.webdav.Ie.getLocalName(element) !== 'href')) {
               continue;
             }
             this.inherited = child.childNodes.item(j).childNodes.item(0).nodeValue;
@@ -174,7 +174,7 @@ nl.sara.webdav.Ace = function(xmlNode) {
       }
     }
   }
-}
+};
 
 /**#@+
  * Class constant
@@ -229,7 +229,7 @@ Object.defineProperty(nl.sara.webdav.Ace.prototype, 'isprotected', {
 
 Object.defineProperty(nl.sara.webdav.Ace.prototype, 'grantdeny', {
   'set': function(value) {
-    if ((value != nl.sara.webdav.Ace.GRANT) && (value != nl.sara.webdav.Ace.DENY)) {
+    if ((value !== nl.sara.webdav.Ace.GRANT) && (value !== nl.sara.webdav.Ace.DENY)) {
       throw new nl.sara.webdav.Exception('grantdeny must be either nl.sara.webdav.Ace.GRANT or nl.sara.webdav.Ace.DENY', nl.sara.webdav.Exception.WRONG_VALUE);
     }
     this._grantdeny = value;
@@ -274,7 +274,7 @@ nl.sara.webdav.Ace.prototype.addPrivilege = function(privilege) {
 
   this._namespaces[namespace][privilege.tagname] = privilege;
   return this;
-}
+};
 
 /**
  * Gets a WebDAV privilege
@@ -288,7 +288,7 @@ nl.sara.webdav.Ace.prototype.getPrivilege = function(namespace, privilege) {
     return undefined;
   }
   return this._namespaces[namespace][privilege];
-}
+};
 
 /**
  * Gets the namespace names
@@ -297,7 +297,7 @@ nl.sara.webdav.Ace.prototype.getPrivilege = function(namespace, privilege) {
  */
 nl.sara.webdav.Ace.prototype.getNamespaceNames = function() {
   return Object.keys(this._namespaces);
-}
+};
 
 /**
  * Gets the privilege names of a namespace
@@ -310,6 +310,6 @@ nl.sara.webdav.Ace.prototype.getPrivilegeNames = function(namespace) {
     return new Array();
   }
   return Object.keys(this._namespaces[namespace]);
-}
+};
 
 // End of library
