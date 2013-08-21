@@ -64,14 +64,14 @@ nl.sara.webdav.codec.AclCodec.toXML = function(acl, xmlDoc){
         principal.appendChild(xmlDoc.createElementNS('DAV:', 'self'));
         break;
       default: // If it isn't one of the constants, it should be either a Property object or a string/URL
-        if (typeof princVal == 'string') { // It is a string; the URL of the principal
+        if (typeof princVal === 'string') { // It is a string; the URL of the principal
           var href = xmlDoc.createElementNS('DAV:', 'href');
           href.appendChild(xmlDoc.createCDATASection(princVal));
           principal.appendChild(href);
         }else{ // And else it is a property
           var property = xmlDoc.createElementNS('DAV:', 'property');
           var prop = xmlDoc.createElementNS(princVal.namespace, princVal.tagname);
-          if (princVal.xmlvalue != null) {
+          if (princVal.xmlvalue !== null) {
             for (var j = 0; j < princVal.xmlvalue.length; j++) {
               var nodeCopy = xmlDoc.importNode(princVal.xmlValue.item(j), true);
               prop.appendChild(nodeCopy);
@@ -95,9 +95,9 @@ nl.sara.webdav.codec.AclCodec.toXML = function(acl, xmlDoc){
     // Then prepare the privileges
     // grant or deny?
     var privilegeParent = null;
-    if (ace.grantdeny == nl.sara.webdav.Ace.DENY) {
+    if (ace.grantdeny === nl.sara.webdav.Ace.DENY) {
       privilegeParent = xmlDoc.createElementNS('DAV:', 'deny');
-    }else if (ace.grantdeny == nl.sara.webdav.Ace.GRANT) {
+    }else if (ace.grantdeny === nl.sara.webdav.Ace.GRANT) {
       privilegeParent = xmlDoc.createElementNS('DAV:', 'grant');
     }else{
       throw new nl.sara.webdav.Exception('\'grantdeny\' property not set on one of the ACE\'s in this ACL', nl.sara.webdav.Exception.WRONG_VALUE);
@@ -110,7 +110,7 @@ nl.sara.webdav.codec.AclCodec.toXML = function(acl, xmlDoc){
         var privilege = ace.getPrivilege(namespace, privileges[k]);
         var privilegeElement = xmlDoc.createElementNS('DAV:', 'privilege');
         var priv = xmlDoc.createElementNS(privilege.namespace, privilege.tagname);
-        if (privilege.xmlvalue != null) {
+        if (privilege.xmlvalue !== null) {
           for (var l = 0; l < privilege.xmlvalue.length; l++) {
             var nodeCopy = xmlDoc.importNode(privilege.xmlValue.item(j), true);
             priv.appendChild(nodeCopy);

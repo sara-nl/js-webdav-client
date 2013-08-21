@@ -80,7 +80,7 @@ asyncTest( 'Client: acl', function() {
       xmlDoc.async = false;
       xmlDoc.loadXML( request.requestText );
     }
-    // We test whether the Acl object parses XML correctly, so here we can assume it does: so let's use that
+    // We test whether the Acl object parses XML correctly elsewhere, so here we can assume it does: so let's use that
     var producedAcl = new nl.sara.webdav.Acl( xmlDoc.documentElement );
     deepEqual( producedAcl.getLength()     , 2             , 'ACL request should result in an ACL with 2 ACE\'s' );
     var producedAce1 = producedAcl.getAce( 0 );
