@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with js-webdav-client.  If not, see <http://www.gnu.org/licenses/>.
  */
-"use strict"
+"use strict";
 
 // If nl.sara.webdav.Acl is already defined, we have a namespace clash!
 if (nl.sara.webdav.Acl !== undefined) {
@@ -39,19 +39,19 @@ nl.sara.webdav.Acl = function(xmlNode) {
 
   // Constructor logic
   // Parse the XML
-  if (typeof xmlNode != 'undefined') {
-    if ((xmlNode.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) != 'acl')) {
+  if (typeof xmlNode !== 'undefined') {
+    if ((xmlNode.namespaceURI !== 'DAV:') || (nl.sara.webdav.Ie.getLocalName(xmlNode) !== 'acl')) {
       throw new nl.sara.webdav.Exception('Node is not of type DAV:acl', nl.sara.webdav.Exception.WRONG_XML);
     }
     for (var i = 0; i < xmlNode.childNodes.length; i++) {
       var child = xmlNode.childNodes.item(i);
-      if ((child.namespaceURI == null) || (child.namespaceURI != 'DAV:') || (nl.sara.webdav.Ie.getLocalName(child) != 'ace')) { // Skip if not the right element
+      if ((child.namespaceURI === null) || (child.namespaceURI !== 'DAV:') || (nl.sara.webdav.Ie.getLocalName(child) !== 'ace')) { // Skip if not the right element
         continue;
       }
       this.addAce(new nl.sara.webdav.Ace(child));
     }
   }
-}
+};
 
 //########################## DEFINE PUBLIC METHODS #############################
 /**
@@ -76,7 +76,7 @@ nl.sara.webdav.Acl.prototype.addAce = function(ace, position) {
     }
   }
   return this;
-}
+};
 
 /**
  * Gets the ACL as an array
@@ -85,7 +85,7 @@ nl.sara.webdav.Acl.prototype.addAce = function(ace, position) {
  */
 nl.sara.webdav.Acl.prototype.getAces = function() {
   return this._aces;
-}
+};
 
 /**
  * Gets one ACE from a certain position
@@ -99,7 +99,7 @@ nl.sara.webdav.Acl.prototype.getAce = function(position) {
     throw new nl.sara.webdav.Exception('No ACE found on position ' + position, nl.sara.webdav.Exception.UNEXISTING_PROPERTY);
   }
   return this._aces[position];
-}
+};
 
 /**
  * Gets the length of the ACL
@@ -108,6 +108,6 @@ nl.sara.webdav.Acl.prototype.getAce = function(position) {
  */
 nl.sara.webdav.Acl.prototype.getLength = function() {
   return this._aces.length;
-}
+};
 
 // End of library
