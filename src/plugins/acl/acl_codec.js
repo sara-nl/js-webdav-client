@@ -36,7 +36,7 @@ nl.sara.webdav.codec.AclCodec.fromXML = function(nodelist) {
   var xmlDoc = document.implementation.createDocument("DAV:", "acl", null);
   var acl = xmlDoc.documentElement;
   for (var i = 0; i < nodelist.length; i++) {
-    acl.appendChild(xmlDoc.importNode(nodelist.item(i)));
+    acl.appendChild( xmlDoc.importNode( nodelist.item( i ), true ) );
   }
   return new nl.sara.webdav.Acl(acl);
 };
