@@ -45,9 +45,9 @@ test( 'Getcontentlength Codec; conversion from object to XML', function() {
   var xmlDoc = nl.sara.webdav.codec.GetcontentlengthCodec.toXML( length, document.implementation.createDocument( 'DAV:', 'getcontentlength', null ) );
   
   // Assertions whether the formed XML is correct
-  var dateNode = xmlDoc.documentElement.childNodes[0];
-  deepEqual( dateNode.nodeType , 4                , 'Returned node should be of nodeType CDATA' );
-  deepEqual( dateNode.nodeValue, length.toString(), 'Returned node should contain correct length' );
+  var lengthNode = xmlDoc.documentElement.childNodes[0];
+  deepEqual( lengthNode.nodeType , 4                , 'Returned node should be of nodeType CDATA' );
+  deepEqual( lengthNode.nodeValue, length.toString(), 'Returned node should contain correct length' );
 } );
 
 // End of file
