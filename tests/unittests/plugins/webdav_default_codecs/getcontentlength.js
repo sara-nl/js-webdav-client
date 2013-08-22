@@ -19,35 +19,35 @@
 "use strict";
 
 /**
- * Tests whether an XML piece representing a creationdate property is converted correctly to an object
+ * Tests whether an XML piece representing a getcontentlength property is converted correctly to an object
  */
-test( 'Creationdate Codec; conversion from XML to object', function() {
+test( 'Getcontentlength Codec; conversion from XML to object', function() {
   // Prepare test values
-  var date = '1985-01-12T12:34:56Z';
+  var length = 654321;
   
   // Prepare an XML document with a createiondate to test
-  var xmlDoc = document.implementation.createDocument( 'DAV:', 'creationdate', null );
-  xmlDoc.documentElement.appendChild( xmlDoc.createCDATASection( date ) );
+  var xmlDoc = document.implementation.createDocument( 'DAV:', 'getcontentlength', null );
+  xmlDoc.documentElement.appendChild( xmlDoc.createCDATASection( length ) );
   
   // Test conversion with the codec set
-  var producedDate = nl.sara.webdav.codec.CreationdateCodec.fromXML( xmlDoc.documentElement.childNodes );
-  deepEqual( producedDate.getTime(), (new Date( date )).getTime(), 'Returned value should represent the correct date' );
+  var producedLength = nl.sara.webdav.codec.GetcontentlengthCodec.fromXML( xmlDoc.documentElement.childNodes );
+  deepEqual( producedLength, length, 'Returned value should represent the correct length' );
 } );
 
 /**
- * Tests whether a creationdate is converted correctly to XML
+ * Tests whether an integer is converted correctly to XML
  */
-test( 'Creationdate Codec; conversion from object to XML', function() {
+test( 'Getcontentlength Codec; conversion from object to XML', function() {
   // Prepare test values
-  var date = new Date( 2013, 1, 12, 12, 34, 56, 0 );
+  var length = 654321;
   
   // Let's call the method we actually want to test
-  var xmlDoc = nl.sara.webdav.codec.CreationdateCodec.toXML( date, document.implementation.createDocument( 'DAV:', 'creationdate', null ) );
+  var xmlDoc = nl.sara.webdav.codec.GetcontentlengthCodec.toXML( length, document.implementation.createDocument( 'DAV:', 'getcontentlength', null ) );
   
   // Assertions whether the formed XML is correct
   var dateNode = xmlDoc.documentElement.childNodes[0];
-  deepEqual( dateNode.nodeType , 4                 , 'Returned node should be of nodeType CDATA' );
-  deepEqual( dateNode.nodeValue, date.toISOString(), 'Returned node should contain correct date in ISO format' );
+  deepEqual( dateNode.nodeType , 4                , 'Returned node should be of nodeType CDATA' );
+  deepEqual( dateNode.nodeValue, length.toString(), 'Returned node should contain correct length' );
 } );
 
 // End of file
