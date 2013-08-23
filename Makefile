@@ -55,8 +55,8 @@ tests: test-dependencies dist.js $(TESTS) $(SOURCES)
 docs: $(SOURCES)
 	@if test ! -d $(JSRUN) ; then \
 		curl http://jsdoc-toolkit.googlecode.com/files/jsdoc_toolkit-2.4.0.zip > jsdoc_toolkit-2.4.0.zip ; \
-		@unzip jsdoc_toolkit-2.4.0.zip ; \
-		mv -f jsdoc_toolkit-2.4.0/jsdoc-toolkit ./ ; \
+		unzip jsdoc_toolkit-2.4.0.zip ; \
+		mv -vf jsdoc_toolkit-2.4.0/jsdoc-toolkit ./ ; \
 		rm -rf jsdoc_toolkit-2.4.* ; \
 	fi
 	@export JSDOCDIR=$(JSRUN) ; \
@@ -69,4 +69,4 @@ docs: $(SOURCES)
 		"src/" "src/plugins/" "src/plugins/acl" "src/plugins/webdav_default_codecs"
 
 clean:
-	@rm -rf dist.js dist-unminified.js docs/* jsdoc.log yuicompressor.jar jsdoc-toolkit tests/resources temp_footer.html tests/run_dev_tests.html tests/run_dist_tests.html
+	@rm -rf dist.js dist-unminified.js docs/* docs/.git jsdoc.log yuicompressor.jar jsdoc-toolkit tests/resources temp_footer.html tests/run_dev_tests.html tests/run_dist_tests.html
