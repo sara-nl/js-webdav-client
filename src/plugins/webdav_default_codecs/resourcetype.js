@@ -46,7 +46,7 @@ nl.sara.webdav.codec.ResourcetypeCodec.PRINCIPAL = 4;
 nl.sara.webdav.codec.ResourcetypeCodec.fromXML = function(nodelist) {
   for (var i = 0; i < nodelist.length; i++) {
     var node = nodelist.item(i);
-    if (node.namespaceURI == 'DAV:') {
+    if (node.namespaceURI === 'DAV:') {
       switch (nl.sara.webdav.Ie.getLocalName(node)) {
         case 'collection':
           return nl.sara.webdav.codec.ResourcetypeCodec.COLLECTION;
@@ -55,7 +55,7 @@ nl.sara.webdav.codec.ResourcetypeCodec.fromXML = function(nodelist) {
       }
     }
   }
-  return nl.sara.webdav.codec.ResourcetypeCodec.NON_COLLECTION;
+  return nl.sara.webdav.codec.ResourcetypeCodec.UNSPECIFIED;
 };
 
 nl.sara.webdav.codec.ResourcetypeCodec.toXML = function(value, xmlDoc){

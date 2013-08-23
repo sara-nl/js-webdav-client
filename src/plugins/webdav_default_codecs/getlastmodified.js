@@ -33,7 +33,7 @@ nl.sara.webdav.codec.GetlastmodifiedCodec.tagname = 'getlastmodified';
 
 nl.sara.webdav.codec.GetlastmodifiedCodec.fromXML = function(nodelist) {
   var node = nodelist.item(0);
-  if ((node.nodeType == 3) || (node.nodeType == 4)) { // Make sure text and CDATA content is stored
+  if ((node.nodeType === 3) || (node.nodeType === 4)) { // Make sure text and CDATA content is stored
     return new Date(node.nodeValue);
   }else{ // If the node is not text or CDATA, then we don't parse a value at all
     return null;

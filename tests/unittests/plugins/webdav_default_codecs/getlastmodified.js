@@ -19,35 +19,36 @@
 "use strict";
 
 /**
- * Tests whether an XML piece representing a creationdate property is converted correctly to an object
+ * Tests whether an XML piece representing a getlastmodified property is converted correctly to an object
  */
-test( 'Creationdate Codec; conversion from XML to object', function() {
+test( 'Getlastmodified Codec; conversion from XML to object', function() {
   // Prepare test values
-  var date = '1985-01-12T12:34:56Z';
+  var date = 'Fri, 13 Sep 2013 12:34:56 GMT';
   
   // Prepare an XML document with a createiondate to test
-  var xmlDoc = document.implementation.createDocument( 'DAV:', 'creationdate', null );
+  var xmlDoc = document.implementation.createDocument( 'DAV:', 'getlastmodified', null );
   xmlDoc.documentElement.appendChild( xmlDoc.createCDATASection( date ) );
   
   // Test conversion with the codec set
-  var producedDate = nl.sara.webdav.codec.CreationdateCodec.fromXML( xmlDoc.documentElement.childNodes );
+  var producedDate = nl.sara.webdav.codec.GetlastmodifiedCodec.fromXML( xmlDoc.documentElement.childNodes );
   deepEqual( producedDate.getTime(), (new Date( date )).getTime(), 'Returned value should represent the correct date' );
 } );
 
 /**
- * Tests whether a creationdate is converted correctly to XML
+ * Tests whether a lastmodified date is converted correctly to XML
  */
-test( 'Creationdate Codec; conversion from object to XML', function() {
+test( 'Getlastmodified Codec; conversion from object to XML', function() {
   // Prepare test values
-  var date = new Date( 2013, 1, 12, 12, 34, 56, 0 );
+  var date = new Date( 2013, 8, 13, 12, 34, 56, 0 );
+  date.setUTCHours( 12 ); // Make sure the hours represent 12 hour GMT (and not the local timezone)
   
   // Let's call the method we actually want to test
-  var xmlDoc = nl.sara.webdav.codec.CreationdateCodec.toXML( date, document.implementation.createDocument( 'DAV:', 'creationdate', null ) );
+  var xmlDoc = nl.sara.webdav.codec.GetlastmodifiedCodec.toXML( date, document.implementation.createDocument( 'DAV:', 'getlastmodified', null ) );
   
   // Assertions whether the formed XML is correct
   var dateNode = xmlDoc.documentElement.childNodes[0];
-  deepEqual( dateNode.nodeType , 4                 , 'Returned node should be of nodeType CDATA' );
-  deepEqual( dateNode.nodeValue, date.toISOString(), 'Returned node should contain correct date in ISO format' );
+  deepEqual( dateNode.nodeType , 4                              , 'Returned node should be of nodeType CDATA' );
+  deepEqual( dateNode.nodeValue, 'Fri, 13 Sep 2013 12:34:56 GMT', 'Returned node should contain correct date in ISO format' );
 } );
 
 // End of file
