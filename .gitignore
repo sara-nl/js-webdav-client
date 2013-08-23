@@ -1,6 +1,9 @@
 dist*
-test/
 tests/resources/
-.project
+tests/run_dev_tests.html
+tests/run_dist_tests.html
+jsdoc-toolkit/
 jsdoc.log
+yuicompressor.jar
+.project
 nbproject
