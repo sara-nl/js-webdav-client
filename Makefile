@@ -37,16 +37,16 @@ test-dependencies:
 tests: test-dependencies dist.js $(TESTS) $(SOURCES)
 	@rm -f temp_footer.html
 	@for TESTFILE in $(TESTS); do \
-		echo "    <script src=\"$${TESTFILE}\"></script>" >> temp_footer.html ; \
+		echo "    <script src=\"../$${TESTFILE}\"></script>" >> temp_footer.html ; \
 	done
 	@cat tests/templates/tests_footer.html >> temp_footer.html
 	@cp tests/templates/tests_header.html tests/run_dev_tests.html
 	@for SOURCEFILE in $(SOURCES); do \
-		echo "    <script src=\"$${SOURCEFILE}\"></script>" >> tests/run_dev_tests.html ; \
+		echo "    <script src=\"../$${SOURCEFILE}\"></script>" >> tests/run_dev_tests.html ; \
 	done
 	@cat temp_footer.html >> tests/run_dev_tests.html
 	@cp tests/templates/tests_header.html tests/run_dist_tests.html
-	@echo "<script src=\"../dist.js\"></script>" >> tests/run_dist_tests.html
+	@echo "    <script src=\"../dist.js\"></script>" >> tests/run_dist_tests.html
 	@cat temp_footer.html >> tests/run_dist_tests.html
 	@rm -f temp_footer.html
 	@echo "To run the tests for the development files, open tests/run_dev_tests.html in a browser"
