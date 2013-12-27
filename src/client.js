@@ -81,9 +81,9 @@ nl.sara.webdav.Client.prototype.getUrl = function(path) {
  *
  * @param    {String}                         path             The path get a PROPFIND for
  * @param    {Function(status,body,headers)}  callback         Querying the server is done asynchronously, this callback function is called when the results are in
- * @param    {String}                         [depth=0]        Optional; Value for the 'depth' header, should be either '0', '1' or the class constant INFINITY. When omitted, '0' is used. See RFC 4916.
- * @param    {mixed}                          [props=ALLPROP]  Optional; The properties to fetch. Should be either one of the class constants PROPNAME or ALLPROP or an array with Property objects. When omitted, ALLPROP is assumed. See RFC 4916.
- * @param    {nl.sara.webdav.Property[]}      [include]        Optional; An array with Property objects used for the <include> element. This is only used for ALLPROP requests. When omitted, no <include> element is send. See RFC 4916.
+ * @param    {String}                         [depth=0]        Optional; Value for the 'depth' header, should be either '0', '1' or the class constant INFINITY. When omitted, '0' is used. See RFC 4918.
+ * @param    {mixed}                          [props=ALLPROP]  Optional; The properties to fetch. Should be either one of the class constants PROPNAME or ALLPROP or an array with Property objects. When omitted, ALLPROP is assumed. See RFC 4918.
+ * @param    {nl.sara.webdav.Property[]}      [include]        Optional; An array with Property objects used for the <include> element. This is only used for ALLPROP requests. When omitted, no <include> element is send. See RFC 4918.
  * @param    {Array}                          headers          Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                           The client itself for chaining methods
  */
