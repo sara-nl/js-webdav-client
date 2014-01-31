@@ -4,21 +4,25 @@ JSRUN = ./jsdoc-toolkit
 
 all: dist.js docs tests
 
-dist.js: $(SOURCES)
-	@rm -f $@ dist-unminified.js
-	@for SOURCEFILE in $(SOURCES); do \
-		cat $${SOURCEFILE} >> dist-unminified.js && \
-		echo >> dist-unminified.js; \
-		echo "Added to build file: $${SOURCEFILE}"; \
-	done
+dist.js: dist-unminified.js check-minifier-dependencies
 	@if test ! -e yuicompressor.jar ; then \
 		curl --location https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.7.zip > yuicompressor-2.4.7.zip ; \
 		unzip -p yuicompressor-2.4.7.zip yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar > yuicompressor.jar ; \
 		rm -rf yuicompressor-2.4.7.zip ; \
 	fi
 	@java -jar yuicompressor.jar --type js --charset utf-8 --preserve-semi -o $@ dist-unminified.js
-	@rm -f dist-unminified.js
 	@echo "dist.js is created and contains the complete library."
+
+check-minifier-dependencies:
+	@scripts/check_dependencies.sh
+
+dist-unminified.js: $(SOURCES)
+	@rm -f $@ dist-unminified.js
+	@for SOURCEFILE in $(SOURCES); do \
+		cat $${SOURCEFILE} >> dist-unminified.js && \
+		echo >> dist-unminified.js; \
+		echo "Added to build file: $${SOURCEFILE}"; \
+	done
 
 test-dependencies:
 	@if test ! -d 'tests/resources' ; then \
