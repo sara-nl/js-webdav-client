@@ -91,10 +91,12 @@ nl.sara.webdav.Client = function(config, useHTTPS, port, defaultHeaders) {
       host = config;
     }
     
-    // if the configuration item is a string, then we have to work in compatibility mode; first parameter is the host, second, the protocol, third the port and fourth aditional headers
-    var protocol = (useHTTPS === true) ? 'https' : 'http';
-    port = (port !== undefined) ? port : ((protocol === 'https') ? 443 : 80);
-    this._baseUrl = protocol + '://' + host + ((((protocol === 'http') && (port === 80)) || ((protocol === 'https') && (port === 443))) ? '' : ':' + port);
+    if ( host !== undefined ) {
+      // if the configuration item is a string, then we have to work in compatibility mode; first parameter is the host, second, the protocol, third the port and fourth aditional headers
+      var protocol = (useHTTPS === true) ? 'https' : 'http';
+      port = (port !== undefined) ? port : ((protocol === 'https') ? 443 : 80);
+      this._baseUrl = protocol + '://' + host + ((((protocol === 'http') && (port === 80)) || ((protocol === 'https') && (port === 443))) ? '' : ':' + port);
+    }
   }
   
   if (defaultHeaders !== undefined) {
