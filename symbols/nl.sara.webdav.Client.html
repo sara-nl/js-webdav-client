@@ -203,9 +203,9 @@ ul.inheritsList
 	
 	<li><a href="../symbols/nl.sara.webdav.Client.html">nl.sara.webdav.Client</a></li>
 	
-	<li><a href="../symbols/nl.sara.webdav.codec.html">nl.sara.webdav.codec</a></li>
-	
 	<li><a href="../symbols/nl.sara.webdav.Codec.html">nl.sara.webdav.Codec</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.codec.html">nl.sara.webdav.codec</a></li>
 	
 	<li><a href="../symbols/nl.sara.webdav.codec.AclCodec.html">nl.sara.webdav.codec.AclCodec</a></li>
 	
@@ -214,6 +214,8 @@ ul.inheritsList
 	<li><a href="../symbols/nl.sara.webdav.codec.GetcontentlengthCodec.html">nl.sara.webdav.codec.GetcontentlengthCodec</a></li>
 	
 	<li><a href="../symbols/nl.sara.webdav.codec.GetlastmodifiedCodec.html">nl.sara.webdav.codec.GetlastmodifiedCodec</a></li>
+	
+	<li><a href="../symbols/nl.sara.webdav.codec.OwnerCodec.html">nl.sara.webdav.codec.OwnerCodec</a></li>
 	
 	<li><a href="../symbols/nl.sara.webdav.codec.ResourcetypeCodec.html">nl.sara.webdav.codec.ResourcetypeCodec</a></li>
 	
@@ -268,7 +270,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Client.html#constructor">nl.sara.webdav.Client</a></b>(host, useHTTPS, port)
+								<b><a href="../symbols/nl.sara.webdav.Client.html#constructor">nl.sara.webdav.Client</a></b>(config, useHTTPS, port, defaultHeaders)
 							</div>
 							<div class="description"></div>
 						</td>
@@ -331,9 +333,9 @@ ul.inheritsList
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">nl.sara.webdav.Client.<b><a href="../symbols/nl.sara.webdav.Client.html#.getAjax">getAjax</a></b>(method, url, callback, headers)
+								<div class="fixedFont"><b><a href="../symbols/nl.sara.webdav.Client.html#getAjax">getAjax</a></b>(method, url, callback, headers)
 								</div>
 								<div class="description">Prepares a XMLHttpRequest object to be used for an AJAX request</div>
 							</td>
@@ -467,7 +469,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 				</div>
 				
 				<div class="fixedFont">
-						<b>nl.sara.webdav.Client</b>(host, useHTTPS, port)
+						<b>nl.sara.webdav.Client</b>(config, useHTTPS, port, defaultHeaders)
 				</div>
 				
 				<div class="description">
@@ -483,22 +485,43 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{String}</span>  <b>host</b>
+								<span class="light fixedFont">{Array}</span>  <b>config</b>
 								<i>Optional</i>
 							</dt>
-								<dd>Optional; The hostname or IP address of the server. This is only needed if the host is different from the one serving this library.</dd>
+								<dd>A configuration object. It can contain the following fields:
+                           - host; String containing the hostname to connect to (default: current host)
+                           - useHTTPS; If set to (boolean) false, a regular HTTP connection will be used, any other value (even 0 or '' which evaluate to false) and HTTPS will be used instead. Is ignored if host is not set. (default: true)
+                           - port; Integer with the port number to use. Is ignored if host is not set. (default: 443 for HTTPS and 80 for HTTP)
+                           - defaultHeaders; An array containing default headers to use for each request. Header names should be the keys. (default: {} i.e. no default headers)
+                           - username; A string with the username to use for authentication. (default: the current username if any)
+                           - password; A string with the password to use for authentication. This is only used if a username is supplied. (default: the current password if any)
+                           For backwards compatibility reasons, it is also
+                           possible to specify the 'host', 'useHTTPS', 'port'
+                           and 'defaultHeaders' as regular parameters (in
+                           that order). Note that useHTTPS works differently
+                           in that case; any other value than boolean True
+                           will result in regular HTTP. If you want to supply
+                           a username and password, you will have to use the
+                           config array, you cannot pass them as extra normal
+                           parameters.</dd>
 						
 							<dt>
-								<span class="light fixedFont">{Boolean}</span>  <b>useHTTPS</b>
-								<i>Optional, Default: false</i>
+								 <b>useHTTPS</b>
+								
 							</dt>
-								<dd>Optional; If set to true, HTTPS is used. If set to false or omitted, HTTP is used. This parameter is ignored if host is not set.</dd>
+								<dd></dd>
 						
 							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>port</b>
-								<i>Optional</i>
+								 <b>port</b>
+								
 							</dt>
-								<dd>Optional; Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS). This parameter is ignored if host is not set.</dd>
+								<dd></dd>
+						
+							<dt>
+								 <b>defaultHeaders</b>
+								
+							</dt>
+								<dd></dd>
 						
 						</dl>
 					
@@ -672,7 +695,7 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 								<dd>The destination to copy to. Should be either a full URL or a path from the root on this server (i.e. it should start with a /)</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Boolean}</span> <b>overwriteMode</b>
+									<span class="light fixedFont">{Integer}</span> <b>overwriteMode</b>
 									<i>Optional, Default: SILENT_OVERWRITE</i>
 								</dt>
 								<dd>Optional; Specify what to do when destination resource already exists. Should be either FAIL_ON_OVERWRITE or SILENT_OVERWRITE. The default is SILENT_OVERWRITE.</dd>
@@ -762,11 +785,11 @@ Because 'delete' is an operator in JavaScript, I had to name this method
 
 					<hr />
 				
-					<a name=".getAjax"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="getAjax"> </a>
+					<div class="fixedFont">
 					
 					<span class="light">{XMLHttpRequest}</span>
-					<span class="light">nl.sara.webdav.Client.</span><b>getAjax</b>(method, url, callback, headers)
+					<b>getAjax</b>(method, url, callback, headers)
 					
 					</div>
 					<div class="description">
@@ -1574,7 +1597,7 @@ RFC 4918
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Aug 20 2013 16:15:01 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Apr 03 2014 15:50:41 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>
