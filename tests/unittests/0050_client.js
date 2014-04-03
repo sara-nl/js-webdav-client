@@ -19,21 +19,16 @@
 "use strict";
 
 /**
+ * Legacy test for old style contructor parameters (each option separate parameter)
  * Tests whether constructor parameters are correctly used to set object attributes
  */
-asyncTest( 'Client; constructor and URL construction', function() {
+asyncTest( 'Client; legacy constructor and URL construction', function() {
   // Prepare test values
   var host = 'surfsara.nl';
   var useHTTPS = true;
   var port = 8080;
   var testHeader = 'X-Default-Test-Header';
   var testHeaderValue = 'this is a useless, but default header';
-
-  // Assertions to check the constructor without parameters
-  var clientWithoutParams = new nl.sara.webdav.Client();
-  deepEqual( clientWithoutParams.getUrl('')     , '/'    , 'Client with no constructor parameter should return / for empty call to getUrl()' );
-  deepEqual( clientWithoutParams.getUrl('niek') , '/niek', 'Client with no constructor parameter should return /niek for call to getUrl(\'niek\')' );
-  deepEqual( clientWithoutParams.getUrl('/niek'), '/niek', 'Client with no constructor parameter should return /niek for call to getUrl(\'/niek\')' );
 
   // Assertions to check the constructor with the host parameter
   var clientWith1Param = new nl.sara.webdav.Client( host );
@@ -67,6 +62,80 @@ asyncTest( 'Client; constructor and URL construction', function() {
   
   // End mocking of AJAX
   server.stop();
+} );
+
+/**
+ * Tests whether constructor config is correctly used to set object attributes
+ */
+asyncTest( 'Client; constructor and URL construction', function() {
+  // Prepare test values
+  var host = 'surfsara.nl';
+  var useHTTPS = false;
+  var port = 8080;
+  var testHeader = 'X-Default-Test-Header';
+  var testHeaderValue = 'this is a useless, but default header';
+  var username = 'johndoe';
+  var password = 'best password ever: 1234';
+
+  // Assertions to check the constructor without parameters
+  var clientWithoutParams = new nl.sara.webdav.Client();
+  deepEqual( clientWithoutParams.getUrl('')     , '/'    , 'Client with no constructor parameter should return / for empty call to getUrl()' );
+  deepEqual( clientWithoutParams.getUrl('niek') , '/niek', 'Client with no constructor parameter should return /niek for call to getUrl(\'niek\')' );
+  deepEqual( clientWithoutParams.getUrl('/niek'), '/niek', 'Client with no constructor parameter should return /niek for call to getUrl(\'/niek\')' );
+
+  // Assertions to check the constructor with the host parameter
+  var configWith1Param = { 'host': host };
+  var clientWith1Param = new nl.sara.webdav.Client( configWith1Param);
+  deepEqual( clientWith1Param.getUrl('')     , 'https://' + host + '/'    , 'Client with one constructor parameter should return correct result for empty call to getUrl()' );
+  deepEqual( clientWith1Param.getUrl('niek') , 'https://' + host + '/niek', 'Client with one constructor parameter should return correct result for call to getUrl(\'niek\')' );
+
+  // Assertions to check the constructor with the host and https parameters
+  var configWith2Param = { 'host': host, 'useHTTPS': useHTTPS };
+  var clientWith2Param = new nl.sara.webdav.Client( configWith2Param );
+  deepEqual( clientWith2Param.getUrl('')     , 'http://' + host + '/'    , 'Client with two constructor parameter should return correct result for empty call to getUrl()' );
+  deepEqual( clientWith2Param.getUrl('niek') , 'http://' + host + '/niek', 'Client with two constructor parameter should return correct result for call to getUrl(\'niek\')' );
+
+  // Assertions to check the constructor with the host, https and port parameters
+  var clientWith3Param = { 'host': host, 'useHTTPS': useHTTPS, 'port': port };
+  var clientWith3Param = new nl.sara.webdav.Client( clientWith3Param );
+  deepEqual( clientWith3Param.getUrl('')     , 'http://' + host + ':' + port + '/'    , 'Client with three constructor parameter should return correct result for empty call to getUrl()' );
+  deepEqual( clientWith3Param.getUrl('niek') , 'http://' + host + ':' + port + '/niek', 'Client with three constructor parameter should return correct result for call to getUrl(\'niek\')' );
+
+  // Assertions to check the constructor with default headers
+  var defaultHeaders = {};
+  defaultHeaders[testHeader] = testHeaderValue;
+  var configWithDefaultHeader = { 'defaultHeaders': defaultHeaders };
+  var clientWithDefaultHeader = new nl.sara.webdav.Client( configWithDefaultHeader );
+  
+  // Prepare to mock AJAX
+  var server = new MockHttpServer( function ( request ) {
+    start();
+    deepEqual( request.getRequestHeader( testHeader ), testHeaderValue, 'Any request should include the default headers');
+    stop();
+  } );
+  server.start();
+  clientWithDefaultHeader.get('/home/', function() {} );
+  
+  // End mocking of AJAX
+  server.stop();
+
+  // Assertions to check the constructor with username and password
+  var configWithAuthentication = { 'username': username, 'password': password };
+  var clientWithAuthentication = new nl.sara.webdav.Client( configWithAuthentication );
+  
+  // Prepare to mock AJAX
+  var serverForAuthentication = new MockHttpServer( function ( request ) {
+    start();
+    deepEqual( request.user, username, 'Any request should include the username');
+    deepEqual( request.password, password, 'Any request should include the password');
+    stop();
+  } );
+  serverForAuthentication.start();
+  clientWithAuthentication.get('/home/', function() {} );
+  start();
+  
+  // End mocking of AJAX
+  serverForAuthentication.stop();
 } );
 
 /**

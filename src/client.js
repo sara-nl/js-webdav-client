@@ -26,14 +26,38 @@ if (nl.sara.webdav.Client !== undefined) {
 /**
  * @class Connection to a WebDAV server
  *
- * @param  {String}   [host]            Optional; The hostname or IP address of the server. This is only needed if the host is different from the one serving this library.
- * @param  {Boolean}  [useHTTPS=false]  Optional; If set to true, HTTPS is used. If set to false or omitted, HTTP is used. This parameter is ignored if host is not set.
- * @param  {Number}   [port]            Optional; Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS). This parameter is ignored if host is not set.
- * @param  {Array}    [defaultHeaders]  Optional; Default headers to us for every request. This should be an array with the header names as keys. The default headers can be overwritten by the method for a specific request.
+ * @param  {Array}  [config]  A configuration object. It can contain the following fields:
+ *                            - host; String containing the hostname to connect to (default: current host)
+ *                            - useHTTPS; If set to (boolean) false, a regular HTTP connection will be used, any other value (even 0 or '' which evaluate to false) and HTTPS will be used instead. Is ignored if host is not set. (default: true)
+ *                            - port; Integer with the port number to use. Is ignored if host is not set. (default: 443 for HTTPS and 80 for HTTP)
+ *                            - defaultHeaders; An array containing default headers to use for each request. Header names should be the keys. (default: {} i.e. no default headers)
+ *                            - username; A string with the username to use for authentication. (default: the current username if any)
+ *                            - password; A string with the password to use for authentication. This is only used if a username is supplied. (default: the current password if any)
+ *                            For backwards compatibility reasons, it is also
+ *                            possible to specify the 'host', 'useHTTPS', 'port'
+ *                            and 'defaultHeaders' as regular parameters (in
+ *                            that order). Note that useHTTPS works differently
+ *                            in that case; any other value than boolean True
+ *                            will result in regular HTTP. If you want to supply
+ *                            a username and password, you will have to use the
+ *                            config array, you cannot pass them as extra normal
+ *                            parameters.
  */
-nl.sara.webdav.Client = function(host, useHTTPS, port, defaultHeaders) {
+nl.sara.webdav.Client = function(config, useHTTPS, port, defaultHeaders) {
   // First define private attributes
   Object.defineProperty(this, '_baseUrl', {
+    'value': null,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, '_username', {
+    'value': null,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, '_password', {
     'value': null,
     'enumerable': false,
     'configurable': false,
@@ -47,7 +71,27 @@ nl.sara.webdav.Client = function(host, useHTTPS, port, defaultHeaders) {
   });
 
   // Constructor logic
-  if (host !== undefined) {
+  if ( config !== undefined ) {
+    var host;
+    if ( typeof( config ) !== 'string' ) {
+      host = config['host'];
+      useHTTPS = ( config['useHTTPS'] !== false );
+      port = config['port'];
+      defaultHeaders = config['defaultHeaders'];
+      
+      if ( config['username'] !== undefined ) {
+        this._username = config['username'];
+        if ( config['password'] !== undefined ) {
+          this._password = config['password'];
+        }else{
+          this._password = '';
+        }
+      }
+    }else{
+      host = config;
+    }
+    
+    // if the configuration item is a string, then we have to work in compatibility mode; first parameter is the host, second, the protocol, third the port and fourth aditional headers
     var protocol = (useHTTPS === true) ? 'https' : 'http';
     port = (port !== undefined) ? port : ((protocol === 'https') ? 443 : 80);
     this._baseUrl = protocol + '://' + host + ((((protocol === 'http') && (port === 80)) || ((protocol === 'https') && (port === 443))) ? '' : ':' + port);
@@ -568,7 +612,11 @@ nl.sara.webdav.Client.prototype.unlock = function(path, callback, headers) {
  */
 nl.sara.webdav.Client.prototype.getAjax = function(method, url, callback, headers) {
   var /** @type XMLHttpRequest */ ajax = new XMLHttpRequest();
-  ajax.open(method, url, true);
+  if ( this._username !== null ) {
+    ajax.open( method, url, true, this._username, this._password );
+  }else{
+    ajax.open( method, url, true );
+  }
   ajax.onreadystatechange = function() {
     nl.sara.webdav.Client.ajaxHandler( ajax, callback );
   };
