@@ -29,11 +29,18 @@ if (nl.sara.webdav.Client !== undefined) {
  * @param  {String}   [host]            Optional; The hostname or IP address of the server. This is only needed if the host is different from the one serving this library.
  * @param  {Boolean}  [useHTTPS=false]  Optional; If set to true, HTTPS is used. If set to false or omitted, HTTP is used. This parameter is ignored if host is not set.
  * @param  {Number}   [port]            Optional; Set a custom port to connect to. If not set, the default port will be used (80 for HTTP and 443 for HTTPS). This parameter is ignored if host is not set.
+ * @param  {Array}    [defaultHeaders]  Optional; Default headers to us for every request. This should be an array with the header names as keys. The default headers can be overwritten by the method for a specific request.
  */
-nl.sara.webdav.Client = function(host, useHTTPS, port) {
+nl.sara.webdav.Client = function(host, useHTTPS, port, defaultHeaders) {
   // First define private attributes
   Object.defineProperty(this, '_baseUrl', {
     'value': null,
+    'enumerable': false,
+    'configurable': false,
+    'writable': true
+  });
+  Object.defineProperty(this, '_headers', {
+    'value': {},
     'enumerable': false,
     'configurable': false,
     'writable': true
@@ -44,6 +51,10 @@ nl.sara.webdav.Client = function(host, useHTTPS, port) {
     var protocol = (useHTTPS === true) ? 'https' : 'http';
     port = (port !== undefined) ? port : ((protocol === 'https') ? 443 : 80);
     this._baseUrl = protocol + '://' + host + ((((protocol === 'http') && (port === 80)) || ((protocol === 'https') && (port === 443))) ? '' : ':' + port);
+  }
+  
+  if (defaultHeaders !== undefined) {
+    this._headers = defaultHeaders;
   }
 };
 
@@ -166,7 +177,7 @@ nl.sara.webdav.Client.prototype.propfind = function(path, callback, depth, props
   var body = '<?xml version="1.0" encoding="utf-8" ?>' + serializer.serializeToString(propsBody);
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("PROPFIND", url, callback, headers);
+  var ajax = this.getAjax("PROPFIND", url, callback, headers);
   ajax.setRequestHeader('Depth', depthHeader);
   ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
   ajax.send(body);
@@ -240,7 +251,7 @@ nl.sara.webdav.Client.prototype.proppatch = function(path, callback, setProps, d
   var body = '<?xml version="1.0" encoding="utf-8" ?>' + serializer.serializeToString(propsBody);
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("PROPPATCH", url, callback, headers);
+  var ajax = this.getAjax("PROPPATCH", url, callback, headers);
   ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
   ajax.send(body);
 
@@ -269,7 +280,7 @@ nl.sara.webdav.Client.prototype.mkcol = function(path, callback, body, contentty
   var url = this.getUrl(path);
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("MKCOL", url, callback, headers);
+  var ajax = this.getAjax("MKCOL", url, callback, headers);
   if (body !== undefined) {
     if (contenttype !== undefined) {
       ajax.setRequestHeader('Content-Type', contenttype);
@@ -306,7 +317,7 @@ nl.sara.webdav.Client.prototype.remove = function(path, callback, headers) {
   var url = this.getUrl(path);
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("DELETE", url, callback, headers);
+  var ajax = this.getAjax("DELETE", url, callback, headers);
   ajax.send();
 
   return this;
@@ -333,7 +344,7 @@ nl.sara.webdav.Client.prototype.get = function(path, callback, headers) {
 
   // And then send the request
   var ajax = null;
-  ajax = nl.sara.webdav.Client.getAjax("GET", url, callback, headers);
+  ajax = this.getAjax("GET", url, callback, headers);
   ajax.send();
 
   return this;
@@ -360,7 +371,7 @@ nl.sara.webdav.Client.prototype.head = function(path, callback, headers) {
 
   // And then send the request
   var ajax = null;
-  ajax = nl.sara.webdav.Client.getAjax("HEAD", url, callback, headers);
+  ajax = this.getAjax("HEAD", url, callback, headers);
   ajax.send();
 
   return this;
@@ -389,7 +400,7 @@ nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype
 
   // And then send the request
   var ajax = null;
-  ajax = nl.sara.webdav.Client.getAjax("PUT", url, callback, headers);
+  ajax = this.getAjax("PUT", url, callback, headers);
   if (contenttype !== undefined) {
     ajax.setRequestHeader('Content-Type', contenttype);
   }
@@ -421,7 +432,7 @@ nl.sara.webdav.Client.prototype.post = function(path, callback, body, contenttyp
 
   // And then send the request
   var ajax = null;
-  ajax = nl.sara.webdav.Client.getAjax("POST", url, callback, headers);
+  ajax = this.getAjax("POST", url, callback, headers);
   if ( body !== undefined ) {
     if (contenttype !== undefined) {
       ajax.setRequestHeader('Content-Type', contenttype);
@@ -464,7 +475,7 @@ nl.sara.webdav.Client.prototype.copy = function(path, callback, destination, ove
   } // Else I assume it is a complete URL already
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("COPY", url, callback, headers);
+  var ajax = this.getAjax("COPY", url, callback, headers);
   ajax.setRequestHeader('Destination', destination);
   if (depth !== undefined) {
     if ((depth !== 0) && (depth !== 'infinity')) {
@@ -507,7 +518,7 @@ nl.sara.webdav.Client.prototype.move = function(path, callback, destination, ove
   } // Else I assume it is a complete URL already
 
   // And then send the request
-  var ajax = nl.sara.webdav.Client.getAjax("MOVE", url, callback, headers);
+  var ajax = this.getAjax("MOVE", url, callback, headers);
   ajax.setRequestHeader('Destination', destination);
   if (overwriteMode === nl.sara.webdav.Client.FAIL_ON_OVERWRITE) {
     ajax.setRequestHeader('Overwrite', 'F');
@@ -555,12 +566,21 @@ nl.sara.webdav.Client.prototype.unlock = function(path, callback, headers) {
  * @param    {Array}                          headers   Additional headers to set
  * @returns  {XMLHttpRequest}                           A prepared XMLHttpRequest
  */
-nl.sara.webdav.Client.getAjax = function(method, url, callback, headers) {
+nl.sara.webdav.Client.prototype.getAjax = function(method, url, callback, headers) {
   var /** @type XMLHttpRequest */ ajax = new XMLHttpRequest();
   ajax.open(method, url, true);
   ajax.onreadystatechange = function() {
     nl.sara.webdav.Client.ajaxHandler( ajax, callback );
   };
+  
+  if (headers === undefined) {
+    headers = {};
+  }
+  for (var header in this._headers) {
+    if (headers[header] === undefined) {
+      ajax.setRequestHeader(header, this._headers[header]);
+    }
+  }
   for (var header in headers) {
     ajax.setRequestHeader(header, headers[header]);
   }

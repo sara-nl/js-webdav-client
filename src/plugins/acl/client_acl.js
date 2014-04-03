@@ -57,9 +57,9 @@ nl.sara.webdav.Client.prototype.acl = function(path, callback, acl, headers) {
     }else{
       url = url + '?_method=acl';
     }
-    ajax = nl.sara.webdav.Client.getAjax('POST', url, callback, headers);
+    ajax = this.getAjax('POST', url, callback, headers);
   }else{
-    ajax = nl.sara.webdav.Client.getAjax("ACL", url, callback, headers);
+    ajax = this.getAjax("ACL", url, callback, headers);
   }
   ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
   ajax.send(body);
@@ -99,9 +99,9 @@ nl.sara.webdav.Client.prototype.report = function(path, callback, body, headers)
     }else{
       url = url + '?_method=report';
     }
-    ajax = nl.sara.webdav.Client.getAjax('POST', url, callback, headers);
+    ajax = this.getAjax('POST', url, callback, headers);
   }else{
-    ajax = nl.sara.webdav.Client.getAjax("REPORT", url, callback, headers);
+    ajax = this.getAjax("REPORT", url, callback, headers);
   }
   ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
   ajax.send(body);
