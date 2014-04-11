@@ -35,7 +35,7 @@ nl.sara.webdav.codec.Principal_collection_setCodec.fromXML = function(nodelist) 
   var collections = [];
   for ( var key = 0; key < nodelist.length; key++ ) {
     var node = nodelist.item( key );
-    if ( ( node.nodeType === 1 ) && ( node.nodeName === 'href' ) && ( node.namespaceURI === 'DAV:' ) ) { // Only extract data from DAV: href nodes
+    if ( ( node.nodeType === 1 ) && ( node.localName === 'href' ) && ( node.namespaceURI === 'DAV:' ) ) { // Only extract data from DAV: href nodes
       var href = '';
       for ( var subkey = 0; subkey < node.childNodes.length; subkey++ ) {
         var childNode = node.childNodes.item( subkey );
