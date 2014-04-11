@@ -29,7 +29,7 @@ if (nl.sara.webdav.codec.Principal_collection_setCodec !== undefined) {
  */
 nl.sara.webdav.codec.Principal_collection_setCodec = new nl.sara.webdav.Codec();
 nl.sara.webdav.codec.Principal_collection_setCodec.namespace = 'DAV:';
-nl.sara.webdav.codec.Principal_collection_setCodec.tagname = 'principal-collection-setCodec';
+nl.sara.webdav.codec.Principal_collection_setCodec.tagname = 'principal-collection-set';
 
 nl.sara.webdav.codec.Principal_collection_setCodec.fromXML = function(nodelist) {
   var collections = [];
