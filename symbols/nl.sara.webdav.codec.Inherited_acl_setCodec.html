@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - nl.sara.webdav.Codec</title>
+		<title>JsDoc Reference - nl.sara.webdav.codec.Inherited_acl_setCodec</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -246,24 +246,26 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class nl.sara.webdav.Codec
+				Class nl.sara.webdav.codec.Inherited_acl_setCodec
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/nl.sara.webdav.Codec.html">nl.sara.webdav.Codec</a>.<br />
 				
 			
-				A codec transcodes the xml to a custom Javascript object
+				Adds a codec that converts DAV: inherited-acl-set to an array with the uri's object
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/src_codec.js.html">codec.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/src_plugins_acl_0010_inherited-acl-set_codec.js.html">0010_inherited-acl-set_codec.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class nl.sara.webdav.Codec.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class nl.sara.webdav.codec.Inherited_acl_setCodec.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -276,7 +278,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Codec.html#constructor">nl.sara.webdav.Codec</a></b>(namespace, tagname, toXML, fromXML)
+								<b><a href="../symbols/nl.sara.webdav.codec.Inherited_acl_setCodec.html#constructor">nl.sara.webdav.codec.Inherited_acl_setCodec</a></b>()
 							</div>
 							<div class="description"></div>
 						</td>
@@ -289,60 +291,11 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class nl.sara.webdav.Codec.">
-					<caption>Field Summary</caption>
-					<thead>
-						<tr>
-							<th scope="col">Field Attributes</th>
-							<th scope="col">Field Name and Description</th>
-						</tr>
-					</thead>
-					<tbody>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Codec.html#fromXML">fromXML</a></b>
-								</div>
-								<div class="description">Functions which should return a representation of xmlvalue</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Codec.html#namespace">namespace</a></b>
-								</div>
-								<div class="description">The namespace of the property to transcode</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Codec.html#tagname">tagname</a></b>
-								</div>
-								<div class="description">The tag name of the property to transcode</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/nl.sara.webdav.Codec.html#toXML">toXML</a></b>
-								</div>
-								<div class="description">Function which should return a Document with the NodeList of the documentElement as the value of this property</div>
-							</td>
-						</tr>
-					
-					</tbody>
-				</table>
 				
 				
+				<dl class="inheritsList">
+				<dt>Fields borrowed from class <a href="../symbols/nl.sara.webdav.Codec.html">nl.sara.webdav.Codec</a>: </dt><dd><a href="../symbols/nl.sara.webdav.Codec.html#fromXML">fromXML</a>, <a href="../symbols/nl.sara.webdav.Codec.html#namespace">namespace</a>, <a href="../symbols/nl.sara.webdav.Codec.html#tagname">tagname</a>, <a href="../symbols/nl.sara.webdav.Codec.html#toXML">toXML</a></dd>
+				</dl>
 				
 			
 
@@ -359,7 +312,7 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>nl.sara.webdav.Codec</b>(namespace, tagname, toXML, fromXML)
+						<b>nl.sara.webdav.codec.Inherited_acl_setCodec</b>()
 				</div>
 				
 				<div class="description">
@@ -370,35 +323,6 @@ ul.inheritsList
 				
 				
 				
-					
-						<dl class="detailList">
-						<dt class="heading">Parameters:</dt>
-						
-							<dt>
-								<span class="light fixedFont">{String}</span>  <b>namespace</b>
-								<i>Optional</i>
-							</dt>
-								<dd>Optional; The namespace of the property to transcode</dd>
-						
-							<dt>
-								<span class="light fixedFont">{String}</span>  <b>tagname</b>
-								<i>Optional</i>
-							</dt>
-								<dd>Optional; The tag name of the property to transcode</dd>
-						
-							<dt>
-								<span class="light fixedFont">{function(mixed[|xmlDoc])}</span>  <b>toXML</b>
-								<i>Optional</i>
-							</dt>
-								<dd>Optional; Function which should return a Document with the NodeList of the documentElement as the value of this property</dd>
-						
-							<dt>
-								<span class="light fixedFont">{function(NodeList)}</span>  <b>fromXML</b>
-								<i>Optional</i>
-							</dt>
-								<dd>Optional; Functions which should return a representation of xmlvalue</dd>
-						
-						</dl>
 					
 					
 					
@@ -411,99 +335,6 @@ ul.inheritsList
 			
 
 <!-- ============================== field details ========================== -->		
-			
-				<div class="sectionTitle">
-					Field Detail
-				</div>
-				
-					<a name="fromXML"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{function(NodeList)}</span>
-					<b>fromXML</b>
-					
-					</div>
-					<div class="description">
-						Functions which should return a representation of xmlvalue
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="namespace"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{String}</span>
-					<b>namespace</b>
-					
-					</div>
-					<div class="description">
-						The namespace of the property to transcode
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="tagname"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{String}</span>
-					<b>tagname</b>
-					
-					</div>
-					<div class="description">
-						The tag name of the property to transcode
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="toXML"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{function(mixed[|xmlDoc])}</span>
-					<b>toXML</b>
-					
-					</div>
-					<div class="description">
-						Function which should return a Document with the NodeList of the documentElement as the value of this property
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					
-				
 			
 
 <!-- ============================== method details ========================= -->		
