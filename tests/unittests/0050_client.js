@@ -439,6 +439,68 @@ asyncTest( 'Client: move', function() {
 } );
 
 /**
+ * Test options()
+ */
+asyncTest( 'Client: options', function() {
+  // Prepare test values
+  var testUrl = '/resource.txt';
+  var testRequestBody = 'This is the contents of resource.txt';
+  var testRequestContentType = 'application/x-www-form-urlencoded';
+  var testHeader = 'X-Test-Header';
+  var testHeaderValue = 'this is a useless header';
+  var testStatus = 200;
+  var testResponseBody = 'This is the contents of resource.txt';
+  var testContentType = 'plain/text';
+  
+  // Prepare to mock AJAX
+  var server = new MockHttpServer( function ( request ) {
+    start();
+    deepEqual( request.method                            , 'OPTIONS'             , 'options() should initiate a OPTIONS AJAX request');
+    deepEqual( request.url                               , testUrl               , 'options() AJAX request should use the correct URL');
+    deepEqual( request.requestText                       , testRequestBody       , 'options() AJAX request should use the correct body');
+    deepEqual( request.getRequestHeader( 'Content-Type' ), testRequestContentType, 'options() AJAX request should use the correct content type');
+    deepEqual( request.getRequestHeader( testHeader )    , testHeaderValue       , 'options() AJAX request should use the correct custom header');
+    stop();
+    
+    // Prepare a response
+    request.setResponseHeader( 'Content-Type', testContentType );
+    request.receive( testStatus, testResponseBody );
+  } );
+  server.start();
+  
+  // Start the actual request we want to test
+  function optionsCallback( status, data, headers ) {
+    start();
+    deepEqual( status, testStatus                                          , 'OPTIONS requests should return with the correct status code' );
+    ok( (new RegExp('Content-Type: ' + testContentType, 'i')).test(headers), 'OPTIONS requests should return with the correct Content-Type header');
+    deepEqual( data  , testResponseBody                                    , 'OPTIONS requests should return with the correct body' );
+  }
+  var client = new nl.sara.webdav.Client();
+  var customHeaders = {};
+  customHeaders[ testHeader ] = testHeaderValue;
+  client.options(
+          testUrl,
+          optionsCallback,
+          testRequestBody,
+          undefined, // We sent undefined as content type. The options() method should then automatically use "application/x-www-form-urlencoded"
+          customHeaders
+  );
+  stop();
+  // And with a Content-Type
+  testRequestContentType = 'application/octet-stream';
+  client.options(
+          testUrl,
+          optionsCallback,
+          testRequestBody,
+          testRequestContentType,
+          customHeaders
+  );
+  
+  // End mocking of AJAX
+  server.stop();
+} );
+
+/**
  * Test post()
  */
 asyncTest( 'Client: post', function() {

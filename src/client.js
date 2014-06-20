@@ -456,6 +456,44 @@ nl.sara.webdav.Client.prototype.put = function(path, callback, body, contenttype
 };
 
 /**
+ * Perform a WebDAV OPTIONS request
+ *
+ * @param    {String}                         path                                               The path to perform OPTIONS on
+ * @param    {Function(status,body,headers)}  callback                                           Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {String}                         [body]                                             Optional; a body to include in the OPTIONS request.
+ * @param    {String}                         [contenttype='application/x-www-form-urlencoded']  Optional; the content type of the body (i.e. value for the Content-Type header). If omitted, but body is specified, then 'application/x-www-form-urlencoded' is assumed
+ * @param    {Array}                          headers                                            Optional; Additional headers to set
+ * @returns  {nl.sara.webdav.Client}                                                             The client itself for chaining methods
+ */
+nl.sara.webdav.Client.prototype.options = function(path, callback, body, contenttype, headers) {
+  if ((path === undefined) || (callback === undefined)) {
+    throw new nl.sara.webdav.Exception('OPTIONS requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
+  }
+  if ((typeof path !== "string") || ((body !== undefined) && (typeof body !== 'string')) || ((contenttype !== undefined) && (typeof contenttype !== 'string'))) {
+    throw new nl.sara.webdav.Exception('OPTIONS parameter; path, body and contenttype should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
+  }
+
+  // Get the full URL, based on the specified path
+  var url = this.getUrl(path);
+
+  // And then send the request
+  var ajax = null;
+  ajax = this.getAjax("OPTIONS", url, callback, headers);
+  if ( body !== undefined ) {
+    if (contenttype !== undefined) {
+      ajax.setRequestHeader('Content-Type', contenttype);
+    }else{
+      ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    }
+    ajax.send(body);
+  }else{
+    ajax.send();
+  }
+
+  return this;
+};
+
+/**
  * Perform a WebDAV POST request
  *
  * @param    {String}                         path                                               The path to perform POST on
