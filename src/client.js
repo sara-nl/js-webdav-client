@@ -619,24 +619,64 @@ nl.sara.webdav.Client.prototype.move = function(path, callback, destination, ove
  *
  * @param    {String}                         path      The path to perform LOCK on
  * @param    {Function(status,body,headers)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {Document}                       body      Optional; The (XML DOM) document to parse and send as the request body
  * @param    {Array}                          headers   Optional; Additional headers to set
  * @returns  {nl.sara.webdav.Client}                    The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.lock = function(path, callback, headers) {
-  throw new nl.sara.webdav.Exception('LOCK is not implemented yet', nl.sara.webdav.Exception.NOT_IMPLEMENTED);
+nl.sara.webdav.Client.prototype.lock = function(path, callback, body, headers) {
+  if ((path === undefined) || (callback === undefined)) {
+    throw new nl.sara.webdav.Exception('LOCK requires the parameters path and callback', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
+  }
+  if ((typeof path !== "string") || (!nl.sara.webdav.Ie.isIE && (body !== undefined) && !(body instanceof Document))) {
+    throw new nl.sara.webdav.Exception('LOCK parameter; path should be a string, body should be an instance of Document', nl.sara.webdav.Exception.WRONG_TYPE);
+  }
+
+  // Get the full URL, based on the specified path
+  var url = this.getUrl(path);
+
+  // Parse the body
+  var serializer = new XMLSerializer();
+  var body = '<?xml version="1.0" encoding="utf-8" ?>' + serializer.serializeToString(body);
+
+  // And then send the request
+  var ajax = null;
+  ajax = this.getAjax("LOCK", url, callback, headers);
+  if (body !== undefined) {
+    ajax.setRequestHeader('Content-Type', 'application/xml; charset="utf-8"');
+    ajax.send(body);
+  }else{
+    ajax.send();
+  }
+
   return this;
 };
 
 /**
  * Perform a WebDAV UNLOCK request
  *
- * @param    {String}                         path      The path to perform UNLOCK on
- * @param    {Function(status,body,headers)}  callback  Querying the server is done asynchronously, this callback function is called when the results are in
- * @param    {Array}                          headers   Optional; Additional headers to set
- * @returns  {nl.sara.webdav.Client}                    The client itself for chaining methods
+ * @param    {String}                         path       The path to perform UNLOCK on
+ * @param    {Function(status,body,headers)}  callback   Querying the server is done asynchronously, this callback function is called when the results are in
+ * @param    {String}                         lockToken  The lock token to unlock
+ * @param    {Array}                          headers    Optional; Additional headers to set
+ * @returns  {nl.sara.webdav.Client}                     The client itself for chaining methods
  */
-nl.sara.webdav.Client.prototype.unlock = function(path, callback, headers) {
-  throw new nl.sara.webdav.Exception('UNLOCK is not implemented yet', nl.sara.webdav.Exception.NOT_IMPLEMENTED);
+nl.sara.webdav.Client.prototype.unlock = function(path, callback, lockToken, headers) {
+  if ((path === undefined) || (callback === undefined) || (lockToken === undefined)) {
+    throw new nl.sara.webdav.Exception('UNLOCK requires the parameters path, callback and lockToken', nl.sara.webdav.Exception.MISSING_REQUIRED_PARAMETER);
+  }
+  if ( (typeof path !== "string") || (typeof lockToken !== "string") ){
+    throw new nl.sara.webdav.Exception('UNLOCK parameter; path and lockToken should be strings', nl.sara.webdav.Exception.WRONG_TYPE);
+  }
+
+  // Get the full URL, based on the specified path
+  var url = this.getUrl(path);
+
+  // And then send the request
+  headers['Lock-Token'] = lockToken;
+  var ajax = null;
+  ajax = this.getAjax("UNLOCK", url, callback, headers);
+  ajax.send();
+
   return this;
 };
 

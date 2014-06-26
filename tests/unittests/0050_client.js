@@ -439,6 +439,142 @@ asyncTest( 'Client: move', function() {
 } );
 
 /**
+ * Test lock()
+ */
+asyncTest( 'Client: lock', function() {
+  // Prepare test values
+  var testUrl = '/report/path';
+  var testHeader = 'X-Test-Header';
+  var testHeaderValue = 'this is a useless header';
+  var testStatus = 200;
+  var testOwner = 'http://beehub.nl/lockowner';
+
+  var lockBody = document.implementation.createDocument("DAV:", "lockinfo", null);
+  var exclusive = lockBody.createElementNS('DAV:', 'exclusive');
+  var lockscope = lockBody.createElementNS('DAV:', 'lockscope');
+  lockscope.appendChild( exclusive );
+  var write = lockBody.createElementNS('DAV:', 'write');
+  var locktype = lockBody.createElementNS('DAV:', 'locktype');
+  locktype.appendChild( write );
+  var href = lockBody.createElementNS('DAV:', 'href');
+  href.appendChild( lockBody.createCDATASection( testOwner ) );
+  var owner = lockBody.createElementNS('DAV:', 'owner');
+  owner.appendChild( href );
+  lockBody.documentElement.appendChild( lockscope );
+  lockBody.documentElement.appendChild( locktype );
+  lockBody.documentElement.appendChild( owner );
+
+  // Prepare to mock AJAX
+  var server = new MockHttpServer( function ( request ) {
+    start();
+    deepEqual( request.method                        , 'LOCK'         , 'lock() should initiate a LOCK AJAX request');
+    deepEqual( request.url                           , testUrl        , 'lock() AJAX request should use the correct URL');
+    deepEqual( request.getRequestHeader( testHeader ), testHeaderValue, 'lock() AJAX request should use the correct custom header');
+
+    // And the assertions to check whether the XML was well formed
+    var xmlDoc;
+    if ( window.DOMParser ) {
+      var parser = new DOMParser();
+      xmlDoc = parser.parseFromString( request.requestText, "text/xml" );
+    }else{ // Internet Explorer
+      xmlDoc = new ActiveXObject( "Microsoft.XMLDOM" );
+      xmlDoc.async = false;
+      xmlDoc.loadXML( request.requestText );
+    }
+    deepEqual( xmlDoc.documentElement.namespaceURI, 'DAV:'       , 'lock() should create an XML body with correct root element namespace' );
+    deepEqual( xmlDoc.documentElement.nodeName    , 'lockinfo'   , 'lock() should create an XML body with correct root element nodeName' );
+    var rootSubnodes = xmlDoc.documentElement.childNodes;
+    deepEqual( rootSubnodes.length                , 3            , 'lock() should create an XML body with root element, containing 3 child node' );
+
+    stop();
+
+    // Prepare a response
+    request.receive( testStatus,
+      '<?xml version="1.0" encoding="utf-8" ?>\
+      <D:prop xmlns:D="DAV:">\
+        <D:lockdiscovery>\
+          <D:activelock>\
+            <D:locktype><D:write/></D:locktype>\
+            <D:lockscope><D:exclusive/></D:lockscope>\
+            <D:depth>infinity</D:depth>\
+            <D:owner>\
+              <D:href>' + testOwner + '</D:href>\
+            </D:owner>\
+            <D:timeout>Second-604800</D:timeout>\
+            <D:locktoken>\
+              <D:href>urn:uuid:e71d4fae-5dec-22d6-fea5-00a0c91e6be4</D:href>\
+            </D:locktoken>\
+            <D:lockroot>\
+              <D:href>' + testUrl + '</D:href>\
+            </D:lockroot>\
+          </D:activelock>\
+        </D:lockdiscovery>\
+      </D:prop>' );
+  } );
+  server.start();
+
+  // Start the actual request we want to test
+  var client = new nl.sara.webdav.Client();
+  var customHeaders = {};
+  customHeaders[ testHeader ] = testHeaderValue;
+  client.lock(
+          testUrl,
+          function( status, data ) {
+            start();
+            deepEqual( status, testStatus, 'LOCK requests should return with the correct status code' );
+          },
+          lockBody,
+          customHeaders
+  );
+
+  // End mocking of AJAX
+  server.stop();
+} );
+
+/**
+ * Test unlock()
+ */
+asyncTest( 'Client: unlock', function() {
+  // Prepare test values
+  var testUrl = '/resource.txt';
+  var testHeader = 'X-Test-Header';
+  var testHeaderValue = 'this is a useless header';
+  var testLockToken = '<urn:uuid:a515cfa4-5da4-22e1-f5b5-00a0451e6bf7>';
+  var testStatus = 204;
+
+  // Prepare to mock AJAX
+  var server = new MockHttpServer( function ( request ) {
+    start();
+    deepEqual( request.method                          , 'UNLOCK'       , 'unlock() should initiate an UNLOCK AJAX request');
+    deepEqual( request.url                             , testUrl        , 'unlock() AJAX request should use the correct URL');
+    deepEqual( request.getRequestHeader( 'Lock-Token' ), testLockToken  , 'unlock() AJAX request should use the correct Lock-Token header' );
+    deepEqual( request.getRequestHeader( testHeader )  , testHeaderValue, 'unlock() AJAX request should use the correct custom header');
+    stop();
+
+    // Prepare a response
+    request.receive( testStatus );
+  } );
+  server.start();
+
+  // Start the actual request we want to test
+  var client = new nl.sara.webdav.Client();
+  var customHeaders = {};
+  customHeaders[ testHeader ] = testHeaderValue;
+  client.unlock(
+          testUrl,
+          function( status ) {
+            start();
+            deepEqual( status, testStatus, 'UNLOCK requests should return with the correct status code' );
+          },
+          testLockToken,
+          customHeaders
+  );
+
+  // End mocking of AJAX
+  server.stop();
+} );
+
+/**
  * Test options()
  */
 asyncTest( 'Client: options', function() {
