@@ -690,7 +690,7 @@ nl.sara.webdav.Client.prototype.unlock = function(path, callback, lockToken, hea
  * @returns  {XMLHttpRequest}                           A prepared XMLHttpRequest
  */
 nl.sara.webdav.Client.prototype.getAjax = function(method, url, callback, headers) {
-  var /** @type XMLHttpRequest */ ajax = new XMLHttpRequest();
+  var /** @type XMLHttpRequest */ ajax = (Components && Components.classes ? Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest) : new XMLHttpRequest());
   if ( this._username !== null ) {
     ajax.open( method, url, true, this._username, this._password );
   }else{
