@@ -21,7 +21,7 @@ Directory structure
 Development
 -----------
 
-If you want to develope on the library code itself, you'll want to link to the
+If you want to develop on the library code itself, you'll want to link to the
 source files from within your HTML page. You should add all needed files
 manually to the header with the default script tag. For example:
 
