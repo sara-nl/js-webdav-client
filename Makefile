@@ -24,21 +24,7 @@ dist-unminified.js: $(SOURCES)
 		echo "Added to build file: $${SOURCEFILE}"; \
 	done
 
-test-dependencies:
-	@if test ! -d 'tests/resources' ; then \
-		mkdir tests/resources ; \
-	fi
-	@if test ! -e 'tests/resources/qunit.css' ; then \
-		curl http://code.jquery.com/qunit/qunit-1.12.0.css > tests/resources/qunit.css ; \
-	fi
-	@if test ! -e 'tests/resources/qunit.js' ; then \
-		curl http://code.jquery.com/qunit/qunit-1.12.0.js > tests/resources/qunit.js ; \
-	fi
-	@if test ! -e 'tests/resources/mock.js' ; then \
-		curl https://raw.github.com/philikon/MockHttpRequest/master/lib/mock.js > tests/resources/mock.js ; \
-	fi
-
-tests: test-dependencies dist.js $(TESTS) $(SOURCES)
+tests: dist.js $(TESTS) $(SOURCES)
 	@rm -f temp_footer.html
 	@for TESTFILE in $(TESTS); do \
 		echo "    <script src=\"../$${TESTFILE}\"></script>" >> temp_footer.html ; \
