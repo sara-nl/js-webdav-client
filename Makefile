@@ -18,11 +18,13 @@ check-minifier-dependencies:
 
 dist-unminified.js: $(SOURCES)
 	@rm -f $@ dist-unminified.js
+	@cat src/UMD-header.txt > dist-unminified.js
 	@for SOURCEFILE in $(SOURCES); do \
 		cat $${SOURCEFILE} >> dist-unminified.js && \
 		echo >> dist-unminified.js; \
 		echo "Added to build file: $${SOURCEFILE}"; \
 	done
+	@cat src/UMD-footer.txt >> dist-unminified.js
 
 tests: dist.js $(TESTS) $(SOURCES)
 	@rm -f temp_footer.html
