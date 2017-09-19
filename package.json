@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A low-level webDAV client library written in/for JavaScript",
   "main": "dist.js",
+  "typeings": "dist.d.ts",
   "directories": {
     "doc": "docs",
     "test": "tests"
