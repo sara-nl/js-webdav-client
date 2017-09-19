@@ -10,3 +10,5 @@ Makefile
 /scripts/
 /src/
 /tests/
+.git
+.gitmodules
