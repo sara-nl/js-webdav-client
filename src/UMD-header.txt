@@ -1,0 +1,26 @@
+(function (root, factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(exports);
+        if (v !== undefined && v !== null) {
+            module.exports = v;
+        }
+
+    } else if (typeof define === "function" && define.amd) {
+        define(["exports"], factory);
+
+    } else {
+        // Browser globals
+        root.nl = factory({});
+    }
+})(this, function (exports) {
+    "use strict";
+
+    // This flag is a necessity to support interoperability between CommonJS/AMD/UMD/ES6 module loaders.
+    // this flag triggers special compatibility behaviour of non-ES6 loaders to handle "default" exports
+    // of this module exactly like ES6.
+    //
+    // see https://github.com/esnext/es6-module-transpiler/issues/86
+    // https://github.com/esnext/es6-module-transpiler/issues/85
+    // https://github.com/Microsoft/TypeScript/issues/5844#issuecomment-161425239
+    Object.defineProperty(exports, "__esModule", { value: true });
+

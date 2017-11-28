@@ -5,3 +5,10 @@
 /yuicompressor.jar
 /.project
 /nbproject
+/MakefileCOPYING.LESSER.txt
+Makefile
+/scripts/
+/src/
+/tests/
+.git
+.gitmodules
