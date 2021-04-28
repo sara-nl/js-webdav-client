@@ -6,7 +6,7 @@ JavaScript. The main purpose is to support the built-in client for *BeeHub*.
 However, we attempt to make it follow the webDAV RFC 4918 and any contributions
 that help implement features of this and other webDAV standards are welcome.
 
-API reference can be found here: http://sara-nl.github.com/js-webdav-client/
+API reference can be found here: https://raw.githack.com/sara-nl/js-webdav-client/198acdc3f24279874682c10e54d04eed1316dcb6/index.html
 
 Directory structure
 -------------------
